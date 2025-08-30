@@ -1,0 +1,35 @@
+GET http://localhost:3001/
+
+###
+# Get all projects
+GET http://localhost:3001/projects
+
+###
+# Get specific project
+GET http://localhost:3001/projects/16
+
+###
+# Create new project
+POST http://localhost:3001/projects/
+Content-Type: application/json
+
+{
+    "id" : "0",
+    "projectName" : "Todowinn",
+    "dateCreated" : "2025-08-30" 
+}
+
+###
+# Update project
+PATCH http://localhost:3001/projects/16
+Content-Type: application/json
+
+{
+    "id" : "0",
+    "projectName" : "Zav PMS",
+    "dateCreated" : "2025-08-30" 
+}
+
+###
+# Delete project
+DELETE http://localhost:3001/projects/16
