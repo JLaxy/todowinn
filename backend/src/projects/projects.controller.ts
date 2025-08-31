@@ -1,3 +1,4 @@
+import { ProjectsService } from './projects.service';
 import {
   Body,
   Controller,
@@ -10,32 +11,47 @@ import {
 
 @Controller('projects')
 export class ProjectsController {
+  constructor(private readonly projectService: ProjectsService) {}
+
   // Get all projects
   @Get()
   getAllProjects() {
-    return 'all projects';
+    return this.projectService.getAllProjects();
   }
 
   // Get specific project
   @Get(':id')
   getProject(@Param('id') id: string) {
-    return `project ${id}`;
+    return this.projectService.getProject(+id);
   }
 
   // Create new project
   @Post()
-  newProject(@Body() project: {}) {
-    return project;
+  createProject(
+    @Body()
+    project: {
+      projectName: string;
+      dateCreated: string;
+    },
+  ) {
+    return this.projectService.createProject(project);
   }
 
   // Update project
   @Patch(':id')
-  updateProject(@Param('id') id: string, @Body() updatedInfo: {}) {
-    return `updated project with id ${id}, containing ${JSON.stringify(updatedInfo)}`;
+  updateProject(
+    @Param('id') id: string,
+    @Body()
+    updatedInfo: {
+      projectName?: string;
+      dateCreated?: string;
+    },
+  ) {
+    return this.projectService.updateProject(+id, updatedInfo);
   }
 
   @Delete(':id')
   deleteProject(@Param('id') id: string) {
-    return `deleted project with id ${id}`;
+    return this.projectService.deleteProject(+id);
   }
 }
