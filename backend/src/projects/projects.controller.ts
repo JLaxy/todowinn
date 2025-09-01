@@ -1,3 +1,5 @@
+import { CreateProjectDTO } from './dto/create-project.dto';
+import { UpdateProjectDTO } from './dto/update-project.dto';
 import { ProjectsService } from './projects.service';
 import {
   Body,
@@ -5,6 +7,7 @@ import {
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
 } from '@nestjs/common';
@@ -21,37 +24,31 @@ export class ProjectsController {
 
   // Get specific project
   @Get(':id')
-  getProject(@Param('id') id: string) {
-    return this.projectService.getProject(+id);
+  getProject(@Param('id', ParseIntPipe) id: number) {
+    return this.projectService.getProject(id);
   }
 
   // Create new project
   @Post()
   createProject(
     @Body()
-    project: {
-      projectName: string;
-      dateCreated: string;
-    },
+    createUserDTO: CreateProjectDTO,
   ) {
-    return this.projectService.createProject(project);
+    return this.projectService.createProject(createUserDTO);
   }
 
   // Update project
   @Patch(':id')
   updateProject(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: number,
     @Body()
-    updatedInfo: {
-      projectName?: string;
-      dateCreated?: string;
-    },
+    updateProjectDTO: UpdateProjectDTO,
   ) {
-    return this.projectService.updateProject(+id, updatedInfo);
+    return this.projectService.updateProject(id, updateProjectDTO);
   }
 
   @Delete(':id')
-  deleteProject(@Param('id') id: string) {
-    return this.projectService.deleteProject(+id);
+  deleteProject(@Param('id', ParseIntPipe) id: number) {
+    return this.projectService.deleteProject(id);
   }
 }

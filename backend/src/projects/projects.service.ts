@@ -1,4 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { UpdateProjectDTO } from './dto/update-project.dto';
+import { CreateProjectDTO } from './dto/create-project.dto';
 
 @Injectable()
 export class ProjectsService {
@@ -40,10 +42,10 @@ export class ProjectsService {
   }
 
   // Creates new project
-  createProject(project: { projectName: string; dateCreated: string }) {
+  createProject(createProjectDTO: CreateProjectDTO) {
     const newProject = {
       id: this.projects.length,
-      ...project,
+      ...createProjectDTO,
     };
 
     this.projects.push(newProject);
@@ -52,18 +54,12 @@ export class ProjectsService {
   }
 
   // Update project
-  updateProject(
-    id: number,
-    updatedProject: {
-      projectName?: string;
-      dateCreated?: string;
-    },
-  ) {
+  updateProject(id: number, updateProjectDTO: UpdateProjectDTO) {
     // Iterate through projects
     this.projects = this.projects.map((project) => {
       if (project.id === id) {
         // Get old info, then overwrite
-        return { ...project, ...updatedProject };
+        return { ...project, ...updateProjectDTO };
       }
       return project;
     });
