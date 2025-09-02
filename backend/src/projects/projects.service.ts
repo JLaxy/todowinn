@@ -1,78 +1,68 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { UpdateProjectDTO } from './dto/update-project.dto';
+import { DatabaseService } from 'src/database/database.service';
 import { CreateProjectDTO } from './dto/create-project.dto';
+import { UpdateProjectDTO } from './dto/update-project.dto';
 
 @Injectable()
 export class ProjectsService {
-  private projects = [
-    {
-      id: 0,
-      projectName: 'Zav Product Management System',
-      dateCreated: '2024-06-30',
-    },
-    {
-      id: 1,
-      projectName: 'Margaux Store Management System',
-      dateCreated: '2025-08-30',
-    },
-    {
-      id: 2,
-      projectName: 'Disdrive',
-      dateCreated: '2025-08-05',
-    },
-    {
-      id: 3,
-      projectName: 'Todowinn Project Management System',
-      dateCreated: '2025-08-27',
-    },
-  ];
+  constructor(private readonly databaseService: DatabaseService) {}
 
   // Gets all projects
-  getAllProjects() {
-    return this.projects;
+  async getAllProjects() {
+    return await this.databaseService.projects.findMany();
   }
 
   // Gets specific project
-  getProject(id: number) {
-    const project = this.projects.find((project) => project.id === id);
+  async getProject(id: number) {
+    try {
+      const retrievedProject =
+        await this.databaseService.projects.findUniqueOrThrow({
+          where: {
+            id,
+          },
+        });
 
-    if (project) return project;
-
-    throw new NotFoundException(`Project with id ${id} not found!`);
+      return retrievedProject;
+    } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      if (error.code === 'P2025')
+        throw new NotFoundException(`project with id ${id} not found!`);
+      throw error;
+    }
   }
 
   // Creates new project
-  createProject(createProjectDTO: CreateProjectDTO) {
-    const newProject = {
-      id: this.projects.length,
-      ...createProjectDTO,
-    };
-
-    this.projects.push(newProject);
-
-    return newProject;
+  async createProject(createProjectDTO: CreateProjectDTO) {
+    return this.databaseService.projects.create({
+      data: {
+        name: createProjectDTO.name,
+        date_created: new Date(createProjectDTO.dateCreated),
+      },
+    });
   }
 
   // Update project
-  updateProject(id: number, updateProjectDTO: UpdateProjectDTO) {
+  async updateProject(id: number, updateProjectDTO: UpdateProjectDTO) {
     // Iterate through projects
-    this.projects = this.projects.map((project) => {
-      if (project.id === id) {
-        // Get old info, then overwrite
-        return { ...project, ...updateProjectDTO };
-      }
-      return project;
+    return this.databaseService.projects.update({
+      data: {
+        name: updateProjectDTO.name,
+        date_created: updateProjectDTO.dateCreated
+          ? new Date(updateProjectDTO.dateCreated)
+          : new Date(),
+      },
+      where: {
+        id,
+      },
     });
-
-    return this.getProject(id);
   }
 
   // Delete project
-  deleteProject(id: number) {
-    const deleted = this.getProject(id);
-
-    this.projects = this.projects.filter((project) => project.id !== id);
-
-    return deleted;
+  async deleteProject(id: number) {
+    return this.databaseService.projects.delete({
+      where: {
+        id,
+      },
+    });
   }
 }

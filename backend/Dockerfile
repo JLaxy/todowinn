@@ -15,4 +15,5 @@ RUN npm install
 COPY . .
 
 # Default command for development (you can override in docker-compose)
-CMD ["npm", "run", "start:dev"]
+# CMD ["npm", "run", "start:dev"]
+CMD ["sleep", "infinity"]

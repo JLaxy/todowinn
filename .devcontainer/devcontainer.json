@@ -31,7 +31,9 @@
       "extensions": [
         "oderwat.indent-rainbow",
         "humao.rest-client",
-        "Gydunhn.typescript-essentials"
+        "Gydunhn.typescript-essentials",
+        "Prisma.prisma",
+        "imgildev.vscode-nestjs-prisma-snippets"
       ]
     }
   }

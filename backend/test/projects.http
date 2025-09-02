@@ -6,7 +6,7 @@ GET http://localhost:3001/projects
 
 ###
 # Get specific project
-GET http://localhost:3001/projects/1asdasd
+GET http://localhost:3001/projects/22
 
 ###
 # Create new project
@@ -14,8 +14,8 @@ POST http://localhost:3001/projects/
 Content-Type: application/json
 
 {
-    "projectName" : "MoonHey Hotpot and Grill POS System",
-    "dateCreated" : "2025-05-28"
+    "name" : "Disdrive Distracted Driving Detection",
+    "dateCreated" : "2025-08-05"
 }
 
 ###
@@ -24,7 +24,7 @@ PATCH http://localhost:3001/projects/3
 Content-Type: application/json
 
 {
-    "projectName" : "Nicole Nextjss Portfolio",
+    "name" : "Nicole Nextjss Portfolio",
     "dateCreated" : "2025-08-31"
 }
 

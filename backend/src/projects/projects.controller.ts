@@ -1,5 +1,3 @@
-import { CreateProjectDTO } from './dto/create-project.dto';
-import { UpdateProjectDTO } from './dto/update-project.dto';
 import { ProjectsService } from './projects.service';
 import {
   Body,
@@ -11,6 +9,8 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
+import { CreateProjectDTO } from './dto/create-project.dto';
+import { UpdateProjectDTO } from './dto/update-project.dto';
 
 @Controller('projects')
 export class ProjectsController {
@@ -32,9 +32,9 @@ export class ProjectsController {
   @Post()
   createProject(
     @Body()
-    createUserDTO: CreateProjectDTO,
+    createProjectDTO: CreateProjectDTO,
   ) {
-    return this.projectService.createProject(createUserDTO);
+    return this.projectService.createProject(createProjectDTO);
   }
 
   // Update project

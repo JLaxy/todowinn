@@ -6,4 +6,20 @@ services:
       - /app/node_modules
     ports:
       - "3001:3001"
-    command: npm run start:dev
+    # command: npm run start:dev
+    depends_on:
+      - mysqldb
+  
+  mysqldb:
+    image: mysql:8
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: todowinndb
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
