@@ -1,16 +1,16 @@
-GET http://localhost:3001/
+GET http://localhost:3001/api
 
 ###
 # Get all projects
-GET http://localhost:3001/projects
+GET http://localhost:3001/api/projects
 
 ###
 # Get specific project
-GET http://localhost:3001/projects/22
+GET http://localhost:3001/api/projects/22
 
 ###
 # Create new project
-POST http://localhost:3001/projects/
+POST http://localhost:3001/api/projects/
 Content-Type: application/json
 
 {
@@ -20,7 +20,7 @@ Content-Type: application/json
 
 ###
 # Update project
-PATCH http://localhost:3001/projects/14
+PATCH http://localhost:3001/api/projects/142
 Content-Type: application/json
 
 {
@@ -29,4 +29,4 @@ Content-Type: application/json
 
 ###
 # Delete project
-DELETE http://localhost:3001/projects/11
+DELETE http://localhost:3001/api/projects/13

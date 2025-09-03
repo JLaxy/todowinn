@@ -4,7 +4,6 @@ import {
   Controller,
   Delete,
   Get,
-  NotFoundException,
   Param,
   ParseIntPipe,
   Patch,
@@ -26,17 +25,7 @@ export class ProjectsController {
   // Get specific project
   @Get(':id')
   async getProject(@Param('id', ParseIntPipe) id: number) {
-    // return this.projectService.getProject(id);
-    try {
-      const retrievedProject = await this.projectService.getProject(id);
-      return retrievedProject;
-    } catch (error) {
-      // else, throw error
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      if (error.code === 'P2025')
-        throw new NotFoundException(`project with id ${id} not found!`);
-      throw error;
-    }
+    return this.projectService.getProject(id);
   }
 
   // Create new project
@@ -60,14 +49,6 @@ export class ProjectsController {
 
   @Delete(':id')
   async deleteProject(@Param('id', ParseIntPipe) id: number) {
-    try {
-      return await this.projectService.deleteProject(id);
-    } catch (error) {
-      // else, throw error
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      if (error.code === 'P2025')
-        throw new NotFoundException(`project with id ${id} not found!`);
-      throw error;
-    }
+    return await this.projectService.deleteProject(id);
   }
 }
