@@ -4,6 +4,7 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   ParseIntPipe,
   Patch,
@@ -18,37 +19,55 @@ export class ProjectsController {
 
   // Get all projects
   @Get()
-  getAllProjects() {
-    return this.projectService.getAllProjects();
+  async getAllProjects() {
+    return await this.projectService.getAllProjects();
   }
 
   // Get specific project
   @Get(':id')
-  getProject(@Param('id', ParseIntPipe) id: number) {
-    return this.projectService.getProject(id);
+  async getProject(@Param('id', ParseIntPipe) id: number) {
+    // return this.projectService.getProject(id);
+    try {
+      const retrievedProject = await this.projectService.getProject(id);
+      return retrievedProject;
+    } catch (error) {
+      // else, throw error
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      if (error.code === 'P2025')
+        throw new NotFoundException(`project with id ${id} not found!`);
+      throw error;
+    }
   }
 
   // Create new project
   @Post()
-  createProject(
+  async createProject(
     @Body()
     createProjectDTO: CreateProjectDTO,
   ) {
-    return this.projectService.createProject(createProjectDTO);
+    return await this.projectService.createProject(createProjectDTO);
   }
 
   // Update project
   @Patch(':id')
-  updateProject(
+  async updateProject(
     @Param('id', ParseIntPipe) id: number,
     @Body()
     updateProjectDTO: UpdateProjectDTO,
   ) {
-    return this.projectService.updateProject(id, updateProjectDTO);
+    return await this.projectService.updateProject(id, updateProjectDTO);
   }
 
   @Delete(':id')
-  deleteProject(@Param('id', ParseIntPipe) id: number) {
-    return this.projectService.deleteProject(id);
+  async deleteProject(@Param('id', ParseIntPipe) id: number) {
+    try {
+      return await this.projectService.deleteProject(id);
+    } catch (error) {
+      // else, throw error
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      if (error.code === 'P2025')
+        throw new NotFoundException(`project with id ${id} not found!`);
+      throw error;
+    }
   }
 }

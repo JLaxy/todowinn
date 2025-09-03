@@ -1,7 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 import { CreateProjectDTO } from './dto/create-project.dto';
 import { UpdateProjectDTO } from './dto/update-project.dto';
+import { ProjectMapper } from './projects.mapper';
 
 @Injectable()
 export class ProjectsService {
@@ -14,43 +15,23 @@ export class ProjectsService {
 
   // Gets specific project
   async getProject(id: number) {
-    try {
-      const retrievedProject =
-        await this.databaseService.projects.findUniqueOrThrow({
-          where: {
-            id,
-          },
-        });
-
-      return retrievedProject;
-    } catch (error) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      if (error.code === 'P2025')
-        throw new NotFoundException(`project with id ${id} not found!`);
-      throw error;
-    }
+    return await this.databaseService.projects.findUniqueOrThrow({
+      where: { id },
+    });
   }
 
   // Creates new project
   async createProject(createProjectDTO: CreateProjectDTO) {
-    return this.databaseService.projects.create({
-      data: {
-        name: createProjectDTO.name,
-        date_created: new Date(createProjectDTO.dateCreated),
-      },
+    return await this.databaseService.projects.create({
+      // Map DTO values to match prisma entity
+      data: ProjectMapper.toCreateEntity(createProjectDTO),
     });
   }
 
   // Update project
   async updateProject(id: number, updateProjectDTO: UpdateProjectDTO) {
-    // Iterate through projects
-    return this.databaseService.projects.update({
-      data: {
-        name: updateProjectDTO.name,
-        date_created: updateProjectDTO.dateCreated
-          ? new Date(updateProjectDTO.dateCreated)
-          : new Date(),
-      },
+    return await this.databaseService.projects.update({
+      data: ProjectMapper.toUpdateEntity(updateProjectDTO),
       where: {
         id,
       },
@@ -59,7 +40,7 @@ export class ProjectsService {
 
   // Delete project
   async deleteProject(id: number) {
-    return this.databaseService.projects.delete({
+    return await this.databaseService.projects.delete({
       where: {
         id,
       },

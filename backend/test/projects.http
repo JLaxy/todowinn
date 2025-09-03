@@ -14,20 +14,19 @@ POST http://localhost:3001/projects/
 Content-Type: application/json
 
 {
-    "name" : "Disdrive Distracted Driving Detection",
-    "dateCreated" : "2025-08-05"
+    "name" : "San Benildo Student Management System",
+    "dateCreated" : "2009-08-15"
 }
 
 ###
 # Update project
-PATCH http://localhost:3001/projects/3
+PATCH http://localhost:3001/projects/14
 Content-Type: application/json
 
 {
-    "name" : "Nicole Nextjss Portfolio",
-    "dateCreated" : "2025-08-31"
+    "name" : "COSB-R Student Management System"
 }
 
 ###
 # Delete project
-DELETE http://localhost:3001/projects/2
+DELETE http://localhost:3001/projects/11
