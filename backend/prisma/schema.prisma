@@ -4,6 +4,13 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+enum Status {
+  TODO
+  IN_PROGRESS
+  FINSIHED
+  CANCELLED
+}
+
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/prisma"
@@ -14,8 +21,46 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Projects{
-  id              Int         @id @default(autoincrement())
-  name            String      @unique @db.VarChar(255)
-  date_created    DateTime    @default(now())
+model Members {
+  member_id Int        @id @default(autoincrement())
+  email     String     @unique @db.VarChar(255)
+  password  String     @db.VarChar(255)
+  Projects  Projects[]
+}
+
+model Projects {
+  project_id    Int       @id @default(autoincrement())
+  name          String    @unique @db.VarChar(255)
+  description   String    @db.VarChar(255)
+  date_target   DateTime?
+  date_created  DateTime  @default(now())
+  date_finished DateTime?
+  status        Status    @default(IN_PROGRESS)
+  remarks       String?   @db.VarChar(255)
+  member_id     Int
+  member        Members   @relation(fields: [member_id], references: [member_id])
+  Tasks         Tasks[]
+}
+
+model Tasks {
+  task_id       Int          @id @default(autoincrement())
+  name          String       @db.VarChar(255)
+  description   String       @db.VarChar(255)
+  date_target   DateTime?
+  date_created  DateTime     @default(now())
+  date_finished DateTime?
+  status        Status       @default(TODO)
+  remarks       String?      @db.VarChar(255)
+  project_id    Int
+  project       Projects     @relation(fields: [project_id], references: [project_id])
+  Changelogs    Changelogs[]
+}
+
+model Changelogs {
+  changelog_id Int      @id @default(autoincrement())
+  old          Status
+  new          Status
+  date         DateTime @default(now())
+  task_id      Int
+  task         Tasks    @relation(fields: [task_id], references: [task_id])
 }
