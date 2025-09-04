@@ -1,0 +1,12 @@
+// Get all members
+GET http://localhost:3001/api/members
+
+###
+// Create member
+POST http://localhost:3001/api/members/
+Content-Type: application/json
+
+{
+    "email": "testuser1@gmail.com",
+    "password": "strongpassword"
+}
