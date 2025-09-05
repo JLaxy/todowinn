@@ -1,5 +1,6 @@
 // Get all members
 GET http://localhost:3001/api/members
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoidGVzdHVzZXIxQGdtYWlsLmNvbSIsImlhdCI6MTc1NzA2MjMwOH0.K3ViZjK3Uo0ryKjd6yCcoNPPTFaCQyX-gasDOLt3Ll0
 
 ###
 // Create member
@@ -7,6 +8,14 @@ POST http://localhost:3001/api/members/
 Content-Type: application/json
 
 {
-    "email": "testuser1asdasd@gmail.com",
-    "password": "strongpassword"
+    "email": "laxy@gmail.com",
+    "password": "password123"
+}
+
+###
+PATCH http://localhost:3001/api/members/2
+Content-Type: application/json
+
+{
+    "password": "newpassword"
 }
