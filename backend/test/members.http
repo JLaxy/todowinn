@@ -8,14 +8,15 @@ POST http://localhost:3001/api/members/
 Content-Type: application/json
 
 {
-    "email": "laxy@gmail.com",
+    "email": "jun@gmail.com",
     "password": "password123"
 }
 
 ###
-PATCH http://localhost:3001/api/members/2
+PATCH http://localhost:3001/api/members/56
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsImVtYWlsIjoibGF4eUBnbWFpbC5jb20iLCJpYXQiOjE3NTcxNDMyMDR9.TxWGiNh7stGcBSFaoeyyDfsiXtMhJ4TLEnjw5GpCrDw
 
 {
-    "password": "newpassword"
+    "password": "newpassword1"
 }

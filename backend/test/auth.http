@@ -14,5 +14,14 @@ Content-Type: application/json
 
 {
     "email": "laxy@gmail.com",
-    "password": "newpassword"
+    "password": "newpassword1"
+}
+
+###
+POST http://localhost:3001/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "jun@gmail.com",
+    "password": "newpassword1"
 }
