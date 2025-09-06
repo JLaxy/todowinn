@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Get,
   Param,
   ParseIntPipe,
   Patch,
@@ -19,11 +18,6 @@ import { ResourceType } from 'src/common/types/resource.types';
 export class MembersController {
   constructor(private readonly membersService: MembersService) {}
 
-  @Get()
-  async getMembers() {
-    return await this.membersService.getAllMembers();
-  }
-
   // Create Member; Sign Up
   @Public()
   @Post()
@@ -31,6 +25,7 @@ export class MembersController {
     return await this.membersService.createMember(createMemberDTO);
   }
 
+  // Update Member
   @Patch(':id')
   @UseGuards(OwnershipGuard(ResourceType.MEMBER, 'id'))
   async updateMember(

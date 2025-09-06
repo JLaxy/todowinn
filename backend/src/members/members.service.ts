@@ -11,10 +11,6 @@ export class MembersService {
     private readonly hashService: HashingService,
   ) {}
 
-  async getAllMembers() {
-    return await this.databaseService.members.findMany();
-  }
-
   // Retrieves specific user
   async getMember(id: number) {
     return await this.databaseService.members.findUniqueOrThrow({

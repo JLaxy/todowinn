@@ -6,9 +6,10 @@ import { MembersModule } from './members/members.module';
 import { AuthModule } from './auth/auth.module';
 import { HashingModule } from './hashing/hashing.module';
 import { OwnershipModule } from './ownership/ownership.module';
+import { ProjectsModule } from './projects/projects.module';
 
 @Module({
-  imports: [DatabaseModule, MembersModule, AuthModule, HashingModule, OwnershipModule],
+  imports: [DatabaseModule, MembersModule, AuthModule, HashingModule, OwnershipModule, ProjectsModule],
   controllers: [AppController],
   providers: [AppService],
 })

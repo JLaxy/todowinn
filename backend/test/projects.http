@@ -3,28 +3,30 @@ GET http://localhost:3001/api
 ###
 # Get all projects
 GET http://localhost:3001/api/projects
-
-###
-# Get specific project
-GET http://localhost:3001/api/projects/22
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW5AdG9kb3dpbm4uY29tIiwiaWF0IjoxNzU3MTU1NDA4fQ.8h7grDTplVe-J2sXBB9hCO4KQSMP9ZDCmZ13pY0cY8E
 
 ###
 # Create new project
-POST http://localhost:3001/api/projects/
+// jun@gmail.com
+POST http://localhost:3001/api/projects
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW5AdG9kb3dpbm4uY29tIiwiaWF0IjoxNzU3MTU1NDA4fQ.8h7grDTplVe-J2sXBB9hCO4KQSMP9ZDCmZ13pY0cY8E
 
 {
-    "name" : "San Benildo Student Management System",
-    "dateCreated" : "2009-08-15"
+    "name" : "Todowinn Project",
+    "description" : "testing",
+    "dateTarget" : "2025-09-10"
 }
 
 ###
 # Update project
-PATCH http://localhost:3001/api/projects/142
+// jun@gmail.com
+PATCH http://localhost:3001/api/projects/34
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW5AdG9kb3dpbm4uY29tIiwiaWF0IjoxNzU3MTU1NDA4fQ.8h7grDTplVe-J2sXBB9hCO4KQSMP9ZDCmZ13pY0cY8E
 
 {
-    "name" : "COSB-R Student Management System"
+    "status": "CANCELLED"
 }
 
 ###

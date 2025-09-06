@@ -20,7 +20,7 @@ export function OwnershipGuard(resource: ResourceType, resourceId: string) {
       const id = Number(req.params[resourceId]);
 
       // Check if resourceId is valid number
-      if (isNaN(id)) {
+      if (!Number.isInteger(id)) {
         throw new BadRequestException(`Invalid parameter!`);
       }
 
