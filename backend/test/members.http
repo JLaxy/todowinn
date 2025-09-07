@@ -8,14 +8,15 @@ POST http://localhost:3001/api/members/
 Content-Type: application/json
 
 {
-    "email": "jun@gmail.com",
-    "password": "password123"
+    "email": "leah@gmail.com",
+    "password": "Honeybunch1"
 }
 
 ###
-PATCH http://localhost:3001/api/members/56
+// Update member
+PATCH http://localhost:3001/api/members/4
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsImVtYWlsIjoibGF4eUBnbWFpbC5jb20iLCJpYXQiOjE3NTcxNDMyMDR9.TxWGiNh7stGcBSFaoeyyDfsiXtMhJ4TLEnjw5GpCrDw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsImVtYWlsIjoibGF4eUBnbWFpbC5jb20iLCJpYXQiOjE3NTcyMDg0NDF9.TF3lqRS5G4fr3Bekl5_6p0ltvGCDh5fnADqxbAelkB4
 
 {
     "password": "newpassword1"

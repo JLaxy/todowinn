@@ -52,7 +52,7 @@ export function OwnershipGuard(resource: ResourceType, resourceId: string) {
           await this.ownershipService.verifyTaskOwner(userId, id);
           break;
         case ResourceType.MEMBER:
-          this.ownershipService.verifyMemberOwner(userId, id);
+          await this.ownershipService.verifyMemberOwner(userId, id);
           break;
       }
     }

@@ -21,7 +21,7 @@ export class ProjectMapper {
       description: dto.description,
       date_target: dto.dateTarget ? new Date(dto.dateTarget) : undefined,
       // If updated status is finished, set current date
-      date_finished: dto.status === Status.FINSIHED ? new Date() : null,
+      date_finished: dto.status === Status.FINISHED ? new Date() : null,
       status: dto.status,
       remarks: dto.remarks,
     };

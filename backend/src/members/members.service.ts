@@ -3,6 +3,8 @@ import { DatabaseService } from 'src/database/database.service';
 import { CreateMemberDTO } from './dto/create-member.dto';
 import { HashingService } from 'src/hashing/hashing.service';
 import { updateMemberDTO } from './dto/update-member.dto';
+import { plainToInstance } from 'class-transformer';
+import { ResponseMemberDTO } from './dto/response-member.dto';
 
 @Injectable()
 export class MembersService {
@@ -19,19 +21,22 @@ export class MembersService {
   }
 
   async createMember(createMemberDTO: CreateMemberDTO) {
-    await this.databaseService.members.create({
+    const member = await this.databaseService.members.create({
       data: {
         email: createMemberDTO.email,
         password: await this.hashService.hash(createMemberDTO.password),
       },
     });
 
-    return createMemberDTO;
+    // Convert to reponseDTO
+    return plainToInstance(ResponseMemberDTO, member, {
+      excludeExtraneousValues: true,
+    });
   }
 
   async updateMember(id: number, updateMemberDTO: updateMemberDTO) {
     // Try to check if member with ID exists
-    await this.getMember(id);
+    const member = await this.getMember(id);
 
     // Update
     await this.databaseService.members.update({
@@ -45,6 +50,9 @@ export class MembersService {
       where: { member_id: id },
     });
 
-    return updateMemberDTO;
+    // Convert to reponseDTO
+    return plainToInstance(ResponseMemberDTO, member, {
+      excludeExtraneousValues: true,
+    });
   }
 }

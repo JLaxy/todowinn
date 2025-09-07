@@ -7,7 +7,7 @@
 enum Status {
   TODO
   IN_PROGRESS
-  FINSIHED
+  FINISHED
   CANCELLED
 }
 

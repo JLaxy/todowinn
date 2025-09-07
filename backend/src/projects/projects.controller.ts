@@ -33,12 +33,12 @@ export class ProjectsController {
     return this.projectsService.createProject(member_id, createProjectDTO);
   }
 
-  @UseGuards(OwnershipGuard(ResourceType.PROJECT, 'id'))
   @Patch(':id')
+  @UseGuards(OwnershipGuard(ResourceType.PROJECT, 'id'))
   async updateProject(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updateprojectDTO: UpdateProjectDTO,
+    @Body() updateProjectDTO: UpdateProjectDTO,
   ) {
-    return this.projectsService.updateProject(id, updateprojectDTO);
+    return this.projectsService.updateProject(id, updateProjectDTO);
   }
 }

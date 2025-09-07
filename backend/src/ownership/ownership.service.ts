@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 
 @Injectable()
@@ -16,7 +16,7 @@ export class OwnershipService {
 
     // Check ownership
     if (project.member_id != member_id)
-      throw new UnauthorizedException('You do not own this project');
+      throw new ForbiddenException('You do not own this project');
 
     return project;
   }
@@ -33,14 +33,18 @@ export class OwnershipService {
 
     // Check ownership
     if (task.project.member_id != member_id)
-      throw new UnauthorizedException('You do not own this project');
+      throw new ForbiddenException('You do not own this project');
 
     return task;
   }
 
-  verifyMemberOwner(member_id: number, id: number) {
+  async verifyMemberOwner(member_id: number, id: number) {
+    await this.databaseService.members.findUniqueOrThrow({
+      where: { member_id: id },
+    });
+
     if (member_id !== id)
-      throw new UnauthorizedException('You do not own this member');
+      throw new ForbiddenException('You do not own this member');
 
     return;
   }
