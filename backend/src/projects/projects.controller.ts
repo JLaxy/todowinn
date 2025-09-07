@@ -36,7 +36,9 @@ export class ProjectsController {
 
   // Update project
   @Patch(':id')
-  @UseGuards(OwnershipGuard(ResourceType.PROJECT, 'id'))
+  @UseGuards(
+    OwnershipGuard(ResourceType.PROJECT, (req) => Number(req.params['id'])),
+  )
   async updateProject(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateProjectDTO: UpdateProjectDTO,

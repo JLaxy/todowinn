@@ -5,7 +5,7 @@ Content-Type: application/json
 
 {
     "email": "admin@todowinn.com",
-    "password": "strongpassword123"
+    "password": "strongpassword"
 }
 
 ###

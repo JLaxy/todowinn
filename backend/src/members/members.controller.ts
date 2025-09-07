@@ -27,7 +27,9 @@ export class MembersController {
 
   // Update Member
   @Patch(':id')
-  @UseGuards(OwnershipGuard(ResourceType.MEMBER, 'id'))
+  @UseGuards(
+    OwnershipGuard(ResourceType.MEMBER, (req) => Number(req.params['id'])),
+  )
   async updateMember(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateMemberDTO: updateMemberDTO,

@@ -9,19 +9,25 @@ import { Request } from 'express';
 import { OwnershipService } from './ownership.service';
 import { ResourceType } from 'src/common/types/resource.types';
 
-export function OwnershipGuard(resource: ResourceType, resourceId: string) {
+export function OwnershipGuard(
+  resource: ResourceType,
+  getResourceId: (req: Request) => number,
+) {
   @Injectable()
   class OwnGuard implements CanActivate {
     constructor(public readonly ownershipService: OwnershipService) {}
     async canActivate(context: ExecutionContext): Promise<boolean> {
       // Extracts request
       const req = context.switchToHttp().getRequest<Request>();
+
       // Retrieves resourceId
-      const id = Number(req.params[resourceId]);
+      const id = getResourceId(req);
 
       // Check if resourceId is valid number
       if (!Number.isInteger(id)) {
-        throw new BadRequestException(`Invalid parameter!`);
+        throw new BadRequestException(
+          `Failed to extract resource id to verify ownership; bad paramter/body!`,
+        );
       }
 
       // Retrieve member_id

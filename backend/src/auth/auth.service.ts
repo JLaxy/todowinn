@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { LoginMemberDTO } from './dto/login-member.dto';
 import { DatabaseService } from 'src/database/database.service';
 import { HashingService } from 'src/hashing/hashing.service';
@@ -14,11 +14,13 @@ export class AuthService {
 
   async login(loginMemberDTO: LoginMemberDTO) {
     // Check if email exists; will automatically throw error if does not exist
-    const member = await this.databaseService.members.findUniqueOrThrow({
+    const member = await this.databaseService.members.findUnique({
       where: {
         email: loginMemberDTO.email,
       },
     });
+
+    if (!member) return this.throwError();
 
     // If matches, return JWT
     if (
@@ -32,6 +34,10 @@ export class AuthService {
         }),
       };
 
-    return null;
+    return this.throwError();
+  }
+
+  private throwError() {
+    throw new UnauthorizedException('Invalid credentials!');
   }
 }

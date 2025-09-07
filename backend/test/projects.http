@@ -1,27 +1,26 @@
-GET http://localhost:3001/api
-
-###
 # Get all projects
 GET http://localhost:3001/api/projects
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW5AdG9kb3dpbm4uY29tIiwiaWF0IjoxNzU3MTU1NDA4fQ.8h7grDTplVe-J2sXBB9hCO4KQSMP9ZDCmZ13pY0cY8E
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW5AdG9kb3dpbm4uY29tIiwiaWF0IjoxNzU3MjQxOTMyfQ.bVEy38TjQwg9xVKApaLnN5uFj5vubDi3_rCjAsDLd28
 
 ###
 # Create new project
 POST http://localhost:3001/api/projects
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoianVuQHRvZG93aW5uLmNvbSIsImlhdCI6MTc1NzIyNTgxOH0.oZKjPetPwQ5l-JTPJmwWiI4_SUw6lziUqqAEw0E1its
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW5AdG9kb3dpbm4uY29tIiwiaWF0IjoxNzU3MjQxOTMyfQ.bVEy38TjQwg9xVKApaLnN5uFj5vubDi3_rCjAsDLd28
 
 {
-    "name" : "Todowinn",
-    "description" : "Project Management System in NestJS, Next.js, MySQL"
+    "name" : "test project1",
+    "description" : "helloworld",
+    "remarks": "remarked"
 }
 
 ###
 # Update project
-PATCH http://localhost:3001/api/projects/2
+PATCH http://localhost:3001/api/projects/1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoianVuQHRvZG93aW5uLmNvbSIsImlhdCI6MTc1NzIyNTgxOH0.oZKjPetPwQ5l-JTPJmwWiI4_SUw6lziUqqAEw0E1its
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW5AdG9kb3dpbm4uY29tIiwiaWF0IjoxNzU3MjQxOTMyfQ.bVEy38TjQwg9xVKApaLnN5uFj5vubDi3_rCjAsDLd28
 
 {
-    "status" : "TODO"
+    "status" : "CANCELLED",
+    "remarks": "remark"
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 import { CreateProjectDTO } from './dto/create-project.dto';
 import { ProjectMapper } from './project.mapper';
@@ -18,16 +18,23 @@ export class ProjectsService {
   }
 
   // Retrieve specific proejct
-  private async getProject(project_id: number) {
-    return this.databaseService.projects.findUniqueOrThrow({
+  async getProject(project_id: number) {
+    const project = await this.databaseService.projects.findUnique({
       where: { project_id },
     });
+
+    if (!project)
+      throw new NotFoundException(
+        `Project with id ${project_id} does not exist!`,
+      );
+
+    return project;
   }
 
   // Create project
   async createProject(member_id: number, createProjectDTO: CreateProjectDTO) {
     const project = await this.databaseService.projects.create({
-      data: ProjectMapper.toCreateEntity(createProjectDTO, member_id),
+      data: ProjectMapper.toCreateEntity(member_id, createProjectDTO),
     });
 
     return plainToInstance(ResponseProjectDTO, project, {
@@ -38,6 +45,7 @@ export class ProjectsService {
   async updateProject(project_id: number, updateProjectDTO: UpdateProjectDTO) {
     // First check if project exists
     const project = await this.getProject(project_id);
+
     // Copy date finished
     if (project.date_finished)
       updateProjectDTO.dateFinished = project.date_finished;

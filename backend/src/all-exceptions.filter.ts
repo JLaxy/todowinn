@@ -33,7 +33,7 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
 
     // Handle Prisma errors first
     if (this.isPrismaError(exception)) {
-      const prismaResponse = this.handlePrismaErrors(exception);
+      const prismaResponse = this.handlePrismaErrors(exception, request.url);
       response.status(prismaResponse.statusCode).json(prismaResponse);
       return; // stop further handling
     }
@@ -62,7 +62,7 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
   /**
    * Handles Prisma-specific errors
    */
-  private handlePrismaErrors(exception: any): MyResponseObj {
+  private handlePrismaErrors(exception: any, path: string): MyResponseObj {
     if (exception instanceof PrismaClientValidationError) {
       return {
         statusCode: 422,
@@ -84,7 +84,7 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
       return {
         statusCode,
         timestamp: new Date().toISOString(),
-        path: '',
+        path,
         response: exception.message.replace(/\n/g, ''),
       };
     }
@@ -92,7 +92,7 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
     return {
       statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
       timestamp: new Date().toISOString(),
-      path: '',
+      path,
       response: 'Prisma Error',
     };
   }

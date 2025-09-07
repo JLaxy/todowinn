@@ -7,9 +7,18 @@ import { AuthModule } from './auth/auth.module';
 import { HashingModule } from './hashing/hashing.module';
 import { OwnershipModule } from './ownership/ownership.module';
 import { ProjectsModule } from './projects/projects.module';
+import { TasksModule } from './tasks/tasks.module';
 
 @Module({
-  imports: [DatabaseModule, MembersModule, AuthModule, HashingModule, OwnershipModule, ProjectsModule],
+  imports: [
+    DatabaseModule,
+    MembersModule,
+    AuthModule,
+    HashingModule,
+    OwnershipModule,
+    ProjectsModule,
+    TasksModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 import { CreateMemberDTO } from './dto/create-member.dto';
 import { HashingService } from 'src/hashing/hashing.service';
@@ -15,9 +15,14 @@ export class MembersService {
 
   // Retrieves specific user
   async getMember(id: number) {
-    return await this.databaseService.members.findUniqueOrThrow({
+    const member = await this.databaseService.members.findUnique({
       where: { member_id: id },
     });
+
+    if (!member)
+      throw new NotFoundException(`Member with id ${id} does not exist!`);
+
+    return member;
   }
 
   // Creates member

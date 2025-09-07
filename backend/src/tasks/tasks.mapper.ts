@@ -1,22 +1,20 @@
 import { Status } from 'generated/prisma';
-import { CreateProjectDTO } from './dto/create-project.dto';
-import { UpdateProjectDTO } from './dto/update-project.dto';
+import { CreateTaskDTO } from './dto/create-task.dto';
+import { UpdateTaskDTO } from './dto/update-task.dto';
 
 // Maps DTO to model in database
-export class ProjectMapper {
-  // Converts DTO to createEntity
-  static toCreateEntity(member_id: number, dto: CreateProjectDTO) {
+export class TaskMapper {
+  static toCreateEntity(dto: CreateTaskDTO) {
     return {
       name: dto.name,
       description: dto.description,
       date_target: dto.dateTarget ? new Date(dto.dateTarget) : undefined,
       remarks: dto.remarks,
-      member_id,
+      project_id: dto.project_id,
     };
   }
 
-  // Converts DTO to updateEntity
-  static toUpdateEntity(dto: UpdateProjectDTO) {
+  static toUpdateEntity(dto: UpdateTaskDTO) {
     return {
       name: dto.name,
       description: dto.description,

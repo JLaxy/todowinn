@@ -1,23 +1,18 @@
-// Get all members
-GET http://localhost:3001/api/members
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoidGVzdHVzZXIxQGdtYWlsLmNvbSIsImlhdCI6MTc1NzA2MjMwOH0.K3ViZjK3Uo0ryKjd6yCcoNPPTFaCQyX-gasDOLt3Ll0
-
-###
 // Create member
 POST http://localhost:3001/api/members/
 Content-Type: application/json
 
 {
-    "email": "jun@todowinn.com",
+    "email": "leah@todowinn.com",
     "password": "strongpassword"
 }
 
 ###
 // Update member
-PATCH http://localhost:3001/api/members/1
+PATCH http://localhost:3001/api/members/2
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW5AdG9kb3dpbm4uY29tIiwiaWF0IjoxNzU3MjI1NDQwfQ.h3r_xqKtOfTuFW7O_SMkmH6S4ZnRsk5cwNLn3CpAN3s
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW5AdG9kb3dpbm4uY29tIiwiaWF0IjoxNzU3MjQxOTMyfQ.bVEy38TjQwg9xVKApaLnN5uFj5vubDi3_rCjAsDLd28
 
 {
-    "password": "strongpassword1234"
+    "password": "strongpassword"
 }
