@@ -19,6 +19,7 @@ export class ProjectMapper {
     return {
       name: dto.name,
       description: dto.description,
+      // Convert to dateISO
       date_target: dto.dateTarget ? new Date(dto.dateTarget) : undefined,
       // If updated status is finished, set current date
       date_finished: dto.status === Status.FINISHED ? new Date() : null,

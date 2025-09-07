@@ -3,6 +3,8 @@ import { DatabaseService } from 'src/database/database.service';
 import { CreateProjectDTO } from './dto/create-project.dto';
 import { ProjectMapper } from './project.mapper';
 import { UpdateProjectDTO } from './dto/update-project.dto';
+import { plainToInstance } from 'class-transformer';
+import { ResponseProjectDTO } from './dto/response-project.dto';
 
 @Injectable()
 export class ProjectsService {
@@ -15,15 +17,21 @@ export class ProjectsService {
     });
   }
 
+  // Retrieve specific proejct
   private async getProject(project_id: number) {
     return this.databaseService.projects.findUniqueOrThrow({
       where: { project_id },
     });
   }
 
+  // Create project
   async createProject(member_id: number, createProjectDTO: CreateProjectDTO) {
-    return await this.databaseService.projects.create({
+    const project = await this.databaseService.projects.create({
       data: ProjectMapper.toCreateEntity(createProjectDTO, member_id),
+    });
+
+    return plainToInstance(ResponseProjectDTO, project, {
+      excludeExtraneousValues: true,
     });
   }
 
@@ -34,9 +42,13 @@ export class ProjectsService {
     if (project.date_finished)
       updateProjectDTO.dateFinished = project.date_finished;
 
-    return await this.databaseService.projects.update({
+    const updatedProject = await this.databaseService.projects.update({
       data: ProjectMapper.toUpdateEntity(updateProjectDTO),
       where: { project_id },
+    });
+
+    return plainToInstance(ResponseProjectDTO, updatedProject, {
+      excludeExtraneousValues: true,
     });
   }
 }

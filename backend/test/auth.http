@@ -5,7 +5,7 @@ Content-Type: application/json
 
 {
     "email": "admin@todowinn.com",
-    "password": "newpassword1"
+    "password": "strongpassword123"
 }
 
 ###
@@ -13,15 +13,6 @@ POST http://localhost:3001/api/auth/login
 Content-Type: application/json
 
 {
-    "email": "laxy@gmail.com",
-    "password": "newpassword1"
-}
-
-###
-POST http://localhost:3001/api/auth/login
-Content-Type: application/json
-
-{
-    "email": "jun@gmail.com",
-    "password": "newpassword1"
+    "email": "jun@todowinn.com",
+    "password": "strongpassword"
 }

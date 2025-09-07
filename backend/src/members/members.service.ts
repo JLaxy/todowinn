@@ -20,6 +20,7 @@ export class MembersService {
     });
   }
 
+  // Creates member
   async createMember(createMemberDTO: CreateMemberDTO) {
     const member = await this.databaseService.members.create({
       data: {
@@ -36,10 +37,10 @@ export class MembersService {
 
   async updateMember(id: number, updateMemberDTO: updateMemberDTO) {
     // Try to check if member with ID exists
-    const member = await this.getMember(id);
+    await this.getMember(id);
 
     // Update
-    await this.databaseService.members.update({
+    const member = await this.databaseService.members.update({
       data: {
         ...updateMemberDTO,
         // Hash password

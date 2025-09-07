@@ -7,28 +7,21 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsI
 
 ###
 # Create new project
-// jun@gmail.com
 POST http://localhost:3001/api/projects
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW5AdG9kb3dpbm4uY29tIiwiaWF0IjoxNzU3MTU1NDA4fQ.8h7grDTplVe-J2sXBB9hCO4KQSMP9ZDCmZ13pY0cY8E
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoianVuQHRvZG93aW5uLmNvbSIsImlhdCI6MTc1NzIyNTgxOH0.oZKjPetPwQ5l-JTPJmwWiI4_SUw6lziUqqAEw0E1its
 
 {
-    "name" : "Todowinn Project",
-    "description" : "testing",
-    "dateTarget" : "2025-09-10"
+    "name" : "Todowinn",
+    "description" : "Project Management System in NestJS, Next.js, MySQL"
 }
 
 ###
 # Update project
-// jun@gmail.com
-PATCH http://localhost:3001/api/projects/45
+PATCH http://localhost:3001/api/projects/2
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW5AdG9kb3dpbm4uY29tIiwiaWF0IjoxNzU3MjA2ODYwfQ.2IOAtEA_1bEJRUIihRkH-555_lweTDwURZ_HTCDhR4Y
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoianVuQHRvZG93aW5uLmNvbSIsImlhdCI6MTc1NzIyNTgxOH0.oZKjPetPwQ5l-JTPJmwWiI4_SUw6lziUqqAEw0E1its
 
 {
-    "status": "FINISHED"
+    "status" : "TODO"
 }
-
-###
-# Delete project
-DELETE http://localhost:3001/api/projects/13

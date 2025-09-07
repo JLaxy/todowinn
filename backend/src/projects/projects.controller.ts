@@ -25,6 +25,7 @@ export class ProjectsController {
     return this.projectsService.getAllProjects(member_id);
   }
 
+  // Create project
   @Post()
   async createProject(
     @CurrentUser() member_id: number,
@@ -33,6 +34,7 @@ export class ProjectsController {
     return this.projectsService.createProject(member_id, createProjectDTO);
   }
 
+  // Update project
   @Patch(':id')
   @UseGuards(OwnershipGuard(ResourceType.PROJECT, 'id'))
   async updateProject(

@@ -8,16 +8,16 @@ POST http://localhost:3001/api/members/
 Content-Type: application/json
 
 {
-    "email": "leah@gmail.com",
-    "password": "Honeybunch1"
+    "email": "jun@todowinn.com",
+    "password": "strongpassword"
 }
 
 ###
 // Update member
-PATCH http://localhost:3001/api/members/4
+PATCH http://localhost:3001/api/members/1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsImVtYWlsIjoibGF4eUBnbWFpbC5jb20iLCJpYXQiOjE3NTcyMDg0NDF9.TF3lqRS5G4fr3Bekl5_6p0ltvGCDh5fnADqxbAelkB4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW5AdG9kb3dpbm4uY29tIiwiaWF0IjoxNzU3MjI1NDQwfQ.h3r_xqKtOfTuFW7O_SMkmH6S4ZnRsk5cwNLn3CpAN3s
 
 {
-    "password": "newpassword1"
+    "password": "strongpassword1234"
 }
