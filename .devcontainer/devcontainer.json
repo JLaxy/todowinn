@@ -5,14 +5,15 @@
 
   "dockerComposeFile": ["../compose.yaml"],
 
-  "service": "backend",
+  // "service": "backend",
+  "service": "frontend",
 
   "workspaceFolder": "/app",
 
   "forwardPorts": [3000, 3001],
 
   // Makes sure dependencies are installed when created dev container
-  "postCreateCommand": "npm install",
+  // "postCreateCommand": "npm install",
 
   // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
   // "image": "mcr.microsoft.com/devcontainers/base:alpine-3.20"

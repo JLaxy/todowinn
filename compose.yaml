@@ -1,15 +1,28 @@
 services:
+  frontend:
+    build: ./frontend
+    volumes:
+      - ./frontend:/app
+      - frontend_node_modules:/app/node_modules
+    ports:
+      - "3000:3000"
+    # command: npm run dev
+    depends_on:
+      - backend
+    environment:
+      - NODE_ENV=development
+      # - CHOKIDAR_USEPOLLING=true
   backend:
     build: ./backend
     volumes:
       - ./backend:/app
-      - /app/node_modules
+      - backend_node_modules:/app/node_modules
     ports:
       - "3001:3001"
-    # command: npm run start:dev
+    command: npm run start:dev
     depends_on:
       - mysqldb
-  
+
   mysqldb:
     image: mysql:8
     restart: always
@@ -23,3 +36,5 @@ services:
 
 volumes:
   db_data:
+  backend_node_modules:
+  frontend_node_modules:
