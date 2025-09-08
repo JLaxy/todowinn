@@ -35,7 +35,9 @@
         "Gydunhn.typescript-essentials",
         "Prisma.prisma",
         "imgildev.vscode-nestjs-prisma-snippets",
-        "esbenp.prettier-vscode"
+        "esbenp.prettier-vscode",
+        "dsznajder.es7-react-js-snippets",
+        "EQuimper.react-native-react-redux"
       ]
     }
   }
