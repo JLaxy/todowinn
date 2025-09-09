@@ -62,7 +62,7 @@ git clone https://github.com/JLaxy/todowinn.git .
 
 ---
 
-At the time of submission, due to balancing development with other responsibilities, some parts are still in progress — but the backend is fully functional and testable.
+At the time of submission, due to balancing development with other responsibilities, some parts are still subject for development — but the backend is fully functional and testable.
 
 - 📒 **Task Management**: the user interface does not currently support task creation and management. However, endpoints for task creation and management **are already created on the backend and fully functioning** and can be tested using any API testing tools such as [Postman](https://www.postman.com/downloads/). _see `task.controller.ts` on `backend/src/tasks` and `tasks.http` on `backend/test`_
 - 👤 **User Management**: the user interface does not currently support user management. However, endpoints for user management **are already created on the backend and fully functioning** and can be tested using any API testing tools such as [Postman](https://www.postman.com/downloads/). _see `members.controller.ts` on `backend/src/members` and `members.http` on `backend/test`_
@@ -75,7 +75,11 @@ At the time of submission, due to balancing development with other responsibilit
 
 ---
 
+<div align="center">
+
 ![Request/Response Life Cycle](docs/reqreslifecycle.png)
+
+</div>
 
 ## 📌 Backend Key Features
 
