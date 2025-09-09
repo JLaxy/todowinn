@@ -16,3 +16,6 @@ Content-Type: application/json
     "email": "jun@todowinn.com",
     "password": "strongpassword"
 }
+
+###
+POST http://localhost:3001/api/auth/logout

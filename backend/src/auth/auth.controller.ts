@@ -1,4 +1,12 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Post,
+  Res,
+} from '@nestjs/common';
+import type { Response } from 'express';
 import { CreateMemberDTO } from 'src/members/dto/create-member.dto';
 import { LoginMemberDTO } from './dto/login-member.dto';
 import { AuthService } from './auth.service';
@@ -16,8 +24,16 @@ export class AuthController {
   @Public()
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  async login(@Body() loginMemberDTO: LoginMemberDTO) {
-    // Get member if exists
-    return await this.authService.login(loginMemberDTO);
+  async login(
+    @Body() loginMemberDTO: LoginMemberDTO,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    // Try to login
+    return await this.authService.login(loginMemberDTO, res);
+  }
+
+  @Post('logout')
+  logout(@Res({ passthrough: true }) res: Response) {
+    return this.authService.logout(res);
   }
 }

@@ -9,9 +9,9 @@ Content-Type: application/json
 
 ###
 // Update member
-PATCH http://localhost:3001/api/members/2
+PATCH http://localhost:3001/api/members/1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoianVuQHRvZG93aW5uLmNvbSIsImlhdCI6MTc1NzI0MTk2M30.bsQbRH4T-jxRVVPMMN37M7Ok_0tQ0YFOg2Tmuiq3uYw
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoianVuQHRvZG93aW5uLmNvbSIsImlhdCI6MTc1NzI0MTk2M30.bsQbRH4T-jxRVVPMMN37M7Ok_0tQ0YFOg2Tmuiq3uYw
 
 {
     "password": "strongpassword"

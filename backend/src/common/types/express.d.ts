@@ -1,9 +1,12 @@
-// src/types/express.d.ts
-
+import 'express';
 import { JwtPayload } from 'src/auth/auth.types';
 
-declare module 'express-serve-static-core' {
+declare module 'express' {
   interface Request {
-    member?: JwtPayload; // optional, since not all requests have it
+    member?: JwtPayload;
+    cookies?: {
+      token?: string;
+      [key: string]: string | undefined;
+    };
   }
 }

@@ -2,6 +2,7 @@ import {
   CanActivate,
   ExecutionContext,
   Injectable,
+  Logger,
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -59,7 +60,21 @@ export class AuthGuard implements CanActivate {
   }
 
   private extractTokenFromHeader(request: Request): string | undefined {
+    // 1. Try Authorization header
     const [type, token] = request.headers.authorization?.split(' ') ?? [];
-    return type === 'Bearer' ? token : undefined;
+    if (type === 'Bearer' && token) {
+      Logger.log('token in header!');
+      return token;
+    }
+
+    // 2. Try cookie safely
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const cookieToken = request.cookies?.token;
+    if (cookieToken && typeof cookieToken === 'string') {
+      Logger.log('token in cookie!');
+      return cookieToken;
+    }
+
+    return undefined;
   }
 }
