@@ -28,6 +28,6 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api'); // add prefix /api on all endpoints
 
-  await app.listen(process.env.PORT ?? 3001);
+  await app.listen(process.env.PORT ?? 3001, '0.0.0.0');
 }
 bootstrap();
