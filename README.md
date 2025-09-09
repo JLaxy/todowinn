@@ -41,7 +41,7 @@ todowinn is a simple web application that allows users to manage and track proje
 
 </div>
 
-## 💻 Run Locally
+## 💻 Run locally for the first time
 
 ---
 
@@ -54,10 +54,12 @@ git clone https://github.com/JLaxy/todowinn.git .
 
 3. Download .env files [here](https://drive.google.com/file/d/1j77gIkkzGkyDYW8LjT-ltqkt10-Vsjqv/view?usp=sharing), place and extract on root folder, on the level as compose.yaml (message me in Discord for password)
 4. Ensure that no other application is using ports `3000` and `3001` to avoid issues.
-5. Open terminal and navigate to your dedicated folder then run `docker compose up --build` on your terminal, on the same level where `compose.yaml` is located. Docker will automatically download all dependecies needed by the application. Do not close the terminal.
-6. Open terminal on the root folder of the project again and then run `docker compose exec backend npx prisma migrate deploy` to initialize database tables. **This is important if running the application for the first time.**
+5. Open terminal and navigate to your dedicated folder then run `docker compose up --build` on your terminal, on the same level where `compose.yaml` is located. Docker will automatically download all dependecies needed by the application. Wait until you see that `mysqldb-1` is running, do not close the terminal. *(it may take a while depending on internet speed.)*
+6. Open a new terminal on the root folder of the project and then run `docker compose exec backend npx prisma migrate deploy` and then `docker compose exec backend npx prisma generate` to initialize database tables. You must see success messages. **This is important if running the application for the first time.**
 7. Access application via [http://localhost:3000](http://localhost:3000).
 8. Close application by pressing `CTRL + C` on terminal.
+
+>You may now relaunch the application in the future by only executing `docker compose up`.
 
 ## 🧩 Current Limitations
 
