@@ -98,6 +98,34 @@ At the time of submission, due to balancing development with other responsibilit
 - 🛡️ **Protected Routes**: protects routes such as `/projects` and `/tasks` from being accessed by clients that do not have a valid JWT, redirecting them back to the `/login` route using middleware.
 - ❗ **API Error Normalizer**: has utility to normalize API errors to avoid exposing important error information to the client browser.
 
+## 📷 Sample UI Screenshots
+
+---
+
+### Login
+
+<div align="center">
+
+![login page](docs/login.png)
+
+</div>
+
+### Sign-Up
+
+<div align="center">
+
+![signup page](docs/signup.png)
+
+</div>
+
+### Projects
+
+<div align="center">
+
+![projects page](docs/projects.png)
+
+</div>
+
 ---
 
 <div align="center">
