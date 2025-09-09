@@ -14,8 +14,10 @@ import { AuthGuard } from './auth.guard';
   imports: [
     HashingModule,
     DatabaseModule,
+    // Activate JWT module to be global
     JwtModule.register({
       global: true,
+      // Secret key for encoding/decoding
       secret: jwtConstants.secret,
     }),
   ],

@@ -15,6 +15,7 @@ import { UpdateProjectDTO } from './dto/update-project.dto';
 import { OwnershipGuard } from 'src/ownership/ownership.guard';
 import { ResourceType } from 'src/common/types/resource.types';
 
+// /projects endpoint
 @Controller('projects')
 export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
@@ -28,7 +29,7 @@ export class ProjectsController {
   // Create project
   @Post()
   async createProject(
-    @CurrentUser() member_id: number,
+    @CurrentUser() member_id: number, // Custom decorator; Retrieve member_id on JWT
     @Body() createProjectDTO: CreateProjectDTO,
   ) {
     return this.projectsService.createProject(member_id, createProjectDTO);
@@ -37,10 +38,10 @@ export class ProjectsController {
   // Update project
   @Patch(':id')
   @UseGuards(
-    OwnershipGuard(ResourceType.PROJECT, (req) => Number(req.params['id'])),
+    OwnershipGuard(ResourceType.PROJECT, (req) => Number(req.params['id'])), // Checks if user owns project
   )
   async updateProject(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', ParseIntPipe) id: number, // Automatically convert number
     @Body() updateProjectDTO: UpdateProjectDTO,
   ) {
     return this.projectsService.updateProject(id, updateProjectDTO);

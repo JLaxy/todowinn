@@ -1,6 +1,7 @@
 import api from "@/lib/axios";
 import { normalizeApiError } from "@/utils/api-error-normalizer";
 
+// API service for testing endpoints
 export const apiTestService = {
   protectedTest: async () => {
     try {

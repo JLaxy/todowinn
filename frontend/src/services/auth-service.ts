@@ -1,9 +1,9 @@
 import api from "@/lib/axios";
 import { normalizeApiError } from "@/utils/api-error-normalizer";
 
-// Object with functions
+// API service for authentication
 export const authService = {
-  // Signup function
+  // Signup endpoint
   signup: async (email: string, pass: string) => {
     try {
       const res = await api.post("/members", {
@@ -16,7 +16,7 @@ export const authService = {
     }
   },
 
-  // Login function
+  // Login endpoint
   login: async (email: string, pass: string) => {
     try {
       const res = await api.post("/auth/login", {
@@ -29,6 +29,7 @@ export const authService = {
     }
   },
 
+  // Logout endpoint
   logout: async () => {
     try {
       const res = await api.post("/auth/logout");

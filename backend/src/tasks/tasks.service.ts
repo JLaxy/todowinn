@@ -20,6 +20,7 @@ export class TasksService {
       where: { task_id },
     });
 
+    // Throw error if task does not exist
     if (!task)
       throw new NotFoundException(`Task with id ${task_id} does not exist`);
 

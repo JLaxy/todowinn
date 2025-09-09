@@ -7,6 +7,7 @@ import { Status } from "@/types/status";
 import { authService } from "@/services/auth-service";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { ApiError } from "@/types/api-error";
 
 export default function ProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -22,7 +23,9 @@ export default function ProjectsPage() {
   // Fetch all projects
   const fetchProjects = async () => {
     setLoading(true);
+
     try {
+      // Send API rquest
       const res = await projectsService.getProjects();
       setProjects(res.data);
     } catch (error) {
@@ -33,6 +36,7 @@ export default function ProjectsPage() {
     }
   };
 
+  // Run on loading
   useEffect(() => {
     fetchProjects();
   }, []);
@@ -40,12 +44,13 @@ export default function ProjectsPage() {
   // Logout handler
   const handleLogout = async () => {
     try {
-      // Call Logout
+      // Send API Request
       const res = await authService.logout();
 
-      // If okay
       if (res.status === 200) {
         toast.success("Logging out...");
+
+        // Redirect
         setTimeout(() => {
           router.push("/login");
         }, 1000);
@@ -60,8 +65,11 @@ export default function ProjectsPage() {
   // Create or Update project
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+
     try {
+      // If editing
       if (editingProject) {
+        // Send API request
         await projectsService.updateProject({
           project_id: editingProject.project_id,
           name,
@@ -71,9 +79,10 @@ export default function ProjectsPage() {
           date_target: dateTarget
             ? new Date(dateTarget).toISOString()
             : undefined,
-        } as Project);
+        } as Project); // Cast as Project
         setEditingProject(null);
       } else {
+        // Send API request
         await projectsService.createProject({
           name,
           description,
@@ -81,7 +90,7 @@ export default function ProjectsPage() {
           date_target: dateTarget
             ? new Date(dateTarget).toISOString()
             : undefined,
-        } as Project);
+        } as Project); // Cast as Project
       }
       setName("");
       setDescription("");
@@ -90,7 +99,14 @@ export default function ProjectsPage() {
       setStatus(Status.IN_PROGRESS);
       fetchProjects();
     } catch (error) {
-      console.error("Failed to save project:", error);
+      handleErrors(error as ApiError);
+    }
+  };
+
+  const handleErrors = (error: ApiError) => {
+    if (error.statusCode === 409) {
+      toast.error("The same project name already exists!");
+      return;
     }
   };
 
@@ -107,11 +123,13 @@ export default function ProjectsPage() {
         setStatus(Status.IN_PROGRESS);
       }
 
+      // Send API request
       await projectsService.updateProject({
         project_id,
         status: Status.FINISHED,
       } as Project);
 
+      // Update project
       fetchProjects();
     } catch (error) {
       console.error("Failed to finish project:", error);
@@ -119,6 +137,7 @@ export default function ProjectsPage() {
     }
   };
 
+  // Update fields to match selected project to edit
   const handleEdit = (project: Project) => {
     setEditingProject(project);
     setName(project.name);
@@ -253,7 +272,7 @@ export default function ProjectsPage() {
       ) : (
         GetProjectsTable(projects, handleEdit, handleFinish)
       )}
-      <Toaster position="bottom-center" />
+      <Toaster />
     </div>
   );
 }

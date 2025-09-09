@@ -2,6 +2,7 @@ import api from "@/lib/axios";
 import { Project } from "@/types/project";
 import { normalizeApiError } from "@/utils/api-error-normalizer";
 
+// API service for projects
 export const projectsService = {
   // Retrieve all projects
   getProjects: async () => {
@@ -13,6 +14,7 @@ export const projectsService = {
     }
   },
 
+  // Create project
   createProject: async (project: Project) => {
     try {
       const res = await api.post(`/projects/`, {
@@ -28,6 +30,7 @@ export const projectsService = {
     }
   },
 
+  // Update project
   updateProject: async (project: Project) => {
     try {
       const res = await api.patch(`/projects/${project.project_id}`, {

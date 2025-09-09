@@ -23,6 +23,7 @@ export class ProjectsService {
       where: { project_id },
     });
 
+    // Throw exception if it does not exist
     if (!project)
       throw new NotFoundException(
         `Project with id ${project_id} does not exist!`,
@@ -42,6 +43,7 @@ export class ProjectsService {
     });
   }
 
+  // Update project
   async updateProject(project_id: number, updateProjectDTO: UpdateProjectDTO) {
     // First check if project exists
     const project = await this.getProject(project_id);

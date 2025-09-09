@@ -12,6 +12,7 @@ import { JwtPayload } from './auth.types';
 import { IS_PUBLIC_KEY } from 'src/common/decorators/public.decorator';
 import { Reflector } from '@nestjs/core';
 
+// Checks request if has valid JWT
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
@@ -20,7 +21,7 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    // Check if endpoint is public
+    // Check if endpoint is public; then allow request
     if (this.verifyIfPublic(context)) return true;
 
     // Get request
@@ -28,7 +29,7 @@ export class AuthGuard implements CanActivate {
     // Get token from request header
     const token = this.extractTokenFromHeader(request);
 
-    // If token is missing, throw error
+    // If jwt token is missing, throw error
     if (!token) throw new UnauthorizedException('Missing token');
 
     // Return true if token is valid
@@ -59,6 +60,7 @@ export class AuthGuard implements CanActivate {
     return true;
   }
 
+  // Helper function to extract token from either header or cookie
   private extractTokenFromHeader(request: Request): string | undefined {
     // 1. Try Authorization header
     const [type, token] = request.headers.authorization?.split(' ') ?? [];

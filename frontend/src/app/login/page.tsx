@@ -23,6 +23,7 @@ export default function Page() {
     console.log("Email:", email, "Password:", pass);
 
     try {
+      // Send Login Request
       const res = await authService.login(email, pass);
       handleSuccessLogin(res);
     } catch (err) {
@@ -38,6 +39,7 @@ export default function Page() {
       setIsInvalid(false);
       toast.success("Logging in");
 
+      // Redirect after delay
       setTimeout(() => {
         console.log("redirecting");
         router.push("/projects");
@@ -47,8 +49,8 @@ export default function Page() {
 
   // Handle error
   const handleError = (error: ApiError) => {
-    if (error.statusCode == 401) {
-      setIsInvalid(true);
+    setIsInvalid(true);
+    if (error.statusCode == 401 || error.statusCode == 400) {
       toast.error("Invalid credentials!");
       return;
     }

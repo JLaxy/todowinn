@@ -13,14 +13,16 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
+  // Login user
   async login(loginMemberDTO: LoginMemberDTO, res: Response) {
-    // Check if email exists; will automatically throw error if does not exist
+    // Check if email exists
     const member = await this.databaseService.members.findUnique({
       where: {
         email: loginMemberDTO.email,
       },
     });
 
+    // Throw error if member does not exist
     if (!member) return this.throwError();
 
     // If matches, generate JWT
@@ -35,6 +37,7 @@ export class AuthService {
 
       Logger.log(`token: ${token}`);
 
+      // Attach token to cookie
       res.cookie('token', token, {
         httpOnly: true,
         // Change to true on production with HTTPS
@@ -50,7 +53,9 @@ export class AuthService {
     return this.throwError();
   }
 
+  // Logout
   logout(res: Response) {
+    // Clear JWT from cookie
     res.clearCookie('token', { path: '/' });
     return { message: 'Logged out successfully' };
   }

@@ -11,13 +11,14 @@ export class OwnershipService {
 
   // Verifies if member owns the project
   async verifyProjectOwner(member_id: number, project_id: number) {
-    // Retrieve project from database
+    // Check if project exists
     const project = await this.databaseService.projects.findUnique({
       where: {
         project_id: project_id,
       },
     });
 
+    // Throw exception if does not exist
     if (!project)
       throw new NotFoundException(
         `Project with id ${project_id} does not exist!`,

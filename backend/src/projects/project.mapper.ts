@@ -4,7 +4,7 @@ import { UpdateProjectDTO } from './dto/update-project.dto';
 
 // Maps DTO to model in database
 export class ProjectMapper {
-  // Converts DTO to createEntity
+  // Converts DTO to createEntity; to automatically format date to ISO
   static toCreateEntity(member_id: number, dto: CreateProjectDTO) {
     return {
       name: dto.name,
@@ -15,7 +15,7 @@ export class ProjectMapper {
     };
   }
 
-  // Converts DTO to updateEntity
+  // Converts DTO to updateEntity; to automatically format date to ISO
   static toUpdateEntity(dto: UpdateProjectDTO) {
     return {
       name: dto.name,

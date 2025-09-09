@@ -12,15 +12,12 @@ import { LoginMemberDTO } from './dto/login-member.dto';
 import { AuthService } from './auth.service';
 import { Public } from 'src/common/decorators/public.decorator';
 
+// /auth route
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('signup')
-  signup(@Body() createMemberDTO: CreateMemberDTO) {
-    return createMemberDTO;
-  }
-
+  // /login route
   @Public()
   @HttpCode(HttpStatus.OK)
   @Post('login')
@@ -32,7 +29,7 @@ export class AuthController {
     return await this.authService.login(loginMemberDTO, res);
   }
 
-
+  // /logout route
   @HttpCode(HttpStatus.OK)
   @Post('logout')
   logout(@Res({ passthrough: true }) res: Response) {

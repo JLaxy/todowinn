@@ -19,6 +19,7 @@ export class MembersService {
       where: { member_id: id },
     });
 
+    // Throw error if member does not exist
     if (!member)
       throw new NotFoundException(`Member with id ${id} does not exist!`);
 
@@ -40,8 +41,9 @@ export class MembersService {
     });
   }
 
+  // Updates member
   async updateMember(id: number, updateMemberDTO: updateMemberDTO) {
-    // Try to check if member with ID exists
+    // Try to check if member exists
     await this.getMember(id);
 
     // Update

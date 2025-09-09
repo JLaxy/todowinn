@@ -20,7 +20,6 @@ export default function Page() {
   const router = useRouter();
 
   const handleSignUp = async (e: React.FormEvent) => {
-    console.log("clicked");
     // Avoid refresh
     e.preventDefault();
     const newErrors: typeof errors = {};
@@ -31,6 +30,7 @@ export default function Page() {
     console.log("Form submitted:", { email, pass });
 
     try {
+      // Send API request
       const res = await authService.signup(email, pass);
       handleRes(res);
     } catch (err) {
@@ -38,6 +38,7 @@ export default function Page() {
     }
   };
 
+  // Handles error
   const handleError = (error: ApiError) => {
     if (error.statusCode === 409) {
       setErrors({ email: "This email is already used!" });

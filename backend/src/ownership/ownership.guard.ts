@@ -9,6 +9,7 @@ import { Request } from 'express';
 import { OwnershipService } from './ownership.service';
 import { ResourceType } from 'src/common/types/resource.types';
 
+// Checks if member is editing own resources (member, project, task)
 export function OwnershipGuard(
   resource: ResourceType,
   getResourceId: (req: Request) => number,
@@ -30,7 +31,7 @@ export function OwnershipGuard(
         );
       }
 
-      // Retrieve member_id
+      // Retrieve member_id from JWT
       const userId = req.member?.sub;
 
       // Checks if token has a valid payload

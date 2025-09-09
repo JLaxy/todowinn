@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// Singleton axios API object
 const api = axios.create({
   baseURL:
     process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api/members/",
@@ -20,16 +21,5 @@ export function setAuthToken(jwt: string | null) {
 
   console.log("updated auth token!");
 }
-
-// Optional: handle 401 globally
-// api.interceptors.response.use(
-//   (response) => response,
-//   (error) => {
-//     if (error.response?.status === 401) {
-//       // e.g., redirect to login
-//     }
-//     return Promise.reject(error);
-//   }
-// );
 
 export default api;
