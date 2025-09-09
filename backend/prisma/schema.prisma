@@ -35,7 +35,7 @@ model Projects {
   date_target   DateTime?
   date_created  DateTime  @default(now())
   date_finished DateTime?
-  status        Status    @default(IN_PROGRESS)
+  status        Status    @default(TODO)
   remarks       String?   @db.VarChar(255)
   member_id     Int
   member        Members   @relation(fields: [member_id], references: [member_id])

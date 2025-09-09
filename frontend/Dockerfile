@@ -17,5 +17,5 @@ COPY . .
 EXPOSE 3000
 
 # Run the dev server
-# CMD ["npm", "run", "dev"]
-CMD ["sleep", "infinity"]
+CMD ["npm", "run", "dev"]
+# CMD ["sleep", "infinity"]

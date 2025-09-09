@@ -1,6 +1,5 @@
 "use client";
 
-import { setAuthToken } from "@/lib/axios";
 import { authService } from "@/services/auth-service";
 import { AxiosResponse } from "axios";
 import { ApiError } from "next/dist/server/api-utils";
@@ -36,18 +35,12 @@ export default function Page() {
   // execute if login is success
   const handleSuccessLogin = (res: AxiosResponse) => {
     if (res.status === 200) {
-      // If access token is not sent, show error
-      if (!res.data["access_token"]) {
-        toast.error("Invalid response from the backend! Aborting...");
-        return;
-      }
       setIsInvalid(false);
-      // Update auth token in axios
-      setAuthToken(res.data["access_token"]);
       toast.success("Logging in");
 
       setTimeout(() => {
-        router.push("/dashboard");
+        console.log("redirecting");
+        router.push("/projects");
       }, 1000);
     }
   };

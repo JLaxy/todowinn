@@ -41,6 +41,8 @@ export default function Page() {
   const handleError = (error: ApiError) => {
     if (error.statusCode === 409) {
       setErrors({ email: "This email is already used!" });
+    } else if (error.statusCode === 400) {
+      setErrors({ email: "Invalid email!" });
     } else {
       toast.error(error.message || "Something went wrong. Please try again.");
     }
@@ -63,7 +65,7 @@ export default function Page() {
     let valid = true;
 
     // Email validation
-    if (!email.includes("@")) {
+    if (!email.includes("@") && !email.includes(".")) {
       newErrors.email = "Please enter a valid email.";
       valid = false;
     }
