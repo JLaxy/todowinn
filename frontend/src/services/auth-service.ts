@@ -1,5 +1,5 @@
 import api from "@/lib/axios";
-import { handleApiError } from "@/utils/api-error-handler";
+import { normalizeApiError } from "@/utils/api-error-normalizer";
 
 // Object with functions
 export const authService = {
@@ -12,7 +12,7 @@ export const authService = {
       });
       return res;
     } catch (error) {
-      throw handleApiError(error);
+      throw normalizeApiError(error);
     }
   },
 
@@ -25,7 +25,7 @@ export const authService = {
       });
       return res;
     } catch (error) {
-      throw handleApiError(error);
+      throw normalizeApiError(error);
     }
   },
 };

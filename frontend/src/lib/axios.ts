@@ -16,6 +16,8 @@ export function setAuthToken(jwt: string | null) {
   } else {
     delete api.defaults.headers.common["Authorization"];
   }
+
+  console.log("updated auth token!");
 }
 
 // Optional: handle 401 globally

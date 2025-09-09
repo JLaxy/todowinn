@@ -5,6 +5,7 @@ import { ApiError } from "@/types/api-error";
 import { AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Page() {
   // Variables
@@ -16,19 +17,16 @@ export default function Page() {
     pass?: string;
     repeatPass?: string;
   }>({});
-
   const router = useRouter();
 
   const handleSignUp = async (e: React.FormEvent) => {
+    console.log("clicked");
     // Avoid refresh
     e.preventDefault();
-    let valid = true;
     const newErrors: typeof errors = {};
 
     // Validate account credentials
-    valid = validateInput(newErrors, valid);
-    // If invalid, cancel
-    if (!valid) return;
+    if (!isInputValid(newErrors)) return;
 
     console.log("Form submitted:", { email, pass });
 
@@ -36,27 +34,34 @@ export default function Page() {
       const res = await authService.signup(email, pass);
       handleRes(res);
     } catch (err) {
-      const error = err as ApiError;
+      handleError(err as ApiError);
+    }
+  };
 
-      if (error.statusCode === 409) {
-        setErrors({ email: "This email is already used!" });
-      } else {
-        alert(error.message || "Something went wrong. Please try again.");
-      }
+  const handleError = (error: ApiError) => {
+    if (error.statusCode === 409) {
+      setErrors({ email: "This email is already used!" });
+    } else {
+      toast.error(error.message || "Something went wrong. Please try again.");
     }
   };
 
   const handleRes = (res: AxiosResponse) => {
     if (res.status === 201) {
-      alert(
+      toast.success(
         "Member successfully registered! Please login with your credentials."
       );
-      router.push("/login");
+      // Delay then redirect
+      setTimeout(() => {
+        router.push("/login");
+      }, 1800);
     }
   };
 
   // Validates input
-  const validateInput = (newErrors: typeof errors, valid: boolean) => {
+  const isInputValid = (newErrors: typeof errors) => {
+    let valid = true;
+
     // Email validation
     if (!email.includes("@")) {
       newErrors.email = "Please enter a valid email.";
@@ -118,6 +123,7 @@ export default function Page() {
             Sign Up
           </button>
         </form>
+        <Toaster position="bottom-center" />
       </div>
     </div>
   );

@@ -6,9 +6,14 @@ import { Public } from './common/decorators/public.decorator';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
+  @Get('protected-test')
+  getProctectedTestMessage() {
+    return this.appService.getTestMessage('Privately hello from todowinn!');
+  }
+
   @Public()
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @Get('public-test')
+  getPublicTestMessage() {
+    return this.appService.getTestMessage('Publicly hello from todowinn!');
   }
 }

@@ -1,11 +1,5 @@
-import api from "@/lib/axios";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
-  const res = await api.get("/")
-  const data = res.data;
-  return (
-    <div>
-     {data}
-    </div>
-  );
+  redirect("/login");
 }

@@ -1,8 +1,8 @@
 import axios, { AxiosError } from "axios";
 import { ApiError } from "@/types/api-error";
 
-// Normalize error
-export const handleApiError = (error: unknown): ApiError => {
+// Normalize error to make it more readable at frontend
+export const normalizeApiError = (error: unknown): ApiError => {
   if (axios.isAxiosError(error)) {
     const err = error as AxiosError<{ message: string; statusCode: number }>;
     return {

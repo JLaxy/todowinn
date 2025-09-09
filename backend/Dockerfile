@@ -17,8 +17,6 @@ COPY . .
 # Expose Nestjs default port
 EXPOSE 3001
 
-ENV HOSTNAME 0.0.0.0
-
 # Default command for development (you can override in docker-compose)
-CMD ["npm", "run", "start:dev"]
-# CMD ["sleep", "infinity"]
+# CMD ["npm", "run", "start:dev"]
+CMD ["sleep", "infinity"]
