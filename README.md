@@ -55,8 +55,9 @@ git clone https://github.com/JLaxy/todowinn.git .
 3. Download .env files [here](https://drive.google.com/file/d/1j77gIkkzGkyDYW8LjT-ltqkt10-Vsjqv/view?usp=sharing), place and extract on root folder, on the level as compose.yaml (message me in Discord for password)
 4. Ensure that no other application is using ports `3000` and `3001` to avoid issues.
 5. Open terminal and navigate to your dedicated folder then run `docker compose up --build` on your terminal, on the same level where `compose.yaml` is located. Docker will automatically download all dependecies needed by the application. Do not close the terminal.
-6. Access application via [http://localhost:3000](http://localhost:3000).
-7. Close application by pressing `CTRL + C` on terminal.
+6. Open terminal on the root folder of the project again and then run `docker compose exec backend npx prisma migrate deploy` to initialize database tables. **This is important if running the application for the first time.**
+7. Access application via [http://localhost:3000](http://localhost:3000).
+8. Close application by pressing `CTRL + C` on terminal.
 
 ## 🧩 Current Limitations
 
