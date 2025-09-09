@@ -1,8 +1,8 @@
-// Protected api test
+// Protected api test; to test API calls that require JWT
 GET http://localhost:3001/api/protected-test
 # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW5AdG9kb3dpbm4uY29tIiwiaWF0IjoxNzU3MjQxOTMyfQ.bVEy38TjQwg9xVKApaLnN5uFj5vubDi3_rCjAsDLd28
 
 ###
 
-// Public api test
+// Public api test; to test API calls that doesnt require JWT
 GET http://localhost:3001/api/public-test
