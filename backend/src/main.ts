@@ -22,7 +22,7 @@ async function bootstrap() {
   app.use(cookieParser()); // Used to process JWT in cookies
 
   app.enableCors({
-    origin: 'http://localhost:3000', // your frontend
+    origin: '/', // your frontend
     credentials: true, // Allow storing JWT in cookies
   });
 
