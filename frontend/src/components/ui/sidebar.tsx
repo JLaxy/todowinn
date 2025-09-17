@@ -6,12 +6,14 @@ import { CiCirclePlus } from "react-icons/ci";
 import "@/styles/ui/sidebar.css";
 import { useEffect, useState } from "react";
 import { authService } from "@/services/auth-service";
+import { Project } from "@/types/project";
+import { Status } from "@/types/status";
 
 type SidebarProps = {
-  projects: string[];
+  projects: Project[] | undefined;
   isSidebarOpen: boolean;
   setIsSidebarOpen: (e: boolean) => void;
-  onSelectProject: (project: string) => void;
+  onSelectProject: (project: Project) => void;
 };
 
 const iconSize = 30;
@@ -23,14 +25,11 @@ export default function Sidebar({
   onSelectProject,
 }: SidebarProps) {
   const [memberName, setMemberName] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
 
   const fetchLoggedInMember = async () => {
-    setIsLoading(true);
     // Retrieve logged in member
     const userDetails = await authService.getLoggedInMember();
     setMemberName(userDetails.email.split("@")[0]);
-    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -102,8 +101,8 @@ function MemberIconDiv({ memberName }: MemberIconDivProps) {
 }
 
 type ProjectsDivProps = {
-  projects: string[];
-  onSelectProject: (s: string) => void;
+  projects: Project[] | undefined;
+  onSelectProject: (s: Project) => void;
   setIsSidebarOpen: (b: boolean) => void;
 };
 
@@ -112,20 +111,46 @@ function ProjectsDiv({
   onSelectProject,
   setIsSidebarOpen,
 }: ProjectsDivProps) {
+  // First check if have project
+  if (!projects || projects.length === 0)
+    return (
+      <div className="projects-list-div text-gray-500 italic p-4">
+        No projects available.
+      </div>
+    );
+
   return (
     <div className="projects-list-div">
       {projects.map((project, idx) => (
         <button
           key={idx}
-          className="project-div"
+          className={`project-div ${getOutlineColor(project)}`}
           onClick={() => {
-            onSelectProject(project);
             setIsSidebarOpen(false);
+            onSelectProject(project); // don’t forget to call this too
           }}
         >
-          {project}
+          <h4 className="project-div-title ">{project.name}</h4>
+          <p>{project.description}</p>
         </button>
       ))}
     </div>
   );
+}
+
+function getOutlineColor(project: Project) {
+  switch (project.status as Status) {
+    case Status.TODO:
+      return "outline-gray-300";
+      break;
+    case Status.IN_PROGRESS:
+      return "outline-amber-200";
+      break;
+    case Status.FINISHED:
+      return "outline-green-300";
+      break;
+    case Status.CANCELLED:
+      return "outline-red-400";
+      break;
+  }
 }

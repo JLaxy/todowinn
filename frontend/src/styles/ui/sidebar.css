@@ -10,10 +10,17 @@
   }
 
   .projects-list-div {
-    @apply flex-1 overflow-y-auto p-4 space-y-2;
+    @apply flex flex-col overflow-y-auto p-4 space-y-2 gap-y-2;
   }
 
   .project-div {
-    @apply w-full text-left p-2 rounded-lg hover:bg-gray-100 transition font-medium;
+    @apply flex flex-col w-full p-2 rounded-lg hover:bg-gray-100 transition font-medium text-left outline-3 shadow-lg;
+  }
+
+  .project-div-title {
+    @apply font-bold;
+  }
+
+  .project-div-desc {
   }
 }

@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@layer components {
+  .proj-info-div {
+    @apply bg-white;
+  }
+
+  .proj-buttons {
+    @apply w-full text-white rounded-sm m-2 py-2;
+  }
+
+  .tasks-container {
+    @apply grid grid-rows-4;
+  }
+}

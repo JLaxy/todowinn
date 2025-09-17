@@ -46,9 +46,7 @@ export default function Navbar({
       <button onClick={() => setIsSidebarOpen(true)}>
         <GiHamburgerMenu size={hamburgerSize} />
       </button>
-      <h3 className="flex text-gray-700 font-bold items-center">
-        {selectedProject?.name}
-      </h3>
+      <h3 className="app-title">TODOWINN</h3>
       <LogoutButton handleLogout={handleLogout} />
     </div>
   );
