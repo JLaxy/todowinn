@@ -63,7 +63,7 @@ export default function Page() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
       <h1 className="text-4xl font-bold mb-30 text-center">
-        Todowinn Project Mananger
+        Todowinn Project Manager
       </h1>
       <div className="bg-white p-8 rounded-lg w-full max-w-sm">
         <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>

@@ -5,8 +5,8 @@
 
   "dockerComposeFile": ["../compose.yaml"],
 
+  "service": "frontend",
   // "service": "backend",
-  "service": "backend",
 
   "workspaceFolder": "/app",
 
@@ -37,7 +37,12 @@
         "imgildev.vscode-nestjs-prisma-snippets",
         "esbenp.prettier-vscode",
         "dsznajder.es7-react-js-snippets",
-        "EQuimper.react-native-react-redux"
+        "EQuimper.react-native-react-redux",
+        "aaron-bond.better-comments",
+        "Zignd.html-css-class-completion",
+        "christian-kohler.path-intellisense",
+        "helixquar.randomeverything",
+        "bradlc.vscode-tailwindcss"
       ]
     }
   }

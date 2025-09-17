@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+@layer components {
+  .nav-div {
+    @apply grid grid-flow-col bg-white px-3 py-2;
+    grid-template-columns: 4fr 1fr;
+  }
+
+  .logout-btn {
+    @apply bg-red-500 rounded px-4 py-2 hover:bg-red-600 active:bg-red-700;
+  }
+}

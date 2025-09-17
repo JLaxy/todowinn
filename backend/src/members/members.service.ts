@@ -1,10 +1,15 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 import { CreateMemberDTO } from './dto/create-member.dto';
 import { HashingService } from 'src/hashing/hashing.service';
 import { updateMemberDTO } from './dto/update-member.dto';
 import { plainToInstance } from 'class-transformer';
 import { ResponseMemberDTO } from './dto/response-member.dto';
+import { Request } from 'express';
 
 @Injectable()
 export class MembersService {
@@ -12,6 +17,16 @@ export class MembersService {
     private readonly databaseService: DatabaseService,
     private readonly hashService: HashingService,
   ) {}
+
+  // Retrieves logged in user info safely instead of retrieving on frontend
+  getMe(req: Request) {
+    if (!req.member) throw new UnauthorizedException('No member found!');
+
+    return {
+      member_id: req.member?.sub,
+      email: req.member?.email,
+    };
+  }
 
   // Retrieves specific user
   async getMember(id: number) {
