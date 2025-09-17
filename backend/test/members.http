@@ -3,7 +3,7 @@ POST http://localhost:3001/api/members/
 Content-Type: application/json
 
 {
-    "email": "leah@todowinn.com",
+    "email": "jun@todowinn.com",
     "password": "strongpassword"
 }
 

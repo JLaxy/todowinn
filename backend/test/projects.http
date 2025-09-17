@@ -9,9 +9,9 @@ Content-Type: application/json
 # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW5AdG9kb3dpbm4uY29tIiwiaWF0IjoxNzU3MjQxOTMyfQ.bVEy38TjQwg9xVKApaLnN5uFj5vubDi3_rCjAsDLd28
 
 {
-    "name" : "test project11",
-    "description" : "helloworld",
-    "remarks": "remarked"
+    "name" : "zavpms",
+    "description" : "product management system in java",
+    "remarks": "chapter 1 to 3"
 }
 
 ###
@@ -21,6 +21,6 @@ Content-Type: application/json
 # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW5AdG9kb3dpbm4uY29tIiwiaWF0IjoxNzU3MjQxOTMyfQ.bVEy38TjQwg9xVKApaLnN5uFj5vubDi3_rCjAsDLd28
 
 {
-    "status" : "CANCELLED",
-    "remarks": "remark"
+    "status" : "TODO",
+    "remarks": "chpater 4 to 5"
 }

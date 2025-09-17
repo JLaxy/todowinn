@@ -18,5 +18,5 @@ COPY . .
 EXPOSE 3001
 
 # Default command for development (you can override in docker-compose)
-CMD ["npm", "run", "start:dev"]
-# CMD ["sleep", "infinity"]
+# CMD ["npm", "run", "start:dev"]
+CMD ["sleep", "infinity"]

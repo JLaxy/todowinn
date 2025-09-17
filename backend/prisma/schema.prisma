@@ -11,6 +11,14 @@ enum Status {
   CANCELLED
 }
 
+enum UpdateableTaskField {
+  NAME
+  DESCRIPTION
+  DATE_TARGET
+  STATUS
+  REMARKS
+}
+
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/prisma"
@@ -57,10 +65,11 @@ model Tasks {
 }
 
 model Changelogs {
-  changelog_id Int      @id @default(autoincrement())
-  old          Status
-  new          Status
-  date         DateTime @default(now())
+  changelog_id Int                 @id @default(autoincrement())
+  field        UpdateableTaskField
+  old          String
+  new          String
+  date         DateTime            @default(now())
   task_id      Int
-  task         Tasks    @relation(fields: [task_id], references: [task_id])
+  task         Tasks               @relation(fields: [task_id], references: [task_id])
 }

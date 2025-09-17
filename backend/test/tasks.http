@@ -1,23 +1,29 @@
+// Get tasks for project
+GET http://localhost:3001/api/tasks/6
+
+###
 // Create task; See CreateTaskDTO for all available parameters.
 POST http://localhost:3001/api/tasks
 Content-Type: application/json
 # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW5AdG9kb3dpbm4uY29tIiwiaWF0IjoxNzU3MjQxOTMyfQ.bVEy38TjQwg9xVKApaLnN5uFj5vubDi3_rCjAsDLd28
 
 {
-    "name": "test task12",
+    "name": "test task for zav",
     "description": "testing tasks",
-    "project_id": "1",
+    "project_id": "2",
     "remarks": "hello worlds"
 }
 
 ###
 // Update Task; See UpdateTaskDTO for all available parameters
-PATCH http://localhost:3001/api/tasks/3
+PATCH http://localhost:3001/api/tasks/1
 Content-Type: application/json
 # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW5AdG9kb3dpbm4uY29tIiwiaWF0IjoxNzU3MjQxOTMyfQ.bVEy38TjQwg9xVKApaLnN5uFj5vubDi3_rCjAsDLd28
 
 {
-    "status" : "CANCELLED",
-    "remarks": "working on it",
-    "dateTarget": "2002-10-28"
+    "name": "first task edit",
+    "description": "testing all",
+    "status" : "IN_PROGRESS",
+    "dateTarget" : "2025-09-21",
+    "remarks": "one changes"
 }

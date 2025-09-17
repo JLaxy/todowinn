@@ -6,7 +6,7 @@
   "dockerComposeFile": ["../compose.yaml"],
 
   // "service": "backend",
-  "service": "frontend",
+  "service": "backend",
 
   "workspaceFolder": "/app",
 
