@@ -8,6 +8,7 @@ import { HashingModule } from './hashing/hashing.module';
 import { OwnershipModule } from './ownership/ownership.module';
 import { ProjectsModule } from './projects/projects.module';
 import { TasksModule } from './tasks/tasks.module';
+import { SeederModule } from './seeder/seeder.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { TasksModule } from './tasks/tasks.module';
     OwnershipModule,
     ProjectsModule,
     TasksModule,
+    SeederModule,
   ],
   controllers: [AppController],
   providers: [AppService],

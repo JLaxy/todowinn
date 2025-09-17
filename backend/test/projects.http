@@ -9,18 +9,17 @@ Content-Type: application/json
 # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW5AdG9kb3dpbm4uY29tIiwiaWF0IjoxNzU3MjQxOTMyfQ.bVEy38TjQwg9xVKApaLnN5uFj5vubDi3_rCjAsDLd28
 
 {
-    "name" : "zavpms",
-    "description" : "product management system in java",
-    "remarks": "chapter 1 to 3"
+    "name" : "Sample Finished Project",
+    "description" : "A Sample finished project"
 }
 
 ###
 # Update project; see UpdateProjectDTO for all available parameters
-PATCH http://localhost:3001/api/projects/2
+PATCH http://localhost:3001/api/projects/5
 Content-Type: application/json
 # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW5AdG9kb3dpbm4uY29tIiwiaWF0IjoxNzU3MjQxOTMyfQ.bVEy38TjQwg9xVKApaLnN5uFj5vubDi3_rCjAsDLd28
 
 {
-    "status" : "TODO",
-    "remarks": "chpater 4 to 5"
+    "status": "FINISHED",
+    "remarks": "finished task!"
 }
