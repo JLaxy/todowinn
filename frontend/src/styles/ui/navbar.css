@@ -3,7 +3,7 @@
 @layer components {
   .nav-div {
     @apply grid grid-flow-col bg-white px-3 py-2;
-    grid-template-columns: 4fr 1fr;
+    grid-template-columns: 1fr 5fr 1fr;
   }
 
   .logout-btn {

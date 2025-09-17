@@ -1,23 +1,25 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "@/styles/ui/navbar.css";
 import { authService } from "@/services/auth-service";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { Project } from "@/types/project";
 
-export default function Navbar() {
-  const [userEmail, setUserEmail] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+type NavbarProps = {
+  setIsSidebarOpen: (e: boolean) => void;
+  selectedProject: Project | undefined;
+};
+
+const hamburgerSize = 30;
+
+export default function Navbar({
+  setIsSidebarOpen,
+  selectedProject,
+}: NavbarProps) {
   const router = useRouter();
-
-  const fetchLoggedInMember = async () => {
-    setIsLoading(true);
-    // Retrieve logged in member
-    const userDetails = await authService.getLoggedInMember();
-    setUserEmail(userDetails.email.split("@")[0]);
-    setIsLoading(false);
-  };
 
   const handleLogout = async () => {
     try {
@@ -39,14 +41,13 @@ export default function Navbar() {
     }
   };
 
-  useEffect(() => {
-    fetchLoggedInMember();
-  }, []);
-
   return (
     <div className="nav-div">
+      <button onClick={() => setIsSidebarOpen(true)}>
+        <GiHamburgerMenu size={hamburgerSize} />
+      </button>
       <h3 className="flex text-gray-700 font-bold items-center">
-        Hi, {userEmail}!
+        {selectedProject?.name}
       </h3>
       <LogoutButton handleLogout={handleLogout} />
     </div>

@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@layer components {
+  .close-icon-div {
+    @apply flex justify-end p-2;
+  }
+  .icon {
+    @apply bg-center bg-no-repeat bg-contain w-full h-1/8;
+    background-image: url("/vercel.png");
+  }
+
+  .projects-list-div {
+    @apply flex-1 overflow-y-auto p-4 space-y-2;
+  }
+
+  .project-div {
+    @apply w-full text-left p-2 rounded-lg hover:bg-gray-100 transition font-medium;
+  }
+}
