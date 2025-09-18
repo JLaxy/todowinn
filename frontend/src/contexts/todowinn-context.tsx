@@ -8,8 +8,6 @@ import { createContext, useState, useContext } from "react";
 interface TodowinnContextType {
   isSidebarOpen: boolean;
   setIsSidebarOpen: (b: boolean) => void;
-  isAddingProject: boolean;
-  setIsAddingProject: (b: boolean) => void;
   selectedProject: Project | undefined;
   setSelectedProject: (p: Project) => void;
   userProjects: Project[] | undefined;
@@ -30,6 +28,8 @@ interface TodowinnContextType {
   setRemarks: (d: string) => void;
   status: Status;
   setStatus: (d: Status) => void;
+  resetContext: () => void;
+  resetFields: () => void;
 }
 
 const TodowinnContext = createContext<TodowinnContextType | undefined>(
@@ -42,7 +42,6 @@ export const TodowinnProvider = ({
   children: React.ReactNode;
 }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
-  const [isAddingProject, setIsAddingProject] = useState<boolean>(false);
   const [selectedProject, setSelectedProject] = useState<Project>();
   const [userProjects, setUserProjects] = useState<Project[]>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -54,13 +53,30 @@ export const TodowinnProvider = ({
   const [remarks, setRemarks] = useState<string>("");
   const [status, setStatus] = useState<Status>(Status.IN_PROGRESS);
 
+  const resetContext = () => {
+    setIsSidebarOpen(false);
+    setSelectedProject(undefined);
+    setUserProjects(undefined);
+    setIsLoading(false);
+    setIsModalOpen(false);
+    setModalType(undefined);
+    resetFields();
+  };
+
+  const resetFields = () => {
+    console.log("resetting fields...");
+    setName("");
+    setDescription("");
+    setDateTarget("");
+    setRemarks("");
+    setStatus(Status.IN_PROGRESS);
+  };
+
   return (
     <TodowinnContext.Provider
       value={{
         isSidebarOpen,
         setIsSidebarOpen,
-        isAddingProject,
-        setIsAddingProject,
         selectedProject,
         setSelectedProject,
         userProjects,
@@ -81,6 +97,8 @@ export const TodowinnProvider = ({
         setRemarks,
         status,
         setStatus,
+        resetContext,
+        resetFields,
       }}
     >
       {children}

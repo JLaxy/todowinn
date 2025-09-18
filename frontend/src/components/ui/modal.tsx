@@ -4,16 +4,16 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ModalType } from "@/types/modal-type";
 import { dateFormatter } from "@/utils/date-formatter";
 import "@/styles/ui/modals.css";
-import { FormEvent, ReactNode } from "react";
+import { FormEvent } from "react";
 import { Status } from "@/types/status";
 import { useTodowinnContext } from "@/contexts/todowinn-context";
 
 type ModalProps = {
-  children: ReactNode;
+  handleSubmit: (e: FormEvent) => void;
 };
 
-export default function Modal({ children }: ModalProps) {
-  const { isModalOpen, setIsModalOpen, modalType, setIsAddingProject } =
+export default function Modal({ handleSubmit }: ModalProps) {
+  const { isModalOpen, setIsModalOpen, modalType, resetFields } =
     useTodowinnContext();
   const iconSize = 30;
 
@@ -21,13 +21,13 @@ export default function Modal({ children }: ModalProps) {
     // First check what is modal type
     switch (modalType) {
       case ModalType.ADD_PROJECT:
-        setIsAddingProject(false);
         break;
       default:
         break;
     }
 
     setIsModalOpen(false);
+    resetFields();
   };
   return (
     <AnimatePresence>
@@ -52,7 +52,10 @@ export default function Modal({ children }: ModalProps) {
             <button className="flex justify-end" onClick={handleModalClose}>
               <IoCloseCircleOutline size={iconSize} />
             </button>
-            {children}
+            <ModalBody
+              handleModalClose={handleModalClose}
+              handleSubmit={handleSubmit}
+            />
           </motion.div>
         </>
       )}
@@ -62,9 +65,10 @@ export default function Modal({ children }: ModalProps) {
 
 type ModalBodyProps = {
   handleSubmit: (e: FormEvent) => void;
+  handleModalClose: () => void;
 };
 
-export function ModalBody({ handleSubmit }: ModalBodyProps) {
+export function ModalBody({ handleSubmit, handleModalClose }: ModalBodyProps) {
   const {
     modalType,
     selectedProject,
@@ -78,15 +82,68 @@ export function ModalBody({ handleSubmit }: ModalBodyProps) {
     setStatus,
     remarks,
     setRemarks,
-    setIsModalOpen,
   } = useTodowinnContext();
 
-  if (modalType === undefined || selectedProject === undefined) return <></>;
+  if (modalType === undefined) return <></>;
 
   switch (modalType) {
     case ModalType.ADD_PROJECT:
-      return <div>adding project</div>;
+      return (
+        <div>
+          <form onSubmit={handleSubmit}>
+            {getInputField(
+              "Project Name",
+              "name",
+              "text",
+              "Enter Project Name",
+              true,
+              name,
+              setName
+            )}
+            {getInputField(
+              "Project Description",
+              "description",
+              "text",
+              "Enter Project Description",
+              true,
+              description,
+              setDescription
+            )}
+            {getInputField(
+              "Target Date",
+              "dateTarget",
+              "date",
+              "",
+              false,
+              dateTarget,
+              setDateTarget
+            )}
+            {getInputField(
+              "Remarks",
+              "remarks",
+              "text",
+              "Remarks",
+              false,
+              remarks,
+              setRemarks
+            )}
+            <div className="flex flex-row gap-x-5 mt-7">
+              <button
+                type="button"
+                onClick={handleModalClose}
+                className="cancel-btn w-full"
+              >
+                Cancel
+              </button>
+              <button type="submit" className="save-btn w-full">
+                Save
+              </button>
+            </div>
+          </form>
+        </div>
+      );
     case ModalType.VIEW_PROJECT:
+      if (selectedProject === undefined) return <></>;
       return (
         <div className="view-proj-div">
           {/* Name */}
@@ -179,7 +236,7 @@ export function ModalBody({ handleSubmit }: ModalBodyProps) {
             <div className="flex flex-row gap-x-5 mt-7">
               <button
                 type="button"
-                onClick={() => setIsModalOpen(false)}
+                onClick={handleModalClose}
                 className="cancel-btn w-full"
               >
                 Cancel

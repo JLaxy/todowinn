@@ -11,7 +11,7 @@ import { useTodowinnContext } from "@/contexts/todowinn-context";
 const hamburgerSize = 30;
 
 export default function Navbar() {
-  const { setIsSidebarOpen } = useTodowinnContext();
+  const { setIsSidebarOpen, resetContext } = useTodowinnContext();
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -25,6 +25,7 @@ export default function Navbar() {
         // Redirect
         setTimeout(() => {
           router.push("/login");
+          resetContext();
         }, 1000);
       }
     } catch (error) {
@@ -39,7 +40,7 @@ export default function Navbar() {
       <button onClick={() => setIsSidebarOpen(true)}>
         <GiHamburgerMenu size={hamburgerSize} />
       </button>
-      <h3 className="app-title">TODOWINN</h3>
+      <h3 className="app-title">ToDowinn</h3>
       <LogoutButton handleLogout={handleLogout} />
     </div>
   );

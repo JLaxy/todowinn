@@ -14,13 +14,8 @@ import { useTodowinnContext } from "@/contexts/todowinn-context";
 const iconSize = 30;
 
 export default function Sidebar() {
-  const {
-    isSidebarOpen,
-    setIsSidebarOpen,
-    setModalType,
-    setIsModalOpen,
-    setIsAddingProject,
-  } = useTodowinnContext();
+  const { isSidebarOpen, setIsSidebarOpen, setModalType, setIsModalOpen } =
+    useTodowinnContext();
   const [memberName, setMemberName] = useState("");
 
   const fetchLoggedInMember = async () => {
@@ -46,7 +41,6 @@ export default function Sidebar() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => {
-                setIsAddingProject(false);
                 setIsSidebarOpen(false);
               }}
             />
@@ -73,7 +67,6 @@ export default function Sidebar() {
                 <button
                   onClick={() => {
                     setModalType(ModalType.ADD_PROJECT);
-                    setIsAddingProject(true);
                     setIsSidebarOpen(false);
                     setIsModalOpen(true);
                   }}
@@ -129,7 +122,6 @@ function ProjectsDiv() {
           }}
         >
           <h4 className="project-div-title ">{project.name}</h4>
-          <p>{project.description}</p>
         </button>
       ))}
     </div>

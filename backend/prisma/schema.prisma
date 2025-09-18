@@ -38,7 +38,7 @@ model Members {
 
 model Projects {
   project_id    Int       @id @default(autoincrement())
-  name          String    @unique @db.VarChar(255)
+  name          String    @db.VarChar(255)
   description   String    @db.VarChar(255)
   date_target   DateTime?
   date_created  DateTime  @default(now())

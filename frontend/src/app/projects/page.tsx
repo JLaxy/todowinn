@@ -7,7 +7,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { Project } from "@/types/project";
 import { projectsService } from "@/services/projects-service";
 import "@/styles/pages/projects.css";
-import Modal, { ModalBody } from "@/components/ui/modal";
+import Modal from "@/components/ui/modal";
 import { ModalType } from "@/types/modal-type";
 import { toDateInputValue } from "@/utils/date-formatter";
 import { useTodowinnContext } from "@/contexts/todowinn-context";
@@ -16,8 +16,8 @@ export default function ProjectsPage() {
   const {
     setIsLoading,
     setUserProjects,
-    isAddingProject,
     setIsModalOpen,
+    setIsSidebarOpen,
     selectedProject,
     setSelectedProject,
     name,
@@ -30,6 +30,8 @@ export default function ProjectsPage() {
     setRemarks,
     status,
     setStatus,
+    resetFields,
+    modalType,
   } = useTodowinnContext();
 
   const fetchProjects = async () => {
@@ -41,7 +43,7 @@ export default function ProjectsPage() {
       setUserProjects(res.data);
     } catch (error) {
       console.error("Failed to fetch projects:", error);
-      toast.error("An error has occured while fetching projects!");
+      toast.error("Failed to fetch projects! see console");
     } finally {
       setIsLoading(false);
     }
@@ -51,35 +53,66 @@ export default function ProjectsPage() {
     e.preventDefault();
 
     // If adding project
-    if (isAddingProject) {
+    if (modalType === ModalType.ADD_PROJECT) {
       handleAddProject();
       return;
+    } else {
+      try {
+        if (selectedProject === undefined) return;
+
+        console.log("handling edit project...");
+        // Update project
+        await projectsService.updateProject({
+          project_id: selectedProject.project_id,
+          name,
+          description,
+          remarks,
+          status,
+          date_target: dateTarget
+            ? new Date(dateTarget).toISOString()
+            : undefined,
+        } as Project);
+
+        setIsModalOpen(false);
+        toast.success("Successfully updated project!");
+        await fetchProjects();
+        setSelectedProject(
+          await projectsService.getProject(selectedProject.project_id)
+        );
+      } catch (error) {
+        toast.error(`Failed to update project!`);
+        console.log(`Failed to update project: ${error}`);
+      }
     }
 
-    setIsModalOpen(false);
-
-    if (selectedProject === undefined) return;
-
-    // Update project
-    await projectsService.updateProject({
-      project_id: selectedProject.project_id,
-      name,
-      description,
-      remarks,
-      status,
-      date_target: dateTarget ? new Date(dateTarget).toISOString() : undefined,
-    } as Project);
-
-    await fetchProjects();
-
-    setSelectedProject(
-      await projectsService.getProject(selectedProject.project_id)
-    );
-
-    toast.success("Successfully updated project!");
+    resetFields();
   };
 
-  const handleAddProject = async () => {};
+  const handleAddProject = async () => {
+    console.log("handling add project...");
+    try {
+      // Add project
+      const res = await projectsService.createProject({
+        name,
+        description,
+        date_target: dateTarget
+          ? new Date(dateTarget).toISOString()
+          : undefined,
+        remarks,
+      } as Project);
+
+      toast.success("Successfully added project!");
+      setSelectedProject(
+        await projectsService.getProject(res.data["project_id"] as number)
+      );
+      setIsModalOpen(false);
+      resetFields();
+      await fetchProjects();
+    } catch (error) {
+      toast.error(`Failed to add project!`);
+      console.log(`Failed to update project: ${error}`);
+    }
+  };
 
   // Pre fills fields when Edit is pressed
   const handleEdit = () => {
@@ -95,6 +128,7 @@ export default function ProjectsPage() {
 
   useEffect(() => {
     fetchProjects();
+    setIsSidebarOpen(true);
   }, []);
 
   return (
@@ -102,12 +136,8 @@ export default function ProjectsPage() {
       <Navbar />
       <ProjectDiv handleEdit={handleEdit} />
       <Sidebar />
-
-      {/* Modal */}
-      <Modal>
-        <ModalBody handleSubmit={handleSubmit} />
-      </Modal>
-
+      {/* Pop Up Modal */}
+      <Modal handleSubmit={handleSubmit} />
       <Toaster position="bottom-center" />
     </div>
   );
@@ -143,11 +173,10 @@ function ProjectDiv({ handleEdit }: ProjectDivProps) {
   return (
     <div className="proj-info-div">
       <div>
-        <h2 className="text-xl font-bold text-center pt-3 py-2">
-          {selectedProject.name}
-        </h2>
+        <h2 className="text-xl font-bold">{selectedProject.name}</h2>
+        <p className="leading-none">{selectedProject.description}</p>
       </div>
-      <div className="flex flex-row">
+      <div className="flex flex-row gap-x-3 mt-5">
         <button
           onClick={handleViewClick}
           className="proj-buttons bg-blue-600 hover:bg-blue-700 active:bg-blue-800"

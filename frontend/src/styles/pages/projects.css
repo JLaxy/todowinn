@@ -2,11 +2,11 @@
 
 @layer components {
   .proj-info-div {
-    @apply bg-white;
+    @apply bg-white p-5;
   }
 
   .proj-buttons {
-    @apply w-full text-white rounded-sm m-3 py-2;
+    @apply w-full text-white rounded-sm py-2;
   }
 
   .tasks-container {
