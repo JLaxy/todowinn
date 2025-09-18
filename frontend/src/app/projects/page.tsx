@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import Navbar from "@/components/ui/navbar";
 import Sidebar from "@/components/ui/sidebar";
 import toast, { Toaster } from "react-hot-toast";
@@ -40,7 +40,31 @@ export default function ProjectsPage() {
     }
   };
 
-  const handleSubmit = async () => {};
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+
+    setIsModalOpen(false);
+
+    if (selectedProject === undefined) return;
+
+    // Update project
+    await projectsService.updateProject({
+      project_id: selectedProject.project_id,
+      name,
+      description,
+      remarks,
+      status,
+      date_target: dateTarget ? new Date(dateTarget).toISOString() : undefined,
+    } as Project);
+
+    await fetchProjects();
+
+    setSelectedProject(
+      await projectsService.getProject(selectedProject.project_id)
+    );
+
+    toast.success("Successfully updated project!");
+  };
 
   const handleEdit = () => {
     if (selectedProject === undefined) return;
@@ -72,7 +96,6 @@ export default function ProjectsPage() {
         setIsSidebarOpen={setIsSidebarOpen}
         onSelectProject={(p: Project) => setSelectedProject(p)}
       />
-      <Toaster position="bottom-center" />
 
       {/* Modal */}
       <Modal isOpen={isModalOpen} onClose={setIsModalOpen}>
@@ -93,6 +116,8 @@ export default function ProjectsPage() {
           setStatus={setStatus}
         />
       </Modal>
+
+      <Toaster position="bottom-center" />
     </div>
   );
 }

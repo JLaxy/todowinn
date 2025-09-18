@@ -1,3 +1,8 @@
+# Get specific project; must be logged in
+GET http://localhost:3001/api/projects/6
+
+###
+
 # Get all projects of a user; must be logged in
 GET http://localhost:3001/api/projects
 # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW5AdG9kb3dpbm4uY29tIiwiaWF0IjoxNzU3MjQxOTMyfQ.bVEy38TjQwg9xVKApaLnN5uFj5vubDi3_rCjAsDLd28

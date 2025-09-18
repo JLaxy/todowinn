@@ -5,7 +5,7 @@ import { ModalType } from "@/types/modal-type";
 import { Project } from "@/types/project";
 import { dateFormatter } from "@/utils/date-formatter";
 import "@/styles/ui/modals.css";
-import { ReactNode } from "react";
+import { FormEvent, ReactNode } from "react";
 import { Status } from "@/types/status";
 
 type ModalProps = {
@@ -50,7 +50,7 @@ export default function Modal({ isOpen, onClose, children }: ModalProps) {
 type ModalBodyProps = {
   modalType: ModalType | undefined;
   selectedProject: Project | undefined;
-  handleSubmit: () => void;
+  handleSubmit: (e: FormEvent) => void;
   setIsModalOpen: (b: boolean) => void;
   name: string;
   setName: (n: string) => void;
@@ -143,6 +143,7 @@ export function ModalBody({
               "name",
               "text",
               "Enter Project Name",
+              true,
               name,
               setName
             )}
@@ -151,6 +152,7 @@ export function ModalBody({
               "description",
               "text",
               "Enter Project Description",
+              true,
               description,
               setDescription
             )}
@@ -159,6 +161,7 @@ export function ModalBody({
               "dateTarget",
               "date",
               "",
+              false,
               dateTarget,
               setDatetarget
             )}
@@ -168,19 +171,23 @@ export function ModalBody({
               "remarks",
               "text",
               "Remarks",
+              false,
               remarks,
               setRemarks
             )}
+            <div className="flex flex-row gap-x-5 mt-7">
+              <button
+                type="button"
+                onClick={() => setIsModalOpen(false)}
+                className="cancel-btn w-full"
+              >
+                Cancel
+              </button>
+              <button type="submit" className="save-btn w-full">
+                Save
+              </button>
+            </div>
           </form>
-          <div className="flex flex-row gap-x-5 mt-7">
-            <button
-              onClick={() => setIsModalOpen(false)}
-              className="cancel-btn w-full"
-            >
-              Cancel
-            </button>
-            <button className="save-btn w-full">Save</button>
-          </div>
         </div>
       );
     case ModalType.ADD_TASK:
@@ -197,6 +204,7 @@ function getInputField(
   item: string,
   type: string,
   placeholder: string,
+  isRequired: boolean,
   value: string,
   setItem: (i: string) => void
 ) {
@@ -212,7 +220,7 @@ function getInputField(
         className="border rounded p-2 w-full"
         value={value}
         onChange={(e) => setItem(e.target.value)}
-        required
+        required={isRequired}
       />
     </div>
   );
