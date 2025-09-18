@@ -8,22 +8,19 @@ import { useEffect, useState } from "react";
 import { authService } from "@/services/auth-service";
 import { Project } from "@/types/project";
 import { Status } from "@/types/status";
-
-type SidebarProps = {
-  projects: Project[] | undefined;
-  isSidebarOpen: boolean;
-  setIsSidebarOpen: (e: boolean) => void;
-  onSelectProject: (project: Project) => void;
-};
+import { ModalType } from "@/types/modal-type";
+import { useTodowinnContext } from "@/contexts/todowinn-context";
 
 const iconSize = 30;
 
-export default function Sidebar({
-  projects,
-  isSidebarOpen,
-  setIsSidebarOpen,
-  onSelectProject,
-}: SidebarProps) {
+export default function Sidebar() {
+  const {
+    isSidebarOpen,
+    setIsSidebarOpen,
+    setModalType,
+    setIsModalOpen,
+    setIsAddingProject,
+  } = useTodowinnContext();
   const [memberName, setMemberName] = useState("");
 
   const fetchLoggedInMember = async () => {
@@ -48,7 +45,10 @@ export default function Sidebar({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              onClick={() => setIsSidebarOpen(false)}
+              onClick={() => {
+                setIsAddingProject(false);
+                setIsSidebarOpen(false);
+              }}
             />
 
             {/* Sidebar panel */}
@@ -70,15 +70,20 @@ export default function Sidebar({
 
               <div className="flex justify-between items-end p-2">
                 <h1 className="font-bold pl-2 mt-5">Your Projects</h1>
-                <CiCirclePlus size={iconSize} />
+                <button
+                  onClick={() => {
+                    setModalType(ModalType.ADD_PROJECT);
+                    setIsAddingProject(true);
+                    setIsSidebarOpen(false);
+                    setIsModalOpen(true);
+                  }}
+                >
+                  <CiCirclePlus size={iconSize} />
+                </button>
               </div>
 
               {/* Scrollable section (3/4 height) */}
-              <ProjectsDiv
-                projects={projects}
-                onSelectProject={onSelectProject}
-                setIsSidebarOpen={setIsSidebarOpen}
-              />
+              <ProjectsDiv />
             </motion.aside>
           </>
         )}
@@ -100,19 +105,12 @@ function MemberIconDiv({ memberName }: MemberIconDivProps) {
   );
 }
 
-type ProjectsDivProps = {
-  projects: Project[] | undefined;
-  onSelectProject: (s: Project) => void;
-  setIsSidebarOpen: (b: boolean) => void;
-};
+function ProjectsDiv() {
+  const { userProjects, setSelectedProject, setIsSidebarOpen } =
+    useTodowinnContext();
 
-function ProjectsDiv({
-  projects,
-  onSelectProject,
-  setIsSidebarOpen,
-}: ProjectsDivProps) {
   // First check if have project
-  if (!projects || projects.length === 0)
+  if (!userProjects || userProjects.length === 0)
     return (
       <div className="projects-list-div text-gray-500 italic p-4">
         No projects available.
@@ -121,13 +119,13 @@ function ProjectsDiv({
 
   return (
     <div className="projects-list-div">
-      {projects.map((project, idx) => (
+      {userProjects.map((project, idx) => (
         <button
           key={idx}
           className={`project-div ${getOutlineColor(project)}`}
           onClick={() => {
             setIsSidebarOpen(false);
-            onSelectProject(project); // don’t forget to call this too
+            setSelectedProject(project); // don’t forget to call this too
           }}
         >
           <h4 className="project-div-title ">{project.name}</h4>

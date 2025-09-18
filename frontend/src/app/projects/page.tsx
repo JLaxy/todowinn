@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect } from "react";
 import Navbar from "@/components/ui/navbar";
 import Sidebar from "@/components/ui/sidebar";
 import toast, { Toaster } from "react-hot-toast";
@@ -9,21 +9,28 @@ import { projectsService } from "@/services/projects-service";
 import "@/styles/pages/projects.css";
 import Modal, { ModalBody } from "@/components/ui/modal";
 import { ModalType } from "@/types/modal-type";
-import { Status } from "@/types/status";
 import { toDateInputValue } from "@/utils/date-formatter";
+import { useTodowinnContext } from "@/contexts/todowinn-context";
 
 export default function ProjectsPage() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
-  const [selectedProject, setSelectedProject] = useState<Project>();
-  const [userProjects, setUserProjects] = useState<Project[]>();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [modalType, setModalType] = useState<ModalType>();
-  const [name, setName] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
-  const [dateTarget, setDateTarget] = useState<string>("");
-  const [remarks, setRemarks] = useState<string>("");
-  const [status, setStatus] = useState<Status>(Status.IN_PROGRESS);
+  const {
+    setIsLoading,
+    setUserProjects,
+    isAddingProject,
+    setIsModalOpen,
+    selectedProject,
+    setSelectedProject,
+    name,
+    setName,
+    description,
+    setDescription,
+    dateTarget,
+    setDateTarget,
+    remarks,
+    setRemarks,
+    status,
+    setStatus,
+  } = useTodowinnContext();
 
   const fetchProjects = async () => {
     setIsLoading(true);
@@ -42,6 +49,12 @@ export default function ProjectsPage() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+
+    // If adding project
+    if (isAddingProject) {
+      handleAddProject();
+      return;
+    }
 
     setIsModalOpen(false);
 
@@ -66,6 +79,9 @@ export default function ProjectsPage() {
     toast.success("Successfully updated project!");
   };
 
+  const handleAddProject = async () => {};
+
+  // Pre fills fields when Edit is pressed
   const handleEdit = () => {
     if (selectedProject === undefined) return;
 
@@ -83,38 +99,13 @@ export default function ProjectsPage() {
 
   return (
     <div className="flex flex-col">
-      <Navbar setIsSidebarOpen={setIsSidebarOpen} />
-      <ProjectDiv
-        selectedProject={selectedProject}
-        setIsModalOpen={setIsModalOpen}
-        setModalType={setModalType}
-        handleEdit={handleEdit}
-      />
-      <Sidebar
-        projects={userProjects}
-        isSidebarOpen={isSidebarOpen}
-        setIsSidebarOpen={setIsSidebarOpen}
-        onSelectProject={(p: Project) => setSelectedProject(p)}
-      />
+      <Navbar />
+      <ProjectDiv handleEdit={handleEdit} />
+      <Sidebar />
 
       {/* Modal */}
-      <Modal isOpen={isModalOpen} onClose={setIsModalOpen}>
-        <ModalBody
-          handleSubmit={handleSubmit}
-          setIsModalOpen={setIsModalOpen}
-          modalType={modalType}
-          selectedProject={selectedProject}
-          name={name}
-          setName={setName}
-          description={description}
-          setDescription={setDescription}
-          dateTarget={dateTarget}
-          setDatetarget={setDateTarget}
-          remarks={remarks}
-          setRemarks={setRemarks}
-          status={status}
-          setStatus={setStatus}
-        />
+      <Modal>
+        <ModalBody handleSubmit={handleSubmit} />
       </Modal>
 
       <Toaster position="bottom-center" />
@@ -123,18 +114,13 @@ export default function ProjectsPage() {
 }
 
 type ProjectDivProps = {
-  selectedProject: Project | undefined;
-  setModalType: (a: ModalType) => void;
-  setIsModalOpen: (b: boolean) => void;
   handleEdit: () => void;
 };
 
-function ProjectDiv({
-  selectedProject,
-  setModalType,
-  setIsModalOpen,
-  handleEdit,
-}: ProjectDivProps) {
+function ProjectDiv({ handleEdit }: ProjectDivProps) {
+  const { setModalType, setIsModalOpen, selectedProject } =
+    useTodowinnContext();
+
   const handleViewClick = () => {
     handleEdit();
     setModalType(ModalType.VIEW_PROJECT);

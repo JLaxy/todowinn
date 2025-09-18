@@ -2,23 +2,36 @@
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { motion, AnimatePresence } from "framer-motion";
 import { ModalType } from "@/types/modal-type";
-import { Project } from "@/types/project";
 import { dateFormatter } from "@/utils/date-formatter";
 import "@/styles/ui/modals.css";
 import { FormEvent, ReactNode } from "react";
 import { Status } from "@/types/status";
+import { useTodowinnContext } from "@/contexts/todowinn-context";
 
 type ModalProps = {
-  isOpen: boolean;
-  onClose: (e: boolean) => void;
   children: ReactNode;
 };
 
-export default function Modal({ isOpen, onClose, children }: ModalProps) {
+export default function Modal({ children }: ModalProps) {
+  const { isModalOpen, setIsModalOpen, modalType, setIsAddingProject } =
+    useTodowinnContext();
   const iconSize = 30;
+
+  const handleModalClose = () => {
+    // First check what is modal type
+    switch (modalType) {
+      case ModalType.ADD_PROJECT:
+        setIsAddingProject(false);
+        break;
+      default:
+        break;
+    }
+
+    setIsModalOpen(false);
+  };
   return (
     <AnimatePresence>
-      {isOpen && (
+      {isModalOpen && (
         <>
           {/* Background overlay */}
           <motion.div
@@ -26,7 +39,7 @@ export default function Modal({ isOpen, onClose, children }: ModalProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => onClose(false)}
+            onClick={handleModalClose}
           />
 
           {/* Modal content */}
@@ -36,7 +49,7 @@ export default function Modal({ isOpen, onClose, children }: ModalProps) {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
           >
-            <button className="flex justify-end" onClick={() => onClose(false)}>
+            <button className="flex justify-end" onClick={handleModalClose}>
               <IoCloseCircleOutline size={iconSize} />
             </button>
             {children}
@@ -48,38 +61,26 @@ export default function Modal({ isOpen, onClose, children }: ModalProps) {
 }
 
 type ModalBodyProps = {
-  modalType: ModalType | undefined;
-  selectedProject: Project | undefined;
   handleSubmit: (e: FormEvent) => void;
-  setIsModalOpen: (b: boolean) => void;
-  name: string;
-  setName: (n: string) => void;
-  description: string;
-  setDescription: (d: string) => void;
-  dateTarget: string;
-  setDatetarget: (d: string) => void;
-  remarks: string;
-  setRemarks: (r: string) => void;
-  status: Status;
-  setStatus: (s: Status) => void;
 };
 
-export function ModalBody({
-  modalType,
-  selectedProject,
-  handleSubmit,
-  setIsModalOpen,
-  name,
-  setName,
-  description,
-  setDescription,
-  dateTarget,
-  setDatetarget,
-  remarks,
-  setRemarks,
-  status,
-  setStatus,
-}: ModalBodyProps) {
+export function ModalBody({ handleSubmit }: ModalBodyProps) {
+  const {
+    modalType,
+    selectedProject,
+    name,
+    setName,
+    description,
+    setDescription,
+    dateTarget,
+    setDateTarget,
+    status,
+    setStatus,
+    remarks,
+    setRemarks,
+    setIsModalOpen,
+  } = useTodowinnContext();
+
   if (modalType === undefined || selectedProject === undefined) return <></>;
 
   switch (modalType) {
@@ -163,7 +164,7 @@ export function ModalBody({
               "",
               false,
               dateTarget,
-              setDatetarget
+              setDateTarget
             )}
             {getComboField(status, setStatus)}
             {getInputField(
