@@ -1,6 +1,8 @@
 export enum ModalType {
+  ADD_PROJECT,
   VIEW_PROJECT,
   EDIT_PROJECT,
+  ADD_TASK,
   VIEW_TASK,
   EDIT_TASK,
 }

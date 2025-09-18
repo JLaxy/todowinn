@@ -6,19 +6,14 @@ import { authService } from "@/services/auth-service";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { Project } from "@/types/project";
 
 type NavbarProps = {
   setIsSidebarOpen: (e: boolean) => void;
-  selectedProject: Project | undefined;
 };
 
 const hamburgerSize = 30;
 
-export default function Navbar({
-  setIsSidebarOpen,
-  selectedProject,
-}: NavbarProps) {
+export default function Navbar({ setIsSidebarOpen }: NavbarProps) {
   const router = useRouter();
 
   const handleLogout = async () => {

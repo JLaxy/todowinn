@@ -7,10 +7,10 @@ import toast, { Toaster } from "react-hot-toast";
 import { Project } from "@/types/project";
 import { projectsService } from "@/services/projects-service";
 import "@/styles/pages/projects.css";
-import "@/styles/ui/modals.css";
-import Modal from "@/components/ui/modal";
+import Modal, { ModalBody } from "@/components/ui/modal";
 import { ModalType } from "@/types/modal-type";
-import { dateFormatter } from "@/utils/date-formatter";
+import { Status } from "@/types/status";
+import { toDateInputValue } from "@/utils/date-formatter";
 
 export default function ProjectsPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
@@ -19,6 +19,11 @@ export default function ProjectsPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalType, setModalType] = useState<ModalType>();
+  const [name, setName] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [dateTarget, setDateTarget] = useState<string>("");
+  const [remarks, setRemarks] = useState<string>("");
+  const [status, setStatus] = useState<Status>(Status.IN_PROGRESS);
 
   const fetchProjects = async () => {
     setIsLoading(true);
@@ -35,123 +40,84 @@ export default function ProjectsPage() {
     }
   };
 
+  const handleSubmit = async () => {};
+
+  const handleEdit = () => {
+    if (selectedProject === undefined) return;
+
+    setName(selectedProject.name);
+    setDescription(selectedProject.description);
+    if (selectedProject.date_target)
+      setDateTarget(toDateInputValue(selectedProject.date_target));
+    if (selectedProject.remarks) setRemarks(selectedProject.remarks);
+    setStatus(selectedProject.status);
+  };
+
   useEffect(() => {
     fetchProjects();
   }, []);
 
   return (
     <div className="flex flex-col">
-      <Navbar
-        setIsSidebarOpen={setIsSidebarOpen}
-        selectedProject={selectedProject}
-      />
+      <Navbar setIsSidebarOpen={setIsSidebarOpen} />
       <ProjectDiv
         selectedProject={selectedProject}
         setIsModalOpen={setIsModalOpen}
         setModalType={setModalType}
+        handleEdit={handleEdit}
       />
       <Sidebar
         projects={userProjects}
         isSidebarOpen={isSidebarOpen}
         setIsSidebarOpen={setIsSidebarOpen}
-        onSelectProject={(p) => setSelectedProject(p)}
+        onSelectProject={(p: Project) => setSelectedProject(p)}
       />
       <Toaster position="bottom-center" />
 
       {/* Modal */}
       <Modal isOpen={isModalOpen} onClose={setIsModalOpen}>
-        <ModalBody modalType={modalType} selectedProject={selectedProject} />
+        <ModalBody
+          handleSubmit={handleSubmit}
+          setIsModalOpen={setIsModalOpen}
+          modalType={modalType}
+          selectedProject={selectedProject}
+          name={name}
+          setName={setName}
+          description={description}
+          setDescription={setDescription}
+          dateTarget={dateTarget}
+          setDatetarget={setDateTarget}
+          remarks={remarks}
+          setRemarks={setRemarks}
+          status={status}
+          setStatus={setStatus}
+        />
       </Modal>
     </div>
   );
-}
-
-type ModalBodyProps = {
-  modalType: ModalType | undefined;
-  selectedProject: Project | undefined;
-};
-
-function ModalBody({ modalType, selectedProject }: ModalBodyProps) {
-  if (modalType === undefined || selectedProject === undefined) return <></>;
-
-  switch (modalType) {
-    case ModalType.VIEW_PROJECT:
-      return (
-        <div className="view-proj-div">
-          {/* Name */}
-          <h3 className="modal-item-label">{selectedProject.name}</h3>
-          {/* Description */}
-          <p className="pb-5">{selectedProject.description}</p>
-          {/* Status */}
-          <p>
-            <span className="font-bold">Status:</span> {selectedProject.status}
-          </p>
-          {/* Remarks */}
-          <p>
-            {selectedProject.remarks && (
-              <>
-                <span className="font-bold">Remarks: </span>
-                {selectedProject.remarks}
-              </>
-            )}
-          </p>
-          {/* Date Created */}
-          <p>
-            {selectedProject.date_created && (
-              <>
-                <span className="font-bold">Date Created</span>:{" "}
-                {dateFormatter(selectedProject.date_created)}
-              </>
-            )}
-          </p>
-          {/* Date Target */}
-          <p>
-            {selectedProject.date_target && (
-              <>
-                <span className="font-bold">Date Target</span>:{" "}
-                {dateFormatter(selectedProject.date_target)}
-              </>
-            )}
-          </p>
-          {/* Date Finished */}
-          <p>
-            {selectedProject.date_finished && (
-              <>
-                <span className="font-bold">Date Finished</span>:{" "}
-                {dateFormatter(selectedProject.date_finished)}
-              </>
-            )}
-          </p>
-        </div>
-      );
-    case ModalType.EDIT_PROJECT:
-      return <div>editing project</div>;
-    case ModalType.VIEW_TASK:
-      return <div>viewing task</div>;
-    case ModalType.EDIT_TASK:
-      return <div>editing task</div>;
-  }
 }
 
 type ProjectDivProps = {
   selectedProject: Project | undefined;
   setModalType: (a: ModalType) => void;
   setIsModalOpen: (b: boolean) => void;
+  handleEdit: () => void;
 };
 
 function ProjectDiv({
   selectedProject,
   setModalType,
   setIsModalOpen,
+  handleEdit,
 }: ProjectDivProps) {
-  const [isEditing, setIsEditing] = useState<boolean>(false);
-
   const handleViewClick = () => {
+    handleEdit();
     setModalType(ModalType.VIEW_PROJECT);
     setIsModalOpen(true);
   };
 
   const handleEditClick = () => {
+    handleEdit();
     setModalType(ModalType.EDIT_PROJECT);
     setIsModalOpen(true);
   };
