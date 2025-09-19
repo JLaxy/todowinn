@@ -35,18 +35,13 @@ export default function TaskCard({
     opacity: isDragging && !dragOverlay ? 0.5 : 1,
   };
 
-  const { setModalType, setIsModalOpen, setSelectedTask } =
+  const { setModalType, setIsModalOpen, setSelectedTask, prefillData } =
     useTodowinnContext();
 
-  const handleTaskClick = () => {
+  const handleClick = (type: ModalType) => {
     setSelectedTask(task);
-    setModalType(ModalType.VIEW_TASK);
-    setIsModalOpen(true);
-  };
-
-  const handleEditClick = () => {
-    setSelectedTask(task);
-    setModalType(ModalType.EDIT_TASK);
+    prefillData(task);
+    setModalType(type);
     setIsModalOpen(true);
   };
 
@@ -71,12 +66,15 @@ export default function TaskCard({
       <div className="flex flex-row bg-amber-200 w-full justify-between">
         <button
           className="bg-amber-800 flex-1 text-left cursor-pointer"
-          onClick={handleTaskClick}
+          onClick={() => handleClick(ModalType.VIEW_TASK)}
         >
           <h3 className="font-semibold">{task.name}</h3>
           <p className="text-sm text-gray-600">{task.description}</p>
         </button>
-        <button onClick={handleEditClick} className="cursor-pointer">
+        <button
+          onClick={() => handleClick(ModalType.EDIT_TASK)}
+          className="cursor-pointer"
+        >
           Edit
         </button>
       </div>

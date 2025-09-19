@@ -9,10 +9,11 @@ import { projectsService } from "@/services/projects-service";
 import "@/styles/pages/projects.css";
 import Modal from "@/components/ui/modal";
 import { ModalType } from "@/types/modal-type";
-import { toDateInputValue } from "@/utils/date-formatter";
 import { useTodowinnContext } from "@/contexts/todowinn-context";
 import ProjectDiv from "@/components/ui/project-div";
 import TasksKanban from "@/components/ui/tasks-kanban";
+import { taskService } from "@/services/tasks-service";
+import { Task } from "@/types/task";
 
 export default function ProjectsPage() {
   const {
@@ -22,18 +23,15 @@ export default function ProjectsPage() {
     setIsSidebarOpen,
     selectedProject,
     setSelectedProject,
+    selectedTask,
     name,
-    setName,
     description,
-    setDescription,
     dateTarget,
-    setDateTarget,
     remarks,
-    setRemarks,
     status,
-    setStatus,
     resetFields,
     modalType,
+    setProjectTasks,
   } = useTodowinnContext();
 
   const fetchProjects = async () => {
@@ -51,47 +49,40 @@ export default function ProjectsPage() {
     }
   };
 
+  const fetchTasks = async (project_id: number) => {
+    try {
+      // Send API rquest
+      const tasks = await taskService.getTasks(project_id);
+      setProjectTasks(tasks);
+    } catch (error) {
+      console.error("Failed to fetch tasks:", error);
+      toast.error("Failed to fetch tasks! see console");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    // If adding project
-    if (modalType === ModalType.ADD_PROJECT) {
-      handleAddProject();
-      return;
-    } else {
-      try {
-        if (selectedProject === undefined) return;
-
-        console.log("handling edit project...");
-        // Update project
-        await projectsService.updateProject({
-          project_id: selectedProject.project_id,
-          name,
-          description,
-          remarks,
-          status,
-          date_target: dateTarget
-            ? new Date(dateTarget).toISOString()
-            : undefined,
-        } as Project);
-
-        setIsModalOpen(false);
-        toast.success("Successfully updated project!");
-        await fetchProjects();
-        setSelectedProject(
-          await projectsService.getProject(selectedProject.project_id)
-        );
-      } catch (error) {
-        toast.error(`Failed to update project!`);
-        console.log(`Failed to update project: ${error}`);
-      }
+    switch (modalType) {
+      case ModalType.ADD_PROJECT:
+        handleAddProject();
+        break;
+      case ModalType.EDIT_PROJECT:
+        handleEditProject();
+        break;
+      case ModalType.ADD_TASK:
+        break;
+      case ModalType.EDIT_TASK:
+        handleEditTask();
+        break;
+      default:
+        break;
     }
-
-    resetFields();
   };
 
   const handleAddProject = async () => {
-    console.log("handling add project...");
     try {
       // Add project
       const res = await projectsService.createProject({
@@ -116,16 +107,59 @@ export default function ProjectsPage() {
     }
   };
 
-  // Pre fills fields when Edit is pressed
-  const handleEdit = () => {
-    if (selectedProject === undefined) return;
+  const handleEditProject = async () => {
+    try {
+      if (selectedProject === undefined) return;
 
-    setName(selectedProject.name);
-    setDescription(selectedProject.description);
-    if (selectedProject.date_target)
-      setDateTarget(toDateInputValue(selectedProject.date_target));
-    if (selectedProject.remarks) setRemarks(selectedProject.remarks);
-    setStatus(selectedProject.status);
+      // Update project
+      await projectsService.updateProject({
+        project_id: selectedProject.project_id,
+        name,
+        description,
+        remarks,
+        status,
+        date_target: dateTarget
+          ? new Date(dateTarget).toISOString()
+          : undefined,
+      } as Project);
+
+      setIsModalOpen(false);
+      toast.success("Successfully updated project!");
+      await fetchProjects();
+      setSelectedProject(
+        await projectsService.getProject(selectedProject.project_id)
+      );
+      resetFields();
+    } catch (error) {
+      toast.error(`Failed to update project!`);
+      console.log(`Failed to update project: ${error}`);
+    }
+  };
+
+  const handleEditTask = async () => {
+    try {
+      if (selectedTask === undefined || selectedProject === undefined) return;
+
+      // Update project
+      await taskService.updateTask({
+        task_id: selectedTask.task_id,
+        name,
+        description,
+        remarks,
+        status,
+        date_target: dateTarget
+          ? new Date(dateTarget).toISOString()
+          : undefined,
+      } as Task);
+
+      setIsModalOpen(false);
+      toast.success("Successfully updated task!");
+      fetchTasks(selectedProject.project_id);
+      resetFields();
+    } catch (error) {
+      toast.error(`Failed to update task!`);
+      console.log(`Failed to update task: ${error}`);
+    }
   };
 
   useEffect(() => {
@@ -136,8 +170,8 @@ export default function ProjectsPage() {
   return (
     <div className="flex flex-col h-screen">
       <Navbar />
-      <Sidebar />
-      <ProjectDiv handleEdit={handleEdit} />
+      <Sidebar fetchTasks={fetchTasks} />
+      <ProjectDiv />
       <TasksKanban />
       {/* Pop Up Modal */}
       <Modal handleSubmit={handleSubmit} />

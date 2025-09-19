@@ -2,22 +2,20 @@ import { useTodowinnContext } from "@/contexts/todowinn-context";
 import { ModalType } from "@/types/modal-type";
 import React from "react";
 
-type ProjectDivProps = {
-  handleEdit: () => void;
-};
-
-export default function ProjectDiv({ handleEdit }: ProjectDivProps) {
-  const { setModalType, setIsModalOpen, selectedProject } =
+export default function ProjectDiv() {
+  const { setModalType, setIsModalOpen, selectedProject, prefillData } =
     useTodowinnContext();
 
   const handleViewClick = () => {
-    handleEdit();
+    if (selectedProject === undefined) return;
+    prefillData(selectedProject);
     setModalType(ModalType.VIEW_PROJECT);
     setIsModalOpen(true);
   };
 
   const handleEditClick = () => {
-    handleEdit();
+    if (selectedProject === undefined) return;
+    prefillData(selectedProject);
     setModalType(ModalType.EDIT_PROJECT);
     setIsModalOpen(true);
   };
@@ -27,7 +25,7 @@ export default function ProjectDiv({ handleEdit }: ProjectDivProps) {
     setIsModalOpen(true);
   };
 
-  if (!selectedProject)
+  if (selectedProject === undefined)
     return (
       <p className="text-gray-500 text-center italic mt-10">
         Please select a project from the sidebar.

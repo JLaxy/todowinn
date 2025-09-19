@@ -4,6 +4,7 @@ import { ModalType } from "@/types/modal-type";
 import { Project } from "@/types/project";
 import { Status } from "@/types/status";
 import { Task } from "@/types/task";
+import { toDateInputValue } from "@/utils/date-formatter";
 import { createContext, useState, useContext } from "react";
 
 interface TodowinnContextType {
@@ -15,6 +16,8 @@ interface TodowinnContextType {
   setSelectedTask: (t: Task) => void;
   userProjects: Project[] | undefined;
   setUserProjects: (p: Project[]) => void;
+  projectTasks: Task[];
+  setProjectTasks: React.Dispatch<React.SetStateAction<Task[]>>;
   isLoading: boolean;
   setIsLoading: (b: boolean) => void;
   isModalOpen: boolean;
@@ -33,6 +36,7 @@ interface TodowinnContextType {
   setStatus: (d: Status) => void;
   resetContext: () => void;
   resetFields: () => void;
+  prefillData: (r: Project | Task) => void;
 }
 
 const TodowinnContext = createContext<TodowinnContextType | undefined>(
@@ -48,6 +52,7 @@ export const TodowinnProvider = ({
   const [selectedProject, setSelectedProject] = useState<Project>();
   const [selectedTask, setSelectedTask] = useState<Task>();
   const [userProjects, setUserProjects] = useState<Project[]>();
+  const [projectTasks, setProjectTasks] = useState<Task[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalType, setModalType] = useState<ModalType>();
@@ -61,6 +66,7 @@ export const TodowinnProvider = ({
     setIsSidebarOpen(false);
     setSelectedProject(undefined);
     setUserProjects(undefined);
+    setProjectTasks([]);
     setIsLoading(false);
     setIsModalOpen(false);
     setModalType(undefined);
@@ -76,6 +82,16 @@ export const TodowinnProvider = ({
     setStatus(Status.IN_PROGRESS);
   };
 
+  // Pre fills fields when Edit is pressed
+  const prefillData = (resource: Project | Task) => {
+    setName(resource.name);
+    setDescription(resource.description);
+    if (resource.date_target)
+      setDateTarget(toDateInputValue(resource.date_target));
+    if (resource.remarks) setRemarks(resource.remarks);
+    setStatus(resource.status);
+  };
+
   return (
     <TodowinnContext.Provider
       value={{
@@ -87,6 +103,8 @@ export const TodowinnProvider = ({
         setSelectedTask,
         userProjects,
         setUserProjects,
+        projectTasks,
+        setProjectTasks,
         isLoading,
         setIsLoading,
         isModalOpen,
@@ -105,6 +123,7 @@ export const TodowinnProvider = ({
         setStatus,
         resetContext,
         resetFields,
+        prefillData,
       }}
     >
       {children}

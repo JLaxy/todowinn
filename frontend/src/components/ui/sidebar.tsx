@@ -13,7 +13,11 @@ import { useTodowinnContext } from "@/contexts/todowinn-context";
 
 const iconSize = 30;
 
-export default function Sidebar() {
+export default function Sidebar({
+  fetchTasks,
+}: {
+  fetchTasks: (p: number) => void;
+}) {
   const { isSidebarOpen, setIsSidebarOpen, setModalType, setIsModalOpen } =
     useTodowinnContext();
   const [memberName, setMemberName] = useState("");
@@ -76,7 +80,7 @@ export default function Sidebar() {
               </div>
 
               {/* Scrollable section (3/4 height) */}
-              <ProjectsDiv />
+              <ProjectsDiv fetchTasks={fetchTasks} />
             </motion.aside>
           </>
         )}
@@ -98,9 +102,15 @@ function MemberIconDiv({ memberName }: MemberIconDivProps) {
   );
 }
 
-function ProjectsDiv() {
+function ProjectsDiv({ fetchTasks }: { fetchTasks: (p: number) => void }) {
   const { userProjects, setSelectedProject, setIsSidebarOpen } =
     useTodowinnContext();
+
+  const handleProjectClick = (project: Project) => {
+    setIsSidebarOpen(false);
+    setSelectedProject(project);
+    fetchTasks(project.project_id);
+  };
 
   // First check if have project
   if (!userProjects || userProjects.length === 0)
@@ -116,10 +126,7 @@ function ProjectsDiv() {
         <button
           key={idx}
           className={`project-div ${getOutlineColor(project)}`}
-          onClick={() => {
-            setIsSidebarOpen(false);
-            setSelectedProject(project); // don’t forget to call this too
-          }}
+          onClick={() => handleProjectClick(project)}
         >
           <h4 className="project-div-title ">{project.name}</h4>
         </button>

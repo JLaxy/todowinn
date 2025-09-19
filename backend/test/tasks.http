@@ -1,5 +1,5 @@
 // Get tasks for project
-GET http://localhost:3001/api/tasks/6
+GET http://localhost:3001/api/tasks/1
 
 ###
 // Create task; See CreateTaskDTO for all available parameters.

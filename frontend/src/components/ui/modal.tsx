@@ -256,7 +256,61 @@ export function ModalBody({ handleSubmit, handleModalClose }: ModalBodyProps) {
     case ModalType.VIEW_TASK:
       return <div>viewing task</div>;
     case ModalType.EDIT_TASK:
-      return <div>editing task</div>;
+      return (
+        <div>
+          <form onSubmit={handleSubmit}>
+            {getInputField(
+              "Task Name",
+              "name",
+              "text",
+              "Enter Task Name",
+              true,
+              name,
+              setName
+            )}
+            {getInputField(
+              "Task Description",
+              "description",
+              "text",
+              "Enter Task Description",
+              true,
+              description,
+              setDescription
+            )}
+            {getInputField(
+              "Target Date",
+              "dateTarget",
+              "date",
+              "",
+              false,
+              dateTarget,
+              setDateTarget
+            )}
+            {getComboField(status, setStatus)}
+            {getInputField(
+              "Remarks",
+              "remarks",
+              "text",
+              "Remarks",
+              false,
+              remarks,
+              setRemarks
+            )}
+            <div className="flex flex-row gap-x-5 mt-7">
+              <button
+                type="button"
+                onClick={handleModalClose}
+                className="cancel-btn w-full"
+              >
+                Cancel
+              </button>
+              <button type="submit" className="save-btn w-full">
+                Save
+              </button>
+            </div>
+          </form>
+        </div>
+      );
   }
 }
 
