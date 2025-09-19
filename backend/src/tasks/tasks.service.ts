@@ -7,6 +7,7 @@ import { ResponseTaskDTO } from './dto/response-task.dto';
 import { UpdateTaskDTO } from './dto/update-task.dto';
 import { ProjectsService } from 'src/projects/projects.service';
 import { Prisma, UpdateableTaskField } from 'generated/prisma';
+import { ResponseChangelogDTO } from './dto/response-changelog.dto';
 
 @Injectable()
 export class TasksService {
@@ -48,7 +49,7 @@ export class TasksService {
 
   // Create task
   async createTask(createTaskDTO: CreateTaskDTO) {
-    // First check if project exists
+    // First check if task exists
     await this.projectsService.getProject(createTaskDTO.project_id);
 
     const task = await this.databaseService.tasks.create({
@@ -130,5 +131,19 @@ export class TasksService {
     // If there are changes, then log to database
     if (changes.length > 0)
       await this.databaseService.changelogs.createMany({ data: changes });
+  }
+
+  async getTaskHistory(task_id: number) {
+    // First check if task exists
+    await this.getTask(task_id);
+
+    const res = await this.databaseService.changelogs.findMany({
+      where: { task_id },
+      orderBy: [{ changelog_id: 'desc' }],
+    });
+
+    return plainToInstance(ResponseChangelogDTO, res, {
+      excludeExtraneousValues: true,
+    });
   }
 }

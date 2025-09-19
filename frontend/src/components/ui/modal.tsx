@@ -5,27 +5,19 @@ import { ModalType } from "@/types/modal-type";
 import { dateFormatter } from "@/utils/date-formatter";
 import "@/styles/ui/modals.css";
 import { FormEvent } from "react";
-import { Status } from "@/types/status";
 import { useTodowinnContext } from "@/contexts/todowinn-context";
+import InputField from "./input-field";
+import InputCombo from "./input-combo";
 
 type ModalProps = {
   handleSubmit: (e: FormEvent) => void;
 };
 
 export default function Modal({ handleSubmit }: ModalProps) {
-  const { isModalOpen, setIsModalOpen, modalType, resetFields } =
-    useTodowinnContext();
+  const { isModalOpen, setIsModalOpen, resetFields } = useTodowinnContext();
   const iconSize = 30;
 
   const handleModalClose = () => {
-    // First check what is modal type
-    switch (modalType) {
-      case ModalType.ADD_PROJECT:
-        break;
-      default:
-        break;
-    }
-
     setIsModalOpen(false);
     resetFields();
   };
@@ -75,6 +67,7 @@ export function ModalBody({ handleSubmit, handleModalClose }: ModalBodyProps) {
   const {
     modalType,
     selectedProject,
+    selectedTask,
     name,
     setName,
     description,
@@ -85,6 +78,7 @@ export function ModalBody({ handleSubmit, handleModalClose }: ModalBodyProps) {
     setStatus,
     remarks,
     setRemarks,
+    taskHistory,
   } = useTodowinnContext();
 
   if (modalType === undefined) return <></>;
@@ -94,42 +88,42 @@ export function ModalBody({ handleSubmit, handleModalClose }: ModalBodyProps) {
       return (
         <div>
           <form onSubmit={handleSubmit}>
-            {getInputField(
-              "Project Name",
-              "name",
-              "text",
-              "Enter Project Name",
-              true,
-              name,
-              setName
-            )}
-            {getInputField(
-              "Project Description",
-              "description",
-              "text",
-              "Enter Project Description",
-              true,
-              description,
-              setDescription
-            )}
-            {getInputField(
-              "Target Date",
-              "dateTarget",
-              "date",
-              "",
-              false,
-              dateTarget,
-              setDateTarget
-            )}
-            {getInputField(
-              "Remarks",
-              "remarks",
-              "text",
-              "Remarks",
-              false,
-              remarks,
-              setRemarks
-            )}
+            <InputField
+              label="Project Name"
+              item="name"
+              type="text"
+              placeholder="Enter Project Name"
+              isRequired={true}
+              value={name}
+              setItem={setName}
+            />
+            <InputField
+              label="Project Description"
+              item="description"
+              type="text"
+              placeholder="Enter Project Description"
+              isRequired={true}
+              value={description}
+              setItem={setDescription}
+            />
+            <InputField
+              label="Target Date"
+              item="dateTarget"
+              type="date"
+              placeholder=""
+              isRequired={false}
+              value={dateTarget}
+              setItem={setDateTarget}
+            />
+            <InputField
+              label="Remarks"
+              item="remarks"
+              type="text"
+              placeholder="Remarks"
+              isRequired={false}
+              value={remarks}
+              setItem={setRemarks}
+            />
             <div className="flex flex-row gap-x-5 mt-7">
               <button
                 type="button"
@@ -199,43 +193,43 @@ export function ModalBody({ handleSubmit, handleModalClose }: ModalBodyProps) {
       return (
         <div>
           <form onSubmit={handleSubmit}>
-            {getInputField(
-              "Project Name",
-              "name",
-              "text",
-              "Enter Project Name",
-              true,
-              name,
-              setName
-            )}
-            {getInputField(
-              "Project Description",
-              "description",
-              "text",
-              "Enter Project Description",
-              true,
-              description,
-              setDescription
-            )}
-            {getInputField(
-              "Target Date",
-              "dateTarget",
-              "date",
-              "",
-              false,
-              dateTarget,
-              setDateTarget
-            )}
-            {getComboField(status, setStatus)}
-            {getInputField(
-              "Remarks",
-              "remarks",
-              "text",
-              "Remarks",
-              false,
-              remarks,
-              setRemarks
-            )}
+            <InputField
+              label="Project Name"
+              item="name"
+              type="text"
+              placeholder="Enter Project Name"
+              isRequired={true}
+              value={name}
+              setItem={setName}
+            />
+            <InputField
+              label="Project Description"
+              item="description"
+              type="text"
+              placeholder="Enter Project Description"
+              isRequired={true}
+              value={description}
+              setItem={setDescription}
+            />
+            <InputField
+              label="Target Date"
+              item="dateTarget"
+              type="date"
+              placeholder=""
+              isRequired={false}
+              value={dateTarget}
+              setItem={setDateTarget}
+            />
+            <InputCombo status={status} setStatus={setStatus} />
+            <InputField
+              label="Remarks"
+              item="remarks"
+              type="text"
+              placeholder="Remarks"
+              isRequired={false}
+              value={remarks}
+              setItem={setRemarks}
+            />
             <div className="flex flex-row gap-x-5 mt-7">
               <button
                 type="button"
@@ -252,50 +246,180 @@ export function ModalBody({ handleSubmit, handleModalClose }: ModalBodyProps) {
         </div>
       );
     case ModalType.ADD_TASK:
-      return <div>adding task</div>;
+      return (
+        <div>
+          <form onSubmit={handleSubmit}>
+            <InputField
+              label="Task Name"
+              item="name"
+              type="text"
+              placeholder="Enter Task Name"
+              isRequired={true}
+              value={name}
+              setItem={setName}
+            />
+            <InputField
+              label="Task Description"
+              item="description"
+              type="text"
+              placeholder="Enter Task Description"
+              isRequired={true}
+              value={description}
+              setItem={setDescription}
+            />
+            <InputField
+              label="Target Date"
+              item="dateTarget"
+              type="date"
+              placeholder=""
+              isRequired={false}
+              value={dateTarget}
+              setItem={setDateTarget}
+            />
+            <InputField
+              label="Remarks"
+              item="remarks"
+              type="text"
+              placeholder="Remarks"
+              isRequired={false}
+              value={remarks}
+              setItem={setRemarks}
+            />
+            <div className="flex flex-row gap-x-5 mt-7">
+              <button
+                type="button"
+                onClick={handleModalClose}
+                className="cancel-btn w-full"
+              >
+                Cancel
+              </button>
+              <button type="submit" className="save-btn w-full">
+                Save
+              </button>
+            </div>
+          </form>
+        </div>
+      );
     case ModalType.VIEW_TASK:
-      return <div>viewing task</div>;
+      if (selectedTask === undefined) return <></>;
+      return (
+        <div className="view-task-div">
+          {/* Name */}
+          <h3 className="modal-item-label">{selectedTask.name}</h3>
+          {/* Description */}
+          <p className="pb-5">{selectedTask.description}</p>
+          {/* Status */}
+          <p>
+            <span className="font-bold">Status:</span> {selectedTask.status}
+          </p>
+          {/* Remarks */}
+          <p>
+            {selectedTask.remarks && (
+              <>
+                <span className="font-bold">Remarks: </span>
+                {selectedTask.remarks}
+              </>
+            )}
+          </p>
+          {/* Date Created */}
+          <p>
+            {selectedTask.date_created && (
+              <>
+                <span className="font-bold">Date Created</span>:{" "}
+                {dateFormatter(selectedTask.date_created)}
+              </>
+            )}
+          </p>
+          {/* Date Target */}
+          <p>
+            {selectedTask.date_target && (
+              <>
+                <span className="font-bold">Date Target</span>:{" "}
+                {dateFormatter(selectedTask.date_target)}
+              </>
+            )}
+          </p>
+          {/* Date Finished */}
+          <p>
+            {selectedTask.date_finished && (
+              <>
+                <span className="font-bold">Date Finished</span>:{" "}
+                {dateFormatter(selectedTask.date_finished)}
+              </>
+            )}
+          </p>
+          <h3 className="view-task-history-title">History</h3>
+          <div className="view-task-history-div">
+            {taskHistory === undefined || taskHistory.length === 0 ? (
+              <div className="italic">No history available.</div>
+            ) : (
+              taskHistory.map((changelog, idx) => (
+                <div className="view-task-history-item" key={idx}>
+                  <p>
+                    Changed{" "}
+                    <span className="bg-blue-300 font-bold">
+                      {changelog.field}
+                    </span>{" "}
+                    from{" "}
+                    <span className="bg-red-300 font-bold">
+                      {changelog.old}
+                    </span>{" "}
+                    to{" "}
+                    <span className="bg-green-300 font-bold">
+                      {changelog.new}
+                    </span>{" "}
+                    on{" "}
+                    <span className=" bg-amber-200">
+                      {dateFormatter(changelog.date)}
+                    </span>
+                  </p>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+      );
     case ModalType.EDIT_TASK:
       return (
         <div>
           <form onSubmit={handleSubmit}>
-            {getInputField(
-              "Task Name",
-              "name",
-              "text",
-              "Enter Task Name",
-              true,
-              name,
-              setName
-            )}
-            {getInputField(
-              "Task Description",
-              "description",
-              "text",
-              "Enter Task Description",
-              true,
-              description,
-              setDescription
-            )}
-            {getInputField(
-              "Target Date",
-              "dateTarget",
-              "date",
-              "",
-              false,
-              dateTarget,
-              setDateTarget
-            )}
-            {getComboField(status, setStatus)}
-            {getInputField(
-              "Remarks",
-              "remarks",
-              "text",
-              "Remarks",
-              false,
-              remarks,
-              setRemarks
-            )}
+            <InputField
+              label="Task Name"
+              item="name"
+              type="text"
+              placeholder="Enter Task Name"
+              isRequired={true}
+              value={name}
+              setItem={setName}
+            />
+            <InputField
+              label="Task Description"
+              item="description"
+              type="text"
+              placeholder="Enter Task Description"
+              isRequired={true}
+              value={description}
+              setItem={setDescription}
+            />
+            <InputField
+              label="Target Date"
+              item="dateTarget"
+              type="date"
+              placeholder=""
+              isRequired={false}
+              value={dateTarget}
+              setItem={setDateTarget}
+            />
+            <InputCombo status={status} setStatus={setStatus} />
+            <InputField
+              label="Remarks"
+              item="remarks"
+              type="text"
+              placeholder="Remarks"
+              isRequired={false}
+              value={remarks}
+              setItem={setRemarks}
+            />
             <div className="flex flex-row gap-x-5 mt-7">
               <button
                 type="button"
@@ -312,53 +436,4 @@ export function ModalBody({ handleSubmit, handleModalClose }: ModalBodyProps) {
         </div>
       );
   }
-}
-
-function getInputField(
-  label: string,
-  item: string,
-  type: string,
-  placeholder: string,
-  isRequired: boolean,
-  value: string,
-  setItem: (i: string) => void
-) {
-  return (
-    <div className="flex flex-col py-2">
-      <label htmlFor={item} className="font-medium mb-1">
-        {label}
-      </label>
-      <input
-        id={item}
-        type={type}
-        placeholder={placeholder}
-        className="border rounded p-2 w-full"
-        value={value}
-        onChange={(e) => setItem(e.target.value)}
-        required={isRequired}
-      />
-    </div>
-  );
-}
-
-function getComboField(status: Status, setStatus: (s: Status) => void) {
-  return (
-    <div className="flex flex-col">
-      <label htmlFor="status" className="font-medium mb-1">
-        Status
-      </label>
-      <select
-        id="status"
-        className="border rounded p-2 w-full"
-        value={status}
-        onChange={(e) => setStatus(e.target.value as Status)}
-      >
-        {Object.values(Status).map((s) => (
-          <option key={s} value={s}>
-            {s}
-          </option>
-        ))}
-      </select>
-    </div>
-  );
 }

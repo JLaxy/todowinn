@@ -8,6 +8,8 @@ import { Task } from "@/types/task";
 import { GripVertical } from "lucide-react";
 import { useTodowinnContext } from "@/contexts/todowinn-context";
 import { ModalType } from "@/types/modal-type";
+import { changelogService } from "@/services/changelog-service";
+import toast from "react-hot-toast";
 
 export default function TaskCard({
   task,
@@ -35,11 +37,27 @@ export default function TaskCard({
     opacity: isDragging && !dragOverlay ? 0.5 : 1,
   };
 
-  const { setModalType, setIsModalOpen, setSelectedTask, prefillData } =
-    useTodowinnContext();
+  const {
+    setModalType,
+    setIsModalOpen,
+    setSelectedTask,
+    prefillData,
+    setTaskHistory,
+  } = useTodowinnContext();
+
+  const fetchTaskHistory = async () => {
+    try {
+      const history = await changelogService.getTaskHistory(task.task_id);
+      setTaskHistory(history);
+    } catch (error) {
+      console.error("Failed to fetch task history:", error);
+      toast.error("Failed to fetch task history! see console");
+    }
+  };
 
   const handleClick = (type: ModalType) => {
     setSelectedTask(task);
+    if (ModalType.VIEW_TASK) fetchTaskHistory();
     prefillData(task);
     setModalType(type);
     setIsModalOpen(true);

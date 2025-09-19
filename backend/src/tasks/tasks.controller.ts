@@ -24,8 +24,8 @@ export class TasksController {
     OwnershipGuard(ResourceType.PROJECT, (req) =>
       Number(req.params['project_id']),
     ), // Checks if user owns project since it is connected to tasks
-    )
-    // Retrieves all tasks of of a project
+  )
+  // Retrieves all tasks of of a project
   async getProjectTasks(@Param('project_id', ParseIntPipe) project_id: number) {
     return await this.taskService.getProjectTasks(project_id);
   }
@@ -51,5 +51,13 @@ export class TasksController {
     @Body() updateTaskDTO: UpdateTaskDTO,
   ) {
     return await this.taskService.updateTask(id, updateTaskDTO);
+  }
+
+  @Get('/history/:task_id')
+  @UseGuards(
+    OwnershipGuard(ResourceType.TASK, (req) => Number(req.params['task_id'])), // Checks if user owns task
+  )
+  async getTaskHistory(@Param('task_id', ParseIntPipe) task_id: number) {
+    return await this.taskService.getTaskHistory(task_id);
   }
 }

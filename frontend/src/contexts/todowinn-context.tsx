@@ -1,5 +1,6 @@
 "use client";
 
+import { Changelog } from "@/types/changelog";
 import { ModalType } from "@/types/modal-type";
 import { Project } from "@/types/project";
 import { Status } from "@/types/status";
@@ -14,6 +15,8 @@ interface TodowinnContextType {
   setSelectedProject: (p: Project) => void;
   selectedTask: Task | undefined;
   setSelectedTask: (t: Task) => void;
+  taskHistory: Changelog[] | undefined;
+  setTaskHistory: (c: Changelog[]) => void;
   userProjects: Project[] | undefined;
   setUserProjects: (p: Project[]) => void;
   projectTasks: Task[];
@@ -53,6 +56,7 @@ export const TodowinnProvider = ({
   const [selectedTask, setSelectedTask] = useState<Task>();
   const [userProjects, setUserProjects] = useState<Project[]>();
   const [projectTasks, setProjectTasks] = useState<Task[]>([]);
+  const [taskHistory, setTaskHistory] = useState<Changelog[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalType, setModalType] = useState<ModalType>();
@@ -67,6 +71,7 @@ export const TodowinnProvider = ({
     setSelectedProject(undefined);
     setUserProjects(undefined);
     setProjectTasks([]);
+    setTaskHistory([]);
     setIsLoading(false);
     setIsModalOpen(false);
     setModalType(undefined);
@@ -105,6 +110,8 @@ export const TodowinnProvider = ({
         setUserProjects,
         projectTasks,
         setProjectTasks,
+        taskHistory,
+        setTaskHistory,
         isLoading,
         setIsLoading,
         isModalOpen,

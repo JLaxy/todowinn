@@ -73,6 +73,7 @@ export default function ProjectsPage() {
         handleEditProject();
         break;
       case ModalType.ADD_TASK:
+        handleAddTask();
         break;
       case ModalType.EDIT_TASK:
         handleEditTask();
@@ -91,7 +92,7 @@ export default function ProjectsPage() {
         date_target: dateTarget
           ? new Date(dateTarget).toISOString()
           : undefined,
-        remarks,
+        remarks: remarks ? remarks : undefined,
       } as Project);
 
       toast.success("Successfully added project!");
@@ -100,6 +101,7 @@ export default function ProjectsPage() {
       );
       setIsModalOpen(false);
       resetFields();
+      await fetchTasks(res.data.project_id);
       await fetchProjects();
     } catch (error) {
       toast.error(`Failed to add project!`);
@@ -116,7 +118,7 @@ export default function ProjectsPage() {
         project_id: selectedProject.project_id,
         name,
         description,
-        remarks,
+        remarks: remarks ? remarks : undefined,
         status,
         date_target: dateTarget
           ? new Date(dateTarget).toISOString()
@@ -136,6 +138,31 @@ export default function ProjectsPage() {
     }
   };
 
+  const handleAddTask = async () => {
+    if (selectedProject === undefined) return;
+
+    try {
+      // Add project
+      const res = await taskService.createTask({
+        name,
+        description,
+        date_target: dateTarget
+          ? new Date(dateTarget).toISOString()
+          : undefined,
+        remarks: remarks ? remarks : undefined,
+        project_id: selectedProject.project_id,
+      } as Task);
+
+      toast.success("Successfully added task!");
+      setIsModalOpen(false);
+      resetFields();
+      await fetchTasks(selectedProject.project_id);
+    } catch (error) {
+      toast.error(`Failed to add task!`);
+      console.log(`Failed to update task: ${error}`);
+    }
+  };
+
   const handleEditTask = async () => {
     try {
       if (selectedTask === undefined || selectedProject === undefined) return;
@@ -145,7 +172,7 @@ export default function ProjectsPage() {
         task_id: selectedTask.task_id,
         name,
         description,
-        remarks,
+        remarks: remarks ? remarks : undefined,
         status,
         date_target: dateTarget
           ? new Date(dateTarget).toISOString()

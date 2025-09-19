@@ -2,6 +2,11 @@
 GET http://localhost:3001/api/tasks/1
 
 ###
+
+// Get tasks for project
+GET http://localhost:3001/api/tasks/history/1
+
+###
 // Create task; See CreateTaskDTO for all available parameters.
 POST http://localhost:3001/api/tasks
 Content-Type: application/json
