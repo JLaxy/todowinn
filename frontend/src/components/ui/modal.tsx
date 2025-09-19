@@ -49,7 +49,10 @@ export default function Modal({ handleSubmit }: ModalProps) {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
           >
-            <button className="flex justify-end" onClick={handleModalClose}>
+            <button
+              className="flex justify-end cursor-pointer"
+              onClick={handleModalClose}
+            >
               <IoCloseCircleOutline size={iconSize} />
             </button>
             <ModalBody

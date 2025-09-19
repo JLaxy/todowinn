@@ -3,6 +3,7 @@
 import { ModalType } from "@/types/modal-type";
 import { Project } from "@/types/project";
 import { Status } from "@/types/status";
+import { Task } from "@/types/task";
 import { createContext, useState, useContext } from "react";
 
 interface TodowinnContextType {
@@ -10,6 +11,8 @@ interface TodowinnContextType {
   setIsSidebarOpen: (b: boolean) => void;
   selectedProject: Project | undefined;
   setSelectedProject: (p: Project) => void;
+  selectedTask: Task | undefined;
+  setSelectedTask: (t: Task) => void;
   userProjects: Project[] | undefined;
   setUserProjects: (p: Project[]) => void;
   isLoading: boolean;
@@ -43,6 +46,7 @@ export const TodowinnProvider = ({
 }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [selectedProject, setSelectedProject] = useState<Project>();
+  const [selectedTask, setSelectedTask] = useState<Task>();
   const [userProjects, setUserProjects] = useState<Project[]>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -79,6 +83,8 @@ export const TodowinnProvider = ({
         setIsSidebarOpen,
         selectedProject,
         setSelectedProject,
+        selectedTask,
+        setSelectedTask,
         userProjects,
         setUserProjects,
         isLoading,

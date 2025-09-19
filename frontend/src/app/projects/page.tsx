@@ -11,6 +11,8 @@ import Modal from "@/components/ui/modal";
 import { ModalType } from "@/types/modal-type";
 import { toDateInputValue } from "@/utils/date-formatter";
 import { useTodowinnContext } from "@/contexts/todowinn-context";
+import ProjectDiv from "@/components/ui/project-div";
+import TasksKanban from "@/components/ui/tasks-kanban";
 
 export default function ProjectsPage() {
   const {
@@ -132,68 +134,14 @@ export default function ProjectsPage() {
   }, []);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col h-screen">
       <Navbar />
-      <ProjectDiv handleEdit={handleEdit} />
       <Sidebar />
+      <ProjectDiv handleEdit={handleEdit} />
+      <TasksKanban />
       {/* Pop Up Modal */}
       <Modal handleSubmit={handleSubmit} />
       <Toaster position="bottom-center" />
     </div>
   );
-}
-
-type ProjectDivProps = {
-  handleEdit: () => void;
-};
-
-function ProjectDiv({ handleEdit }: ProjectDivProps) {
-  const { setModalType, setIsModalOpen, selectedProject } =
-    useTodowinnContext();
-
-  const handleViewClick = () => {
-    handleEdit();
-    setModalType(ModalType.VIEW_PROJECT);
-    setIsModalOpen(true);
-  };
-
-  const handleEditClick = () => {
-    handleEdit();
-    setModalType(ModalType.EDIT_PROJECT);
-    setIsModalOpen(true);
-  };
-
-  if (!selectedProject)
-    return (
-      <p className="text-gray-500 text-center italic mt-10">
-        Please select a project from the sidebar.
-      </p>
-    );
-
-  return (
-    <div className="proj-info-div">
-      <div>
-        <h2 className="text-xl font-bold">{selectedProject.name}</h2>
-        <p className="leading-none">{selectedProject.description}</p>
-      </div>
-      <div className="flex flex-row gap-x-3 mt-5">
-        <button
-          onClick={handleViewClick}
-          className="proj-buttons bg-blue-600 hover:bg-blue-700 active:bg-blue-800"
-        >
-          View
-        </button>
-        <button
-          onClick={handleEditClick}
-          className="proj-buttons bg-yellow-500 hover:bg-yellow-600 active:bg-yellow-700"
-        >
-          Edit
-        </button>
-      </div>
-    </div>
-  );
-}
-
-function TasksDiv() {
-  return <div className="tasks-container"></div>;
 }
