@@ -37,7 +37,7 @@ export default function Navbar() {
 
   return (
     <div className="nav-div">
-      <button onClick={() => setIsSidebarOpen(true)}>
+      <button className="cursor-pointer" onClick={() => setIsSidebarOpen(true)}>
         <GiHamburgerMenu size={hamburgerSize} />
       </button>
       <h3 className="app-title">ToDowinn</h3>

@@ -1,5 +1,3 @@
-// TASK KANBAN
-
 "use client";
 
 import React, { useState } from "react";
@@ -20,6 +18,7 @@ import TaskCard from "@/components/ui/task-card";
 import ScrollContainer from "../containers/scrollable";
 import toast from "react-hot-toast";
 import { taskService } from "@/services/tasks-service";
+import "@/styles/ui/tasks-kanban.css";
 
 // Define your columns
 const STATUSES: Status[] = [
@@ -43,12 +42,25 @@ function DroppableColumn({
     data: { type: "column" },
   });
 
+  const getColumnColor = (status: Status): string => {
+    switch (status) {
+      case Status.TODO:
+        return "bg-blue-100 border-2 border-blue-400";
+      case Status.IN_PROGRESS:
+        return "bg-yellow-100 border-2 border-yellow-400";
+      case Status.FINISHED:
+        return "bg-green-100 border-2 border-green-400";
+      case Status.CANCELLED:
+        return "bg-red-100 border-2 border-red-400";
+    }
+  };
+
   return (
     <div
       ref={setNodeRef}
       id={status}
-      className={`min-w-[97vw] sm:min-w-[300px] rounded-2xl p-3 flex-shrink-0 transition-colors ${
-        isOver ? "bg-blue-100 border-2 border-blue-400" : "bg-gray-100"
+      className={`droppable-col ${
+        isOver ? getColumnColor(status) : "bg-gray-100"
       }`}
     >
       <h2 className="text-lg font-bold mb-2">{status}</h2>
@@ -130,7 +142,7 @@ export default function TasksKanban() {
   if (!selectedProject) return null;
 
   return (
-    <div className="flex-1 h-full">
+    <div className="kanban-div">
       <ScrollContainer isDragging={isDragging}>
         <DndContext
           collisionDetection={collisionDetection}
@@ -142,7 +154,7 @@ export default function TasksKanban() {
           }}
           onDragEnd={handleDragEnd}
         >
-          <div className="flex gap-4">
+          <div className="col-div">
             {/* If there are tasks in project */}
             {projectTasks !== undefined ? (
               STATUSES.map((status) => {

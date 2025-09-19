@@ -1,1 +1,18 @@
 @import "tailwindcss";
+
+@layer components {
+  .droppable-col {
+    @apply flex flex-col min-w-[90vw] 2xl:xl:min-w-1/4 rounded-2xl p-8 transition-colors;
+  }
+
+  .kanban-div {
+    @apply flex-1 h-full w-full;
+  }
+
+  .col-div {
+    @apply flex flex-row w-[95vw] gap-5;
+  }
+
+  .heading-text {
+  }
+}

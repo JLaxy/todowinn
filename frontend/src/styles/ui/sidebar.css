@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 @layer components {
-  .close-icon-div {
-    @apply flex justify-end p-2;
+  .close-icon-btn {
+    @apply flex justify-end p-2 cursor-pointer;
   }
   .icon {
     @apply bg-center bg-no-repeat bg-contain w-full h-1/8;
@@ -19,8 +19,5 @@
 
   .project-div-title {
     @apply font-bold;
-  }
-
-  .project-div-desc {
   }
 }

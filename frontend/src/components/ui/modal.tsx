@@ -36,7 +36,7 @@ export default function Modal({ handleSubmit }: ModalProps) {
 
           {/* Modal content */}
           <motion.div
-            className="flex flex-col fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-xl z-50 p-6 w-11/12 max-w-4xl"
+            className="flex flex-col fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-xl z-50 p-8 w-11/12 max-w-4xl"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
@@ -357,19 +357,19 @@ export function ModalBody({ handleSubmit, handleModalClose }: ModalBodyProps) {
                 <div className="view-task-history-item" key={idx}>
                   <p>
                     Changed{" "}
-                    <span className="bg-blue-300 font-bold">
+                    <span className="bg-blue-300 view-task-history-details">
                       {changelog.field}
                     </span>{" "}
                     from{" "}
-                    <span className="bg-red-300 font-bold">
+                    <span className="bg-amber-200 view-task-history-details">
                       {changelog.old}
                     </span>{" "}
                     to{" "}
-                    <span className="bg-green-300 font-bold">
+                    <span className="bg-green-300 view-task-history-details">
                       {changelog.new}
                     </span>{" "}
                     on{" "}
-                    <span className=" bg-amber-200">
+                    <span className=" bg-red-300 view-task-history-details">
                       {dateFormatter(changelog.date)}
                     </span>
                   </p>

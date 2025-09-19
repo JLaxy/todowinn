@@ -10,6 +10,7 @@ import { useTodowinnContext } from "@/contexts/todowinn-context";
 import { ModalType } from "@/types/modal-type";
 import { changelogService } from "@/services/changelog-service";
 import toast from "react-hot-toast";
+import "@/styles/ui/task-card.css";
 
 export default function TaskCard({
   task,
@@ -64,34 +65,32 @@ export default function TaskCard({
   };
 
   return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      className="p-3 rounded-xl shadow-md select-none flex items-center gap-2 bg-red-300 w-full"
-    >
+    <div ref={setNodeRef} style={style} className="card-div">
       {/* ✅ Drag handle only */}
       <button
         ref={setActivatorNodeRef}
         {...listeners}
         {...attributes}
-        className="cursor-grab active:cursor-grabbing p-1 text-gray-400 hover:text-gray-600"
+        className="drag-handle"
         aria-label="Drag task"
       >
         <GripVertical size={18} />
       </button>
 
       {/* Task Content */}
-      <div className="flex flex-row bg-amber-200 w-full justify-between">
+      <div className="task-content-div">
         <button
-          className="bg-amber-800 flex-1 text-left cursor-pointer"
+          className="task-btn min-w-0"
           onClick={() => handleClick(ModalType.VIEW_TASK)}
         >
-          <h3 className="font-semibold">{task.name}</h3>
-          <p className="text-sm text-gray-600">{task.description}</p>
+          <h3 className="task-name">{task.name}</h3>
+          <p className="text-sm text-gray-600 truncate w-full">
+            {task.description}
+          </p>
         </button>
         <button
           onClick={() => handleClick(ModalType.EDIT_TASK)}
-          className="cursor-pointer"
+          className="edit-btn"
         >
           Edit
         </button>

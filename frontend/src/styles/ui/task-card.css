@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+@layer components {
+  .card-div {
+    @apply p-5 rounded-xl shadow-md select-none flex flex-row items-center gap-2 bg-white w-full my-3;
+  }
+
+  .drag-handle {
+    @apply cursor-grab active:cursor-grabbing text-gray-400 hover:text-gray-600;
+  }
+
+  .task-name {
+    @apply font-semibold truncate w-full;
+  }
+
+  .task-desc {
+    @apply text-sm text-gray-600 truncate w-full;
+  }
+
+  .task-btn {
+    @apply flex-1 text-left cursor-pointer;
+  }
+
+  .task-content-div {
+    @apply flex flex-row flex-1 min-w-0 justify-between gap-5;
+  }
+
+  .edit-btn {
+    @apply bg-blue-500 px-4 py-2 hover:bg-blue-600 active:bg-blue-700 cursor-pointer text-white rounded-lg;
+  }
+}

@@ -27,7 +27,6 @@
     line-height: 1.5;
     /* 5. Improve text rendering */
     -webkit-font-smoothing: antialiased;
-    @apply bg-gray-200;
   }
 
   /* 6. Improve media defaults */

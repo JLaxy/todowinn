@@ -41,7 +41,7 @@ export default function ScrollContainer({
       onMouseLeave={handleMouseLeave}
       onMouseUp={handleMouseUp}
       onMouseMove={handleMouseMove}
-      className="flex-1 h-full overflow-x-auto flex space-x-4 p-2 touch-pan-x touch-pan-y cursor-grab active:cursor-grabbing"
+      className="w-full flex h-full overflow-x-auto p-5 touch-pan-x touch-pan-y cursor-grab active:cursor-grabbing"
     >
       {children}
     </div>

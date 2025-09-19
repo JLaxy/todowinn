@@ -33,7 +33,7 @@ export default function ProjectDiv() {
     );
 
   return (
-    <div className="proj-info-div">
+    <div className="proj-info-div ">
       <h2 className="text-xl font-bold text-center">{selectedProject.name}</h2>
       <div className="flex flex-row gap-x-3 mt-5">
         <button
@@ -51,7 +51,7 @@ export default function ProjectDiv() {
       </div>
       <button
         onClick={handleAddTaskClick}
-        className="w-full proj-buttons bg-green-400 mt-3 cursor-pointer"
+        className="proj-buttons bg-green-400 hover:bg-green-600 active:bg-green-700 mt-3"
       >
         Add Task
       </button>

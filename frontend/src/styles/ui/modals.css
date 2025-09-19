@@ -21,15 +21,19 @@
     @apply font-bold mt-5;
   }
 
+  .view-task-history-details {
+    @apply font-bold px-2;
+  }
+
   .view-task-history-item {
-    @apply bg-gray-200 rounded-lg p-5;
+    @apply bg-gray-200 rounded-lg p-5 shadow-lg;
   }
 
   .cancel-btn {
-    @apply bg-red-500 rounded px-4 py-2 hover:bg-red-600 active:bg-red-700 text-white;
+    @apply bg-red-500 rounded px-4 py-2 hover:bg-red-600 active:bg-red-700 text-white cursor-pointer;
   }
 
   .save-btn {
-    @apply bg-blue-500 rounded px-4 py-2 hover:bg-blue-600 active:bg-blue-700 text-white;
+    @apply bg-blue-500 rounded px-4 py-2 hover:bg-blue-600 active:bg-blue-700 text-white cursor-pointer;
   }
 }

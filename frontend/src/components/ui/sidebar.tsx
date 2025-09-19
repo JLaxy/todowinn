@@ -57,11 +57,12 @@ export default function Sidebar({
               exit={{ x: "-100%" }}
               transition={{ type: "tween", stiffness: 300, damping: 30 }}
             >
-              <div className="close-icon-div">
-                <button onClick={() => setIsSidebarOpen(false)}>
-                  <IoCloseCircleOutline size={iconSize} />
-                </button>
-              </div>
+              <button
+                className="close-icon-btn"
+                onClick={() => setIsSidebarOpen(false)}
+              >
+                <IoCloseCircleOutline size={iconSize} />
+              </button>
 
               {/* Top fixed section (1/4 height) */}
               <MemberIconDiv memberName={memberName} />
@@ -69,6 +70,7 @@ export default function Sidebar({
               <div className="flex justify-between items-end p-2">
                 <h1 className="font-bold pl-2 mt-5">Your Projects</h1>
                 <button
+                  className="cursor-pointer"
                   onClick={() => {
                     setModalType(ModalType.ADD_PROJECT);
                     setIsSidebarOpen(false);
