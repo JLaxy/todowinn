@@ -1,20 +1,25 @@
 # backend/Dockerfile
-FROM node:20-alpine AS builder
-WORKDIR /app
-
-COPY package*.json ./
-RUN npm install --frozen-lockfile
-COPY . .
-RUN npm run build   # compiles TS → dist/
-
-# Production image
 FROM node:20-alpine
+
+# Install Nest CLI globally
+RUN npm install -g @nestjs/cli
+
 WORKDIR /app
 
-COPY --from=builder /app/package*.json ./
-RUN npm install --production --frozen-lockfile
+# Copy package.json and lock file first for caching
+COPY package*.json ./
 
-COPY --from=builder /app/dist ./dist
+# Install dependencies
+RUN npm install
+
+# Copy app source
+COPY . .
+
+# Copy entrypoint script
+COPY entrypoint.sh ./entrypoint.sh
+RUN chmod +x ./entrypoint.sh
 
 EXPOSE 3001
-CMD ["node", "dist/main.js"]
+
+# Use entrypoint for migrations + app start
+ENTRYPOINT ["./entrypoint.sh"]
