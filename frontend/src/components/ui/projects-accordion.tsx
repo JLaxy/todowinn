@@ -48,7 +48,7 @@ export default function ProjectsAccordion({
 
   return (
     <Accordion
-      type="single" // allow multiple sections open
+      type="single"
       className="projects-list-div"
       collapsible
       defaultValue={Status.TODO}

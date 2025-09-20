@@ -39,12 +39,8 @@ export default function Page() {
     if (res.status === 200) {
       setIsInvalid(false);
       toast.success("Logging in");
-
-      // Redirect after delay
-      setTimeout(() => {
-        console.log("redirecting");
-        router.push("/projects");
-      }, 1000);
+      console.log("redirecting");
+      router.push("/projects");
     }
   };
 

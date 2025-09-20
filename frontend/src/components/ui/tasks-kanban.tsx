@@ -182,7 +182,6 @@ export default function TasksKanban() {
             )}
           </div>
 
-          {/* ✅ Overlay fixes ghost glitch */}
           <DragOverlay>
             {activeTask ? <TaskCard task={activeTask} dragOverlay /> : null}
           </DragOverlay>

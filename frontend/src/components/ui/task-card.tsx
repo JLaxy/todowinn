@@ -23,7 +23,7 @@ export default function TaskCard({
     attributes,
     listeners,
     setNodeRef,
-    setActivatorNodeRef, // 👈 needed for handle-only dragging
+    setActivatorNodeRef,
     transform,
     transition,
     isDragging,
@@ -66,7 +66,6 @@ export default function TaskCard({
 
   return (
     <div ref={setNodeRef} style={style} className="card-div">
-      {/* ✅ Drag handle only */}
       <button
         ref={setActivatorNodeRef}
         {...listeners}

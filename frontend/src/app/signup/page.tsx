@@ -55,10 +55,7 @@ export default function Page() {
       toast.success(
         "Member successfully registered! Please login with your credentials."
       );
-      // Delay then redirect
-      setTimeout(() => {
-        router.push("/login");
-      }, 1800);
+      router.push("/login");
     }
   };
 

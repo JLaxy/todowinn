@@ -21,12 +21,8 @@ export default function Navbar() {
 
       if (res.status === 200) {
         toast.success("Logging out...");
-
-        // Redirect
-        setTimeout(() => {
-          router.push("/login");
-          resetContext();
-        }, 1000);
+        resetContext();
+        router.push("/login");
       }
     } catch (error) {
       toast.error(`An error has occured while trying to log out!`);

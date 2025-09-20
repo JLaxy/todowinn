@@ -20,7 +20,7 @@
   }
 
   .project-div {
-    @apply flex flex-col w-full p-2 rounded-lg hover:bg-gray-100 transition font-medium text-left outline-1 shadow-md my-3;
+    @apply flex flex-col w-full p-2 rounded-lg hover:bg-gray-100 transition font-medium text-left outline-1 shadow-md my-3 cursor-pointer;
   }
 
   .project-div-title {
