@@ -4,6 +4,16 @@ import { normalizeApiError } from "@/utils/api-error-normalizer";
 
 // API service for projects
 export const projectsService = {
+  // Retrieves specific project
+  getProject: async (project_id: number) => {
+    try {
+      const res = await api.get(`/projects/${project_id}`);
+      return res.data;
+    } catch (error) {
+      throw normalizeApiError(error);
+    }
+  },
+
   // Retrieve all projects
   getProjects: async () => {
     try {

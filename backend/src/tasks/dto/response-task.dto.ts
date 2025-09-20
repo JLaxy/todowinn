@@ -3,7 +3,7 @@ import { Status } from 'generated/prisma';
 
 export class ResponseTaskDTO {
   @Expose()
-  task_d: number;
+  task_id: number;
 
   @Expose()
   name: string;

@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@layer components {
+  .proj-info-div {
+    @apply p-5 flex flex-col min-w-sm sm:min-w-xl md:min-w-2xl lg:min-w-4xl xl:min-w-5xl mx-auto;
+  }
+
+  .proj-buttons {
+    @apply w-full text-white rounded-sm py-2 font-bold cursor-pointer;
+  }
+
+  .tasks-container {
+    @apply grid grid-rows-4;
+  }
+}

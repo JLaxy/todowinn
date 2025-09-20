@@ -1,23 +1,30 @@
+// Get tasks for project
+GET http://localhost:3001/api/tasks/1
+
+###
+
+// Get tasks for project
+GET http://localhost:3001/api/tasks/history/1
+
+###
 // Create task; See CreateTaskDTO for all available parameters.
 POST http://localhost:3001/api/tasks
 Content-Type: application/json
 # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW5AdG9kb3dpbm4uY29tIiwiaWF0IjoxNzU3MjQxOTMyfQ.bVEy38TjQwg9xVKApaLnN5uFj5vubDi3_rCjAsDLd28
 
 {
-    "name": "test task12",
-    "description": "testing tasks",
-    "project_id": "1",
-    "remarks": "hello worlds"
+    "name": "Finished task",
+    "description": "sample finished task",
+    "project_id": "5",
+    "remarks": "hello world"
 }
 
 ###
 // Update Task; See UpdateTaskDTO for all available parameters
-PATCH http://localhost:3001/api/tasks/3
+PATCH http://localhost:3001/api/tasks/14
 Content-Type: application/json
 # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW5AdG9kb3dpbm4uY29tIiwiaWF0IjoxNzU3MjQxOTMyfQ.bVEy38TjQwg9xVKApaLnN5uFj5vubDi3_rCjAsDLd28
 
 {
-    "status" : "CANCELLED",
-    "remarks": "working on it",
-    "dateTarget": "2002-10-28"
+    "status": "FINISHED"
 }

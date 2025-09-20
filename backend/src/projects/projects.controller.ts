@@ -26,6 +26,14 @@ export class ProjectsController {
     return this.projectsService.getAllProjects(member_id);
   }
 
+  @Get(':id')
+  @UseGuards(
+    OwnershipGuard(ResourceType.PROJECT, (req) => Number(req.params['id'])), // Checks if user owns project
+  )
+  async getProject(@Param('id', ParseIntPipe) id: number) {
+    return this.projectsService.getProject(id);
+  }
+
   // Create project
   @Post()
   async createProject(

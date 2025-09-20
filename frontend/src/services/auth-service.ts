@@ -29,6 +29,16 @@ export const authService = {
     }
   },
 
+  getLoggedInMember: async () => {
+    try {
+      console.log("getting...");
+      const res = await api.get("/members/me");
+      return res.data;
+    } catch (error) {
+      normalizeApiError(error);
+    }
+  },
+
   // Logout endpoint
   logout: async () => {
     try {

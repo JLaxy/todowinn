@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+@layer components {
+  .modal-item-label {
+    @apply font-bold;
+  }
+
+  .view-proj-div {
+    @apply flex flex-col;
+  }
+
+  .view-task-div {
+    @apply flex flex-col max-h-screen overflow-hidden;
+  }
+
+  .view-task-history-div {
+    @apply flex flex-col overflow-y-auto py-4 space-y-2 gap-y-2 max-h-90;
+  }
+
+  .view-task-history-title {
+    @apply font-bold mt-5;
+  }
+
+  .view-task-history-details {
+    @apply font-bold px-2;
+  }
+
+  .view-task-history-item {
+    @apply bg-gray-200 rounded-lg p-5 shadow-lg;
+  }
+
+  .cancel-btn {
+    @apply bg-red-500 rounded px-4 py-2 hover:bg-red-600 active:bg-red-700 text-white cursor-pointer;
+  }
+
+  .save-btn {
+    @apply bg-blue-500 rounded px-4 py-2 hover:bg-blue-600 active:bg-blue-700 text-white cursor-pointer;
+  }
+}

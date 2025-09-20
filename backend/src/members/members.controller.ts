@@ -5,6 +5,8 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Get,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import { MembersService } from './members.service';
@@ -13,11 +15,18 @@ import { Public } from 'src/common/decorators/public.decorator';
 import { updateMemberDTO } from './dto/update-member.dto';
 import { OwnershipGuard } from 'src/ownership/ownership.guard';
 import { ResourceType } from 'src/common/types/resource.types';
+import type { Request } from 'express';
 
 // /members endpoint
 @Controller('members')
 export class MembersController {
   constructor(private readonly membersService: MembersService) {}
+
+  // Retrieves information of currently logged in user
+  @Get('me')
+  getMe(@Req() req: Request) {
+    return this.membersService.getMe(req);
+  }
 
   // Create Member; Sign Up
   @Public() // Public endpoint; bypasses token requirement on authguard

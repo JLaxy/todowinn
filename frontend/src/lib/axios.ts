@@ -2,8 +2,7 @@ import axios from "axios";
 
 // Singleton axios API object
 const api = axios.create({
-  baseURL:
-    process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api/members/",
+  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api",
   withCredentials: true,
 });
 
