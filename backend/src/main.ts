@@ -22,12 +22,12 @@ async function bootstrap() {
   app.use(cookieParser()); // Used to process JWT in cookies
 
   app.enableCors({
-    origin: 'http://localhost:3000', // your frontend
+    origin: '/', // your frontend
     credentials: true, // Allow storing JWT in cookies
   });
 
   app.setGlobalPrefix('api'); // add prefix /api on all endpoints
 
-  await app.listen(process.env.PORT ?? 3001);
+  await app.listen(process.env.PORT ?? 3001, '0.0.0.0');
 }
 bootstrap();
