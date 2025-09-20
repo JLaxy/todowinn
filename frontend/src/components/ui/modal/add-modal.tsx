@@ -51,7 +51,7 @@ export default function AddModalBody({
         <InputField
           label="Target Date"
           item="dateTarget"
-          type="date"
+          type="datetime-local"
           placeholder=""
           isRequired={false}
           value={dateTarget}

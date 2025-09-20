@@ -11,6 +11,7 @@ import { ModalType } from "@/types/modal-type";
 import { changelogService } from "@/services/changelog-service";
 import toast from "react-hot-toast";
 import "@/styles/ui/task-card.css";
+import { dateFormatter } from "@/utils/date-formatter";
 
 export default function TaskCard({
   task,
@@ -84,7 +85,7 @@ export default function TaskCard({
         >
           <h3 className="task-name">{task.name}</h3>
           <p className="text-sm text-gray-600 truncate w-full">
-            {task.description}
+            Due: {task.date_target ? dateFormatter(task.date_target) : "None"}
           </p>
         </button>
         <button

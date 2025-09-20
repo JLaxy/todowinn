@@ -10,6 +10,7 @@ import { useTodowinnContext } from "@/contexts/todowinn-context";
 import { Project } from "@/types/project";
 import { Status } from "@/types/status";
 import "@/styles/ui/projects-accordion.css";
+import { dateFormatter } from "@/utils/date-formatter";
 
 export default function ProjectsAccordion({
   fetchTasks,
@@ -69,6 +70,12 @@ export default function ProjectsAccordion({
                   onClick={() => handleProjectClick(project)}
                 >
                   <h4 className="project-div-title">{project.name}</h4>
+                  <p className="text-sm text-gray-600 truncate w-full">
+                    Due:{" "}
+                    {project.date_target
+                      ? dateFormatter(project.date_target)
+                      : "None"}
+                  </p>
                 </button>
               ))}
             </div>

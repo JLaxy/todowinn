@@ -1,5 +1,5 @@
 export const dateFormatter = (date: string) => {
-  return new Date(date).toLocaleDateString("en-US", {
+  return new Date(date).toLocaleDateString("en-GB", {
     year: "numeric",
     month: "short", // e.g., "September"
     day: "numeric",
@@ -8,8 +8,17 @@ export const dateFormatter = (date: string) => {
   });
 };
 
-// Returns "yyyy-MM-dd" format for <input type="date" />
+// Returns "yyyy-MM-ddTHH:mm" for <input type="datetime-local" />
 export const toDateInputValue = (date: string | Date) => {
   const d = new Date(date);
-  return d.toISOString().split("T")[0]; // "2025-11-28"
+
+  const pad = (n: number) => n.toString().padStart(2, "0");
+
+  const yyyy = d.getFullYear();
+  const mm = pad(d.getMonth() + 1);
+  const dd = pad(d.getDate());
+  const hh = pad(d.getHours());
+  const min = pad(d.getMinutes());
+
+  return `${yyyy}-${mm}-${dd}T${hh}:${min}`;
 };
