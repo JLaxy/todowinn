@@ -1,22 +1,20 @@
 # backend/Dockerfile
-FROM node:20-alpine
-
-RUN npm install -g @nestjs/cli
-
+FROM node:20-alpine AS builder
 WORKDIR /app
 
-# Copy package.json and package-lock.json first for caching
 COPY package*.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy the rest of the app
+RUN npm install --frozen-lockfile
 COPY . .
+RUN npm run build   # compiles TS → dist/
 
-# Expose Nestjs default port
+# Production image
+FROM node:20-alpine
+WORKDIR /app
+
+COPY --from=builder /app/package*.json ./
+RUN npm install --production --frozen-lockfile
+
+COPY --from=builder /app/dist ./dist
+
 EXPOSE 3001
-
-# Default command for development (you can override in docker-compose)
-CMD ["npm", "run", "start:dev"]
-# CMD ["sleep", "infinity"]
+CMD ["node", "dist/main.js"]

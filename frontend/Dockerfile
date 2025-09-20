@@ -1,21 +1,22 @@
-# Use Node.js LTS image
-FROM node:20-alpine
-
-# Set working directory
+# frontend/Dockerfile
+FROM node:20-alpine AS builder
 WORKDIR /app
 
-# Copy only package files first (for caching layers)
 COPY package*.json ./
-
-# Install dependencies inside container
-RUN npm install
-
-# Copy the rest of the project
+RUN npm install --frozen-lockfile
 COPY . .
+RUN npm run build   # 👉 creates `.next` production build
 
-# Expose Next.js default port
+# Production image
+FROM node:20-alpine
+WORKDIR /app
+
+COPY --from=builder /app/package*.json ./
+RUN npm install --production --frozen-lockfile
+
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/next.config.js ./ 
+
 EXPOSE 3000
-
-# Run the dev server
-# CMD ["npm", "run", "dev"]
-CMD ["sleep", "infinity"]
+CMD ["npm", "run", "start"]   # production server
