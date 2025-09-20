@@ -74,7 +74,7 @@ export default function TaskCard({
         className="drag-handle"
         aria-label="Drag task"
       >
-        <GripVertical size={18} />
+        <GripVertical size={25} />
       </button>
 
       {/* Task Content */}

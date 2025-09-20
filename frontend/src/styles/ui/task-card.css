@@ -6,7 +6,8 @@
   }
 
   .drag-handle {
-    @apply cursor-grab active:cursor-grabbing text-gray-400 hover:text-gray-600;
+    @apply cursor-grab active:cursor-grabbing text-gray-400 hover:text-gray-600  p-1;
+    touch-action: none;
   }
 
   .task-name {
