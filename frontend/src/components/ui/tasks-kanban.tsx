@@ -64,12 +64,14 @@ function DroppableColumn({
       }`}
     >
       <h2 className="text-lg font-bold mb-2">{status}</h2>
-      <SortableContext
-        items={tasks.map((t) => t.task_id)}
-        strategy={rectSortingStrategy}
-      >
-        {children}
-      </SortableContext>
+      <div className="tasks-div">
+        <SortableContext
+          items={tasks.map((t) => t.task_id)}
+          strategy={rectSortingStrategy}
+        >
+          {children}
+        </SortableContext>
+      </div>
     </div>
   );
 }

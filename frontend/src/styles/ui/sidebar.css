@@ -2,22 +2,10 @@
 
 @layer components {
   .close-icon-btn {
-    @apply flex justify-end p-2 cursor-pointer;
+    @apply p-2 cursor-pointer;
   }
   .icon {
-    @apply bg-center bg-no-repeat bg-contain w-full h-1/8;
+    @apply bg-center bg-no-repeat bg-contain w-full h-32;
     background-image: url("/vercel.png");
-  }
-
-  .projects-list-div {
-    @apply flex flex-col overflow-y-auto p-4 space-y-2 gap-y-2;
-  }
-
-  .project-div {
-    @apply flex flex-col w-full p-2 rounded-lg hover:bg-gray-100 transition font-medium text-left outline-3 shadow-lg;
-  }
-
-  .project-div-title {
-    @apply font-bold;
   }
 }

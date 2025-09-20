@@ -2,7 +2,7 @@
 
 @layer components {
   .proj-info-div {
-    @apply p-5 flex flex-col sm:min-w-xl md:min-w-2xl lg:min-w-4xl xl:min-w-6xl mx-auto;
+    @apply p-5 flex flex-col min-w-sm sm:min-w-xl md:min-w-2xl lg:min-w-4xl xl:min-w-5xl mx-auto;
   }
 
   .proj-buttons {

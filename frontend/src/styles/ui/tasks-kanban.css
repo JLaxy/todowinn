@@ -6,13 +6,14 @@
   }
 
   .kanban-div {
-    @apply flex-1 h-full w-full;
+    @apply flex-1 h-0 w-full;
   }
 
   .col-div {
     @apply flex flex-row w-[95vw] gap-5;
   }
 
-  .heading-text {
+  .tasks-div {
+    @apply flex-1 overflow-y-auto;
   }
 }
