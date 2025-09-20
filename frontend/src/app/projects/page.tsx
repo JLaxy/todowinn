@@ -7,7 +7,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { Project } from "@/types/project";
 import { projectsService } from "@/services/projects-service";
 import "@/styles/pages/projects.css";
-import Modal from "@/components/ui/modal";
+import Modal from "@/components/ui/modal/modal";
 import { ModalType } from "@/types/modal-type";
 import { useTodowinnContext } from "@/contexts/todowinn-context";
 import ProjectDiv from "@/components/ui/project-div";

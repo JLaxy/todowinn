@@ -6,6 +6,7 @@ import { ApiError } from "next/dist/server/api-utils";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import "@/styles/pages/start.css";
 
 export default function Page() {
   const [email, setEmail] = useState("");
@@ -61,12 +62,10 @@ export default function Page() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
-      <h1 className="text-4xl font-bold mb-30 text-center">
-        Todowinn Project Manager
-      </h1>
-      <div className="bg-white p-8 rounded-lg w-full max-w-sm">
-        <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
+    <div className="main-div">
+      <h1 className="title-text">Todowinn Project Manager</h1>
+      <div className="card">
+        <h2 className="card-title">Login</h2>
         <form onSubmit={handleLogin} className="space-y-4">
           {GetInputFields(
             email,

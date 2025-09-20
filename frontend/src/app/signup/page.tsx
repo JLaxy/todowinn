@@ -6,6 +6,7 @@ import { AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import "@/styles/pages/start.css";
 
 export default function Page() {
   // Variables
@@ -88,9 +89,9 @@ export default function Page() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg w-full max-w-sm">
-        <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
+    <div className="main-div">
+      <div className="card">
+        <h2 className="card-title">Sign Up</h2>
         <form onSubmit={handleSignUp} className="space-y-4">
           {GetInputFields(
             email,
