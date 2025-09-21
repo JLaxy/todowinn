@@ -9,6 +9,7 @@ type Props = {
   modalType: ModalType;
 };
 
+// Modal body for adding project/tasks
 export default function AddModalBody({
   handleSubmit,
   handleModalClose,

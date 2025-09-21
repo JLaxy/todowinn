@@ -14,6 +14,7 @@ type ModalProps = {
   handleSubmit: (e: FormEvent) => void;
 };
 
+// Pop up modal
 export default function Modal({ handleSubmit }: ModalProps) {
   const { isModalOpen, setIsModalOpen, resetFields } = useTodowinnContext();
   const iconSize = 30;
@@ -69,6 +70,7 @@ export function ModalBody({ handleSubmit, handleModalClose }: ModalBodyProps) {
 
   if (modalType === undefined) return <></>;
 
+  // Display right modal body
   switch (modalType) {
     case ModalType.ADD_PROJECT:
       return (

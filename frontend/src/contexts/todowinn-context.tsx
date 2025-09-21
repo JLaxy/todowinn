@@ -8,6 +8,7 @@ import { Task } from "@/types/task";
 import { toDateInputValue } from "@/utils/date-formatter";
 import { createContext, useState, useContext } from "react";
 
+// Global context; to avoid prop drilling
 interface TodowinnContextType {
   isSidebarOpen: boolean;
   setIsSidebarOpen: (b: boolean) => void;
@@ -66,6 +67,7 @@ export const TodowinnProvider = ({
   const [remarks, setRemarks] = useState<string>("");
   const [status, setStatus] = useState<Status>(Status.IN_PROGRESS);
 
+  // Reset context values
   const resetContext = () => {
     setIsSidebarOpen(false);
     setSelectedProject(undefined);

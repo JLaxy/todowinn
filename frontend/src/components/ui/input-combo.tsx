@@ -5,6 +5,7 @@ type Props = {
   setStatus: (s: Status) => void;
 };
 
+// Combobox input
 export default function InputCombo({ status, setStatus }: Props) {
   return (
     <div className="flex flex-col">

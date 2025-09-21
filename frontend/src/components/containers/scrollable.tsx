@@ -4,6 +4,7 @@
 
 import React, { useRef, useState } from "react";
 
+// Container for side scrolling
 export default function ScrollContainer({
   children,
   isDragging,

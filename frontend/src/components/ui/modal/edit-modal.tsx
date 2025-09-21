@@ -10,6 +10,7 @@ type Props = {
   modalType: ModalType;
 };
 
+// Modal body for editing project/tasks
 export default function EditModalBody({
   handleSubmit,
   handleModalClose,

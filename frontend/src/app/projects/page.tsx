@@ -34,6 +34,7 @@ export default function ProjectsPage() {
     setProjectTasks,
   } = useTodowinnContext();
 
+  // Get all projects of user
   const fetchProjects = async () => {
     setIsLoading(true);
 
@@ -49,6 +50,7 @@ export default function ProjectsPage() {
     }
   };
 
+  // Get all tasks of project
   const fetchTasks = async (project_id: number) => {
     try {
       // Send API rquest
@@ -65,6 +67,7 @@ export default function ProjectsPage() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
+    // Redirect
     switch (modalType) {
       case ModalType.ADD_PROJECT:
         handleAddProject();
@@ -189,6 +192,7 @@ export default function ProjectsPage() {
     }
   };
 
+  // Fetch project and then open sidebar
   useEffect(() => {
     fetchProjects();
     setIsSidebarOpen(true);

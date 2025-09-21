@@ -2,6 +2,7 @@ import { useTodowinnContext } from "@/contexts/todowinn-context";
 import { dateFormatter } from "@/utils/date-formatter";
 import React from "react";
 
+// Modal for viewing tasks
 export default function ViewTaskModalBody() {
   const { selectedTask, taskHistory } = useTodowinnContext();
 

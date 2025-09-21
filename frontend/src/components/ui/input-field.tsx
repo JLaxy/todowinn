@@ -8,6 +8,7 @@ type Props = {
   setItem: (i: string) => void;
 };
 
+// Input field
 export default function InputField({
   label,
   item,

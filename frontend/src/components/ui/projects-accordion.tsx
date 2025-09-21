@@ -12,6 +12,7 @@ import { Status } from "@/types/status";
 import "@/styles/ui/projects-accordion.css";
 import { dateFormatter } from "@/utils/date-formatter";
 
+// Accordion on sidebar
 export default function ProjectsAccordion({
   fetchTasks,
 }: {
