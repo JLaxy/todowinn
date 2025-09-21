@@ -18,7 +18,7 @@ export default function InputField({
   setItem,
 }: Props) {
   return (
-    <div className="flex flex-col py-2">
+    <div className="flex flex-col py-2 w-full">
       <label htmlFor={item} className="font-medium mb-1">
         {label}
       </label>
@@ -26,7 +26,7 @@ export default function InputField({
         id={item}
         type={type}
         placeholder={placeholder}
-        className="border rounded p-2 w-full"
+        className="border rounded p-2"
         value={value}
         onChange={(e) => setItem(e.target.value)}
         required={isRequired}
